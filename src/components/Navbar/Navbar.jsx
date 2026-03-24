@@ -11,34 +11,35 @@ export default function Navbar() {
 
   return (
     <header className="navbar-container">
-      
-      {/* GROUPE GAUCHE (Desktop uniquement) */}
+
+      {/* LEFT (Desktop only) */}
       <div className={`nav-links-left ${isMenuOpen ? 'open' : ''}`}>
         <Link to="/" onClick={toggleMenu}>Nos Salons</Link>
         <Link to="/prestations" onClick={toggleMenu}>Prestations</Link>
       </div>
 
-      {/* LE LOGO (Au centre sur Desktop, à gauche sur Mobile) */}
+      {/* LOGO (center desktop , left mobile) */}
       <div className="logo-container">
         <Link to="/" className="logo">Le Groupe l'Atelier</Link>
       </div>
 
-      {/* LE BURGER MENU (Mobile uniquement) */}
+      {/* BURGER (mobile only) */}
       <button className="burger-menu" onClick={toggleMenu} aria-label="Menu">
-        {/* J'ai mis trois tirets pour faire un burger maison plus fidèle à ta maquette */}
-        {isMenuOpen ? '✖' : '☰'} 
+        {isMenuOpen ? '✖' : '☰'}
       </button>
 
-      {/* GROUPE DROITE (Desktop) ou MENU ENTIER (Mobile) */}
+      {/* RIGHT (Desktop only) - MENU (Mobile) */}
       <div className={`nav-links-right ${isMenuOpen ? 'open' : ''}`}>
-        {/* On remet les liens de gauche ici pour le menu mobile */}
         <Link to="/" className="mobile-only" onClick={toggleMenu}>Nos Salons</Link>
         <Link to="/prestations" className="mobile-only" onClick={toggleMenu}>Prestations</Link>
         
         <Link to="/reservation" onClick={toggleMenu}>Prendre RDV</Link>
         <Link to="/compte" onClick={toggleMenu}>Mon compte</Link>
+
+        {/* mobile only */}
+        <Link to="/mentions-legales" className="mobile-only" onClick={toggleMenu}>Mentions Légales</Link>
       </div>
-      
+
     </header>
   );
 }
