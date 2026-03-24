@@ -1,0 +1,33 @@
+/* =========================================
+   RESET CSS GLOBAL ET ULTRA-PUISSANT CONTRE LE SCROLL
+   ========================================= */
+
+/* Le sélecteur "*" cible absolument TOUS les éléments */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Indispensable pour que le padding n'agrandisse pas les boîtes */
+}
+
+/* On force l'interdiction du scroll horizontal sur html ET body */
+html, body {
+  margin: 0;
+  padding: 0;
+  max-width: 100vw; /* S'assure que le body ne fait jamais plus que la largeur de l'écran */
+  overflow-x: hidden; /* C'est la ligne magique qui tue le scroll horizontal */
+  position: relative;
+  font-family: 'Helvetica Neue', Arial, sans-serif; 
+  background-color: #f9f9f9;
+  color: #333333;
+}
+
+/* Appliqué au titles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+/* Enlève le soulignement par défaut de tous les liens */
+a {
+  text-decoration: none;
+}
