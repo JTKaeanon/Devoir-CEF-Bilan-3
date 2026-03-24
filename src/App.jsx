@@ -1,23 +1,35 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar'; 
-import Footer from './components/Footer/Footer'; // 👈 On importe le Footer
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
+// Importation des pages
+import Accueil from './pages/Accueil';
+import NosSalons from './pages/NosSalons';
+import Prestations from './pages/Prestations';
+import Reservation from './pages/Reservation';
+import Compte from './pages/Compte';
+import Contact from './pages/Contact';
+import MentionsLegales from './pages/MentionsLegales';
+import Confidentialite from './pages/Confidentialite';
 
 export default function App() {
   return (
     <BrowserRouter>
-      {/* En-tête */}
-      <Navbar /> 
+      <Navbar />
       
-      {/* Contenu principal de la page (minHeight: 80vh pousse le footer vers le bas) */}
-      <main style={{ minHeight: '80vh' }}> 
+      <main style={{ minHeight: '80vh' }}>
         <Routes>
-          <Route path="/" element={<div style={{ padding: '50px' }}><h2>Accueil</h2></div>} />
-          <Route path="/prestations" element={<div style={{ padding: '50px' }}><h2>Prestations</h2></div>} />
+          <Route path="/" element={<Accueil />} />
+          <Route path="/nos-salons" element={<NosSalons />} />
+          <Route path="/prestations" element={<Prestations />} />
+          <Route path="/reservation" element={<Reservation />} />
+          <Route path="/compte" element={<Compte />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/mentions-legales" element={<MentionsLegales />} />
+          <Route path="/confidentialite" element={<Confidentialite />} />
         </Routes>
       </main>
 
-      {/* Pied de page */}
-      <Footer /> 
+      <Footer />
     </BrowserRouter>
   );
 }
