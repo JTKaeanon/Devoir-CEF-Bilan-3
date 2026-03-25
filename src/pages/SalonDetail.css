@@ -5,29 +5,29 @@
     color: #1a1a1a;
 }
 
-/* La fameuse grille 2x2 */
+/* grid */
 .salon-detail-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
 }
 
-/* Le style commun aux 4 gros blocs */
+/* style grid */
 .grid-box {
     border-radius: 30px;
     overflow: hidden;
     min-height: 400px;
     position: relative;
-    background-color: #b3b3b3; /* Gris par défaut comme sur ta maquette */
+    background-color: #b3b3b3; 
 }
 
-/* 1. Bloc Image (Haut Gauche) */
+/* top left */
 .box-image {
     background-size: cover;
     background-position: center;
 }
 
-/* 2. Bloc Présentation (Haut Droite) */
+/* top right */
 .box-presentation {
     background-size: cover;
     background-position: center;
@@ -39,7 +39,7 @@
     padding: 2rem;
 }
 
-/* L'overlay blanc transparent par dessus l'image */
+/* transparence */
 .box-presentation::before {
     content: '';
     position: absolute;
@@ -50,7 +50,7 @@
 
 .presentation-content {
     position: relative;
-    z-index: 2; /* Pour que le texte soit au-dessus du filtre blanc */
+    z-index: 2; /* text */ 
 }
 
 .presentation-content h1 {
@@ -70,7 +70,7 @@
     font-size: 1.1rem;
 }
 
-/* 3. Bloc Coiffeurs (Bas Gauche) */
+/* bottom left */
 .box-team {
     padding: 2rem;
 }
@@ -94,10 +94,10 @@
 .team-member {
     font-weight: bold;
     text-align: center;
-    white-space: pre-line; /* Pour que le \n fonctionne comme un retour à la ligne */
+    white-space: pre-line; 
 }
 
-/* 4. Bloc Services (Bas Droite) */
+/* bottom right */
 .box-services {
     padding: 2rem;
     display: flex;
@@ -120,7 +120,7 @@
     font-size: 1.1rem;
 }
 
-/* Passage en mode bureau (2x2) */
+/* grid desktop */
 @media screen and (min-width: 1024px) {
     .salon-detail-grid {
         grid-template-columns: 1fr 1fr;

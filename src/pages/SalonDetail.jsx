@@ -19,13 +19,13 @@ export default function SalonDetail() {
     <div className="salon-detail-container">
       <div className="salon-detail-grid">
         
-        {/* BLOC 1 : Image (Haut Gauche) */}
+        {/*top left */}
         <div 
           className="grid-box box-image" 
           style={{ backgroundImage: `url(${salon.image})` }}
         ></div>
 
-        {/* BLOC 2 : Présentation (Haut Droite) */}
+        {/* top right */}
         <div 
           className="grid-box box-presentation"
           style={{ backgroundImage: `url(${salon.presentationImage || salon.image})` }}
@@ -37,7 +37,7 @@ export default function SalonDetail() {
           </div>
         </div>
 
-        {/* BLOC 3 : Les Coiffeurs (Bas Gauche) */}
+        {/* bottom left */}
         <div className="grid-box box-team">
           <h3>Nos coiffeurs :</h3>
           <div className="team-list">
@@ -49,7 +49,7 @@ export default function SalonDetail() {
           </div>
         </div>
 
-        {/* BLOC 4 : Les Services (Bas Droite) */}
+        {/* bottom right */}
         <div className="grid-box box-services">
           <h3>Carte des services - {salon.name}</h3>
           <div className="services-list">
