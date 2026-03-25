@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
-// Importation des pages
+
+// Import
 import Accueil from './pages/Accueil';
 import NosSalons from './pages/NosSalons';
+import SalonDetail from './pages/SalonDetail';
 import Prestations from './pages/Prestations';
 import Reservation from './pages/Reservation';
 import Compte from './pages/Compte';
@@ -20,6 +22,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Accueil />} />
           <Route path="/nos-salons" element={<NosSalons />} />
+          
+          {/* <-- dynamic  --> */}
+          <Route path="/salon/:id" element={<SalonDetail />} />
+          
           <Route path="/prestations" element={<Prestations />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/compte" element={<Compte />} />
