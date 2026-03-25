@@ -1,0 +1,128 @@
+.salon-detail-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 2rem;
+    color: #1a1a1a;
+}
+
+/* La fameuse grille 2x2 */
+.salon-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+/* Le style commun aux 4 gros blocs */
+.grid-box {
+    border-radius: 30px;
+    overflow: hidden;
+    min-height: 400px;
+    position: relative;
+    background-color: #b3b3b3; /* Gris par défaut comme sur ta maquette */
+}
+
+/* 1. Bloc Image (Haut Gauche) */
+.box-image {
+    background-size: cover;
+    background-position: center;
+}
+
+/* 2. Bloc Présentation (Haut Droite) */
+.box-presentation {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* L'overlay blanc transparent par dessus l'image */
+.box-presentation::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.65);
+    z-index: 1;
+}
+
+.presentation-content {
+    position: relative;
+    z-index: 2; /* Pour que le texte soit au-dessus du filtre blanc */
+}
+
+.presentation-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.presentation-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    font-weight: bold;
+}
+
+.presentation-content p {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* 3. Bloc Coiffeurs (Bas Gauche) */
+.box-team {
+    padding: 2rem;
+}
+
+.box-team h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.team-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+    height: 60%;
+    align-items: center;
+}
+
+.team-member {
+    font-weight: bold;
+    text-align: center;
+    white-space: pre-line; /* Pour que le \n fonctionne comme un retour à la ligne */
+}
+
+/* 4. Bloc Services (Bas Droite) */
+.box-services {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box-services h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.service-item {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Passage en mode bureau (2x2) */
+@media screen and (min-width: 1024px) {
+    .salon-detail-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
