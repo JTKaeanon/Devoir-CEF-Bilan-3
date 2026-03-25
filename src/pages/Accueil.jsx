@@ -19,7 +19,7 @@ export default function Accueil() {
         {salonsData.map((salon) => (
           <Link 
             key={salon.id} 
-            to="/nos-salons" 
+            to={`/salon/${salon.id}`} 
             className="grid-item salon-card" 
             style={{ backgroundImage: `url(${salon.image})` }}
           >
