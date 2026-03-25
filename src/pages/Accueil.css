@@ -1,0 +1,128 @@
+/* --- GLOBAL --- */
+.accueil-container {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 40px 0;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 0 2rem;
+    gap: 20px;
+    min-height: calc(100vh - 90px);
+}
+
+/* --- Top left --- */
+.presentation-block {
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    border-radius: 50px;
+}
+
+.presentation-content {
+    max-width: 550px;
+}
+
+.group-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.group-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.group-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+}
+
+.group-cta {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    transition: all 0.3s ease;
+}
+
+.group-cta:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ffffff;
+}
+
+/* --- card salons --- */
+.salon-card {
+    position: relative;
+    min-height: 400px;
+    background-size: cover;
+    background-position: center;
+    text-decoration: none;
+    overflow: hidden;
+    border-radius: 50px;
+}
+
+
+
+
+.salon-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    transition: background 0.3s ease;
+}
+
+
+
+.salon-card:hover .salon-overlay {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.salon-overlay h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin-bottom: 0.2rem;
+}
+
+/* =========================================
+   DESKTOP > 1024px
+   ========================================= */
+@media screen and (min-width: 1024px) {
+    .hero-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        padding: 0 2rem;
+        gap: 30px;
+        height: auto;
+    }
+}
+
+/* =========================================
+ LARGE DESKTOP > 1440px
+   ========================================= */
+@media screen and (min-width: 1440px) {
+    .hero-grid {
+        padding: 0 6rem;
+        gap: 40px;
+    }
+}
