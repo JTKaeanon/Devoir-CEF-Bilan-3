@@ -1,0 +1,37 @@
+.policy-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 2rem;
+  color: #1a1a1a;
+  line-height: 1.6;
+  min-height: calc(100vh - 200px);
+}
+
+.policy-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.policy-section {
+  margin-bottom: 2.5rem;
+}
+
+.policy-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.policy-section p, .policy-section li {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  color: #444;
+}
+
+.policy-section ul {
+  padding-left: 1.5rem;
+}
