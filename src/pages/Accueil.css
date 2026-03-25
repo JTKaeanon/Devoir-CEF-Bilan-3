@@ -1,18 +1,28 @@
+/* --- GLOBAL --- */
+.accueil-container {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 40px 0;
+}
+
 .hero-grid {
     display: grid;
     grid-template-columns: 1fr;
+    padding: 0 2rem;
+    gap: 20px;
     min-height: calc(100vh - 90px);
 }
 
-/* --- top left) --- */
+/* --- Top left --- */
 .presentation-block {
     background: #1a1a1a;
     color: #ffffff;
     padding: 4rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    text-align: left;
+    border-radius: 50px;
 }
 
 .presentation-content {
@@ -56,7 +66,7 @@
     border-color: #ffffff;
 }
 
-/* --- card --- */
+/* --- card salons --- */
 .salon-card {
     position: relative;
     min-height: 400px;
@@ -64,19 +74,11 @@
     background-position: center;
     text-decoration: none;
     overflow: hidden;
+    border-radius: 50px;
 }
 
-.salon-1 {
-    background-image: url('../assets/salon1.jpg');
-}
 
-.salon-2 {
-    background-image: url('../assets/salon2.jpg');
-}
 
-.salon-3 {
-    background-image: url('../assets/salon3.jpg');
-}
 
 .salon-overlay {
     position: absolute;
@@ -88,49 +90,9 @@
     justify-content: center;
     color: #ffffff;
     transition: background 0.3s ease;
-
-    .accueil-container {
-        width: 100%;
-        background-color: #ffffff;
-        padding: 40px 0;
-    }
-
-    .hero-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        padding: 0 2rem;
-        gap: 20px;
-    }
-
-
-    /* =========================================
-    DESKTOP > 1024px
-   ========================================= */
-    @media screen and (min-width: 1024px) {
-        .hero-grid {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            /* Aligné sur le padding de ta Navbar desktop (2rem) */
-            padding: 0 2rem;
-            gap: 30px;
-            height: auto;
-            /* On laisse le contenu respirer en hauteur */
-        }
-    }
-
-    /* =========================================
-   LARGE DESKTOP > 1440px
-   ========================================= */
-    @media screen and (min-width: 1440px) {
-        .hero-grid {
-            /* Aligné sur le padding de ta Navbar large (6rem) */
-            padding: 0 6rem;
-            gap: 40px;
-            column-gap: 5rem;
-            /* Optionnel : pour plus d'espace horizontal */
-        }
-    }
 }
+
+
 
 .salon-card:hover .salon-overlay {
     background: rgba(0, 0, 0, 0.3);
@@ -149,6 +111,18 @@
     .hero-grid {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
-        height: calc(100vh - 90px);
+        padding: 0 2rem;
+        gap: 30px;
+        height: auto;
+    }
+}
+
+/* =========================================
+ LARGE DESKTOP > 1440px
+   ========================================= */
+@media screen and (min-width: 1440px) {
+    .hero-grid {
+        padding: 0 6rem;
+        gap: 40px;
     }
 }
