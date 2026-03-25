@@ -1,0 +1,154 @@
+/* ---  global --- */
+.nos-salons-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 2rem;
+    color: #1a1a1a;
+}
+
+.salons-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.salons-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.salons-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* --- list --- */
+.salons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.salon-list-card {
+    display: flex;
+    flex-direction: column;
+    background: #f9f9f9;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    height: auto; 
+}
+
+
+.salon-list-image {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 30px 30px 0 0;
+}
+
+.salon-list-content {
+    padding: 2rem 1.5rem; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0 0 30px 30px;
+}
+
+
+.salon-list-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.salon-badge {
+    display: inline-block;
+    background: #1a1a1a;
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+    align-self: flex-start;
+}
+
+.salon-desc {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: #444;
+}
+
+/* ---  infos block --- */
+.salon-infos {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.salon-infos .icon {
+    color: #1a1a1a;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+/* --- Button --- */
+.salon-btn {
+    align-self: flex-start;
+    padding: 0.8rem 1.8rem;
+    background: white;
+    color: #1a1a1a;
+    border: 2px solid #1a1a1a;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.salon-btn:hover {
+    background: #1a1a1a;
+    color: white;
+}
+
+/* =========================================
+   DESKTOP > 1024px
+   ========================================= */
+@media screen and (min-width: 1024px) {
+    .salon-list-card {
+        flex-direction: row; /* image left, text right */
+        height: 450px;
+        overflow: hidden; 
+    }
+
+    .salon-list-image {
+        width: 50%;
+        height: 100%;
+        border-radius: 0; 
+    }
+
+    .salon-list-content {
+        width: 50%;
+        padding: 3rem 4rem;
+        border-radius: 0;
+    }
+
+    /* left,right, reverse */
+    .salon-list-card:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+
+    .salon-list-content h2 {
+        font-size: 2.8rem;
+    }
+}

@@ -4,7 +4,7 @@
   padding: 60px 2rem;
   color: #1a1a1a;
   line-height: 1.6;
-  min-height: calc(100vh - 200px); /* Assure que le footer reste en bas */
+  min-height: calc(100vh - 200px);
 }
 
 .legal-title {
