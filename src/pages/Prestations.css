@@ -1,0 +1,139 @@
+.prestations-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 2rem;
+    color: #1a1a1a;
+    min-height: 70vh;
+}
+
+.prestations-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.prestations-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 3rem;
+}
+
+/* scrolling */
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background-color: #f9f9f9;
+    border-radius: 20px;
+    padding: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.prestations-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+/* --- title --- */
+.prestations-table th {
+    padding: 1.5rem 1rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1rem;
+    border-bottom: 2px solid #ddd;
+}
+
+.prestations-table th span {
+    font-weight: 400;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.prestations-table .th-left {
+    text-align: left;
+    padding-left: 2rem;
+}
+
+/* --- table --- */
+.prestations-table td {
+    padding: 1.2rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.prestations-table tr {
+    transition: background-color 0.2s ease;
+}
+
+/* hover */
+.prestations-table tbody tr:hover {
+    background: linear-gradient(90deg,
+            rgba(26, 26, 26, 0.85) 0%,
+            rgba(26, 26, 26, 1) 50%,
+            rgba(26, 26, 26, 0.85) 100%);
+    color: white;
+}
+
+.prestations-table tbody tr:hover .reserver-btn {
+    background-color: white;
+    color: #1a1a1a;
+}
+
+.prestations-table tbody tr:hover .check-icon {
+
+    color: #81C784;
+    filter: drop-shadow(0 0 8px rgba(129, 199, 132, 0.8));
+
+}
+
+
+.presta-name {
+    font-weight: 700;
+    text-align: left !important;
+    padding-left: 2rem !important;
+    font-size: 1.1rem;
+}
+
+.presta-duree {
+    font-weight: 500;
+    color: #555;
+    white-space: nowrap;
+}
+
+/* --- icons, price --- */
+.check-icon {
+    color: #4CAF50;
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3));
+}
+
+.price-cell {
+    vertical-align: middle;
+}
+
+.price-tag {
+    font-weight: 800;
+    font-size: 1.2rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.price-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.reserver-btn {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
