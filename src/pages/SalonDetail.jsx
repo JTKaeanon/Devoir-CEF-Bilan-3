@@ -1,10 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
 import { salonsData } from '../api/salons';
 import './SalonDetail.css';
+import { prestationsData } from '../api/prestations';
 
 export default function SalonDetail() {
   const { id } = useParams();
   const salon = salonsData.find((s) => s.id === id);
+  const salonPrestations = prestationsData.filter(presta => presta.salons.includes(id));
 
   if (!salon) {
     return (
@@ -18,15 +20,15 @@ export default function SalonDetail() {
   return (
     <div className="salon-detail-container">
       <div className="salon-detail-grid">
-        
+
         {/*top left */}
-        <div 
-          className="grid-box box-image" 
+        <div
+          className="grid-box box-image"
           style={{ backgroundImage: `url(${salon.image})` }}
         ></div>
 
         {/* top right */}
-        <div 
+        <div
           className="grid-box box-presentation"
           style={{ backgroundImage: `url(${salon.presentationImage || salon.image})` }}
         >
@@ -53,13 +55,21 @@ export default function SalonDetail() {
         <div className="grid-box box-services">
           <h3>Carte des services - {salon.name}</h3>
           <div className="services-list">
-            {salon.prestations ? salon.prestations.map(presta => (
-              <div key={presta.id} className="service-item">
-                <p>{presta.nom}</p>
-                <p>Durée : {presta.duree}</p>
-                <p>Prix : {presta.prix}</p>
+            {salonPrestations.length > 0 ? salonPrestations.map(presta => (
+              
+              <div key={presta.id} className="service-card">
+                <div className="service-info">
+                  <p className="service-info-name">{presta.nom}</p>
+                  <p className="service-info-duration">{presta.duree}</p>
+                </div>
+                
+                <div className="service-action">
+                  <p className="service-price">{presta.prix}</p>
+                  <Link to="/reservation" className="service-reserver-btn">Réserver</Link>
+                </div>
               </div>
-            )) : <p>Carte des services à venir</p>}
+
+            )) : <p>Aucun service disponible pour le moment.</p>}
           </div>
         </div>
 

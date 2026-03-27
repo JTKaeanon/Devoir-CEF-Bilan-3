@@ -18,7 +18,7 @@
     overflow: hidden;
     min-height: 400px;
     position: relative;
-    background-color: #b3b3b3; 
+    background-color: #b3b3b3;
 }
 
 /* top left */
@@ -50,7 +50,8 @@
 
 .presentation-content {
     position: relative;
-    z-index: 2; /* text */ 
+    z-index: 2;
+    /* text */
 }
 
 .presentation-content h1 {
@@ -94,30 +95,120 @@
 .team-member {
     font-weight: bold;
     text-align: center;
-    white-space: pre-line; 
+    white-space: pre-line;
 }
 
 /* bottom right */
+/* 4. Bloc Services (Bas Droite) */
 .box-services {
-    padding: 2rem;
+    padding: 3rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* Un beau dégradé sombre et élégant au lieu du gris plat */
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    color: white;
+    /* Le titre passe en blanc */
+    border-radius: 30px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .box-services h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    margin-bottom: 3rem;
+    font-size: 2.2rem;
+    margin-bottom: 2.5rem;
     text-align: center;
-    margin-top: 2rem;
+    position: relative;
 }
 
-.service-item {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-weight: bold;
+.box-services h3::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #4CAF50;
+    /* Rappel de ta couleur principale */
+    border-radius: 2px;
+}
+
+.box-services>p {
+    color: #f1f1f1;
+    font-style: italic;
+}
+
+.services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 450px;
+    /* Évite que les cartes soient trop larges */
+}
+
+/* Le design de la carte de prestation */
+.service-card {
+    background-color: white;
+    padding: 1.2rem 1.5rem;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.service-info {
+    text-align: left;
+}
+
+.service-info-name {
+    font-weight: 700;
     font-size: 1.1rem;
+    color: #1a1a1a;
+    margin-bottom: 0.3rem;
+}
+
+.service-info-duration {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.service-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.service-price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #4CAF50;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Bouton réserver dans la carte */
+.service-reserver-btn {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.service-reserver-btn:hover {
+    background-color: #4CAF50;
 }
 
 /* grid desktop */
