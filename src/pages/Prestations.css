@@ -98,11 +98,15 @@
 }
 
 .presta-duree {
-    font-weight: 500;
-    color: #555;
-    white-space: nowrap;
+    font-weight: 600; 
+    color: #444; 
+    white-space: nowrap; 
+    transition: color 0.2s ease; 
 }
 
+.prestations-table tbody tr:hover .presta-duree {
+    color: #f1f1f1; 
+}
 
 
 /* --- icons, price --- */

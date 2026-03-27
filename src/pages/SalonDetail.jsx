@@ -56,16 +56,22 @@ export default function SalonDetail() {
           <h3>Carte des services - {salon.name}</h3>
           <div className="services-list">
             {salonPrestations.length > 0 ? salonPrestations.map(presta => (
-              
+
               <div key={presta.id} className="service-card">
                 <div className="service-info">
                   <p className="service-info-name">{presta.nom}</p>
                   <p className="service-info-duration">{presta.duree}</p>
                 </div>
-                
+
                 <div className="service-action">
                   <p className="service-price">{presta.prix}</p>
-                  <Link to="/reservation" className="service-reserver-btn">Réserver</Link>
+                  <Link
+                    to="/reservation"
+                    state={{ salonId: salon.id, prestationNom: presta.nom }}
+                    className="service-reserver-btn"
+                  >
+                    Réserver
+                  </Link>
                 </div>
               </div>
 

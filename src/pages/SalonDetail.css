@@ -99,16 +99,13 @@
 }
 
 /* bottom right */
-/* 4. Bloc Services (Bas Droite) */
 .box-services {
     padding: 3rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Un beau dégradé sombre et élégant au lieu du gris plat */
     background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
     color: white;
-    /* Le titre passe en blanc */
     border-radius: 30px;
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
@@ -130,7 +127,6 @@
     width: 60px;
     height: 3px;
     background-color: #4CAF50;
-    /* Rappel de ta couleur principale */
     border-radius: 2px;
 }
 
@@ -145,10 +141,9 @@
     gap: 1rem;
     width: 100%;
     max-width: 450px;
-    /* Évite que les cartes soient trop larges */
 }
 
-/* Le design de la carte de prestation */
+/* prestation card */
 .service-card {
     background-color: white;
     padding: 1.2rem 1.5rem;
@@ -195,7 +190,7 @@
     font-family: 'Playfair Display', serif;
 }
 
-/* Bouton réserver dans la carte */
+/* button reserver */
 .service-reserver-btn {
     background-color: #1a1a1a;
     color: white;

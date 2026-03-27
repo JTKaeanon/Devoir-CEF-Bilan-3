@@ -1,4 +1,3 @@
-// src/pages/Accueil.jsx
 import { Link } from 'react-router-dom';
 import { salonsData } from '../api/salons'; // Import des données
 import './Accueil.css';
