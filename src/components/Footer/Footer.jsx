@@ -21,10 +21,10 @@ export default function Footer() {
         </Link>
         
         <div className="social-icons">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
-          <a href="https://x.com" target="_blank" rel="noopener noreferrer"><FaXTwitter /></a>
-          <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer"><FaTiktok /></a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+          <a href="https://facebook.com" aria-label="Visitez notre page Facebook" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
+          <a href="https://x.com" aria-label="Visitez notre page X" target="_blank" rel="noopener noreferrer"><FaXTwitter /></a>
+          <a href="https://tiktok.com" aria-label="Visitez notre page Tiktok" target="_blank" rel="noopener noreferrer"><FaTiktok /></a>
+          <a href="https://instagram.com" aria-label="Visitez notre page Instagram" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
         </div>
       </div>
 

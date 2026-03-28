@@ -35,3 +35,17 @@ h1, h2, h3, h4, h5, h6 {
 a {
   text-decoration: none;
 }
+
+
+
+/* --- keyboard navigation --- */
+*:focus-visible {
+    outline: 3px solid #4CAF50 !important; 
+    outline-offset: 3px; 
+    border-radius: 4px; 
+}
+
+
+*:focus:not(:focus-visible) {
+    outline: none;
+}
