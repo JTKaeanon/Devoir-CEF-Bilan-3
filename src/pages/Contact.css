@@ -1,4 +1,4 @@
-/* --- GLOBAL CONTENEUR --- */
+/* --- GLOBAL --- */
 .contact-container {
     width: 100%;
     background-color: #ffffff;
@@ -10,17 +10,9 @@
     font-family: 'Playfair Display', serif;
     font-size: 3.5rem;
     text-align: center;
-    margin-bottom: 0.5rem;
-}
-
-.contact-subtitle {
-    text-align: center;
-    font-size: 1.2rem;
     margin-bottom: 4rem;
-    color: #666;
 }
 
-/* Grille qui sépare Formulaire et Infos */
 .contact-wrapper {
     display: grid;
     grid-template-columns: 1fr;
@@ -29,7 +21,7 @@
     margin: 0 auto;
 }
 
-/* --- TITRES DE SECTIONS --- */
+/* --- section tittle --- */
 .contact-form-section h2, .contact-info-section h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
@@ -39,10 +31,16 @@
     display: inline-block;
 }
 
-/* --- FORMULAIRE --- */
+/* --- form --- */
 .contact-form {
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
 }
 
@@ -54,61 +52,47 @@
 
 .form-group label {
     font-weight: 600;
-    font-size: 1rem;
 }
 
-/* Style des champs de saisie */
-.form-group input, 
-.form-group select, 
-.form-group textarea {
+.form-group input, .form-group select, .form-group textarea {
     padding: 1rem;
     border: 1px solid #ccc;
-    border-radius: 12px; /* On garde tes arrondis doux */
+    border-radius: 12px;
     font-family: inherit;
     font-size: 1rem;
     background-color: #f9f9f9;
-    transition: all 0.3s ease;
 }
 
-.form-group input:focus, 
-.form-group select:focus, 
-.form-group textarea:focus {
-    outline: none;
-    border-color: #1a1a1a;
-    background-color: #ffffff;
-}
-
-/* Bouton d'envoi */
 .submit-btn {
     padding: 1rem 2rem;
     background-color: #1a1a1a;
     color: #ffffff;
     border: none;
-    border-radius: 30px; /* Bouton très arrondi style "pilule" */
+    border-radius: 30px;
     font-family: 'Playfair Display', serif;
     font-size: 1.2rem;
     cursor: pointer;
-    transition: all 0.3s ease;
     align-self: flex-start;
+    transition: all 0.3s ease;
 }
 
 .submit-btn:hover {
-    background-color: #333;
-    transform: translateY(-2px); /* Petit effet de soulèvement au survol */
+    background-color: #4CAF50;
+    transform: translateY(-2px);
 }
 
-/* --- COORDONNÉES SALONS --- */
+/* --- contact --- */
 .salon-info-card {
     background-color: #f5f5f5;
     padding: 2rem;
-    border-radius: 20px; /* Arrondis cohérents avec ton accueil */
+    border-radius: 20px;
     margin-bottom: 1.5rem;
     border-left: 6px solid #1a1a1a;
     transition: transform 0.3s ease;
 }
 
 .salon-info-card:hover {
-    transform: translateX(10px); /* Effet sympa au survol */
+    transform: translateX(2px);
 }
 
 .salon-info-card h3 {
@@ -118,44 +102,51 @@
     color: #1a1a1a;
 }
 
-.salon-info-card p {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-    color: #444;
-}
-
-/* --- STYLE DES LIGNES D'INFOS ET LIENS --- */
 .info-line {
     display: flex;
-    align-items: center; /* Aligne l'icône et le texte verticalement */
-    gap: 0.8rem;         /* Espace entre l'icône et le texte */
+    align-items: center;
+    gap: 0.8rem;
     margin-bottom: 0.8rem;
     font-size: 1.1rem;
 }
 
 .contact-icon {
     color: #1a1a1a;
-    font-size: 1.2rem;
-    flex-shrink: 0;      /* Empêche l'icône de se rétrécir si le texte est long */
 }
 
 .salon-info-card a {
-    color: #444;
+    color: inherit; 
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .salon-info-card a:hover {
-    color: #1a1a1a;
-    text-decoration: underline; /* Souligne légèrement au survol pour indiquer que c'est cliquable */
+    text-decoration: underline;
 }
 
-/* =========================================
-   RESPONSIVE DESKTOP > 1024px
-   ========================================= */
+/* --- MESSAGE DE SUCCÈS --- */
+.success-message {
+    text-align: center;
+    padding: 3rem;
+    background-color: #f1f8f1;
+    border-radius: 20px;
+}
+
+.success-icon {
+    font-size: 3rem;
+    color: #4CAF50;
+    margin-bottom: 1rem;
+}
+
+/* --- responsive --- */
 @media screen and (min-width: 1024px) {
     .contact-wrapper {
-        /* On passe en 2 colonnes : 60% largeur pour le formulaire, 40% pour les adresses */
-        grid-template-columns: 3fr 2fr; 
+        grid-template-columns: 3fr 2fr;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
     }
 }
