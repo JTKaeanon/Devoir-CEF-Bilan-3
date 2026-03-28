@@ -4,6 +4,8 @@ import { salonsData } from '../api/salons';
 import { prestationsData } from '../api/prestations';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import './Reservation.css';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+
 
 // Fausse équipe pour l'exemple (à mettre dans une API plus tard)
 const mockEquipe = [
@@ -60,6 +62,8 @@ export default function Reservation() {
 
   // Filtrer les prestations en fonction du salon choisi (soit à l'étape 1, soit via le state)
   const availablePrestations = prestationsData.filter(presta => presta.salons.includes(formData.salon));
+
+  useDocumentTitle('Prendre RDV');
 
   return (
     <div className="reservation-container">

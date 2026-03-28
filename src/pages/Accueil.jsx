@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { salonsData } from '../api/salons'; // Import des données
 import './Accueil.css';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+
 
 export default function Accueil() {
+  useDocumentTitle('Accueil');
   return (
     <div className="accueil-container">
       <section className="hero-grid">

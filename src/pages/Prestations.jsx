@@ -2,9 +2,12 @@ import { Link } from 'react-router-dom';
 import { BsCheckLg } from 'react-icons/bs';
 import './Prestations.css';
 import { prestationsData } from '../api/prestations';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 
 export default function Prestations() {
+  useDocumentTitle('Nos prestations');
+  
   return (
     <div className="prestations-container">
       <h1 className="prestations-title">La Carte des Services</h1>
