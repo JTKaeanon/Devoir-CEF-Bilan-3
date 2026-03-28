@@ -1,4 +1,4 @@
-/* --- GLOBAL CONTENEUR --- */
+/* --- GLOBAL --- */
 .contact-container {
     width: 100%;
     background-color: #ffffff;
@@ -21,7 +21,7 @@
     margin: 0 auto;
 }
 
-/* --- TITRES DE SECTIONS --- */
+/* --- section tittle --- */
 .contact-form-section h2, .contact-info-section h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
@@ -31,7 +31,7 @@
     display: inline-block;
 }
 
-/* --- FORMULAIRE --- */
+/* --- form --- */
 .contact-form {
     display: flex;
     flex-direction: column;
@@ -81,7 +81,7 @@
     transform: translateY(-2px);
 }
 
-/* --- BLOCS CONTACT (SALONS) --- */
+/* --- contact --- */
 .salon-info-card {
     background-color: #f5f5f5;
     padding: 2rem;
@@ -114,7 +114,6 @@
     color: #1a1a1a;
 }
 
-/* Suppression de la couleur spécifique pour les numéros et adresses maps */
 .salon-info-card a {
     color: inherit; 
     text-decoration: none;
@@ -139,7 +138,7 @@
     margin-bottom: 1rem;
 }
 
-/* --- RESPONSIVE --- */
+/* --- responsive --- */
 @media screen and (min-width: 1024px) {
     .contact-wrapper {
         grid-template-columns: 3fr 2fr;
