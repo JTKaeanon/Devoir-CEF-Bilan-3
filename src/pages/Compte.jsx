@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Compte.css';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Compte() {
   // Ce state permet de basculer entre le formulaire de connexion et d'inscription
@@ -29,20 +30,22 @@ export default function Compte() {
     }
   };
 
+  useDocumentTitle('Mon compte');
+
   return (
     <div className="compte-container">
       <div className="compte-box">
-        
+
         {/* Les boutons pour basculer entre Connexion et Inscription */}
         <div className="compte-tabs">
-          <button 
-            className={`tab-btn ${isLogin ? 'active' : ''}`} 
+          <button
+            className={`tab-btn ${isLogin ? 'active' : ''}`}
             onClick={() => setIsLogin(true)}
           >
             Se connecter
           </button>
-          <button 
-            className={`tab-btn ${!isLogin ? 'active' : ''}`} 
+          <button
+            className={`tab-btn ${!isLogin ? 'active' : ''}`}
             onClick={() => setIsLogin(false)}
           >
             S'inscrire
@@ -55,7 +58,7 @@ export default function Compte() {
         </div>
 
         <form onSubmit={handleSubmit} className="compte-form">
-          
+
           {/* Champs visibles UNIQUEMENT pour l'inscription */}
           {!isLogin && (
             <div className="form-row">

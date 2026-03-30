@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BsGeoAltFill, BsTelephoneFill, BsPeopleFill } from 'react-icons/bs';
 import './NosSalons.css';
-
-// On importe notre "API" locale au lieu des images et de la liste en dur
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { salonsData } from '../api/salons';
 
 export default function NosSalons() {
@@ -19,6 +18,8 @@ export default function NosSalons() {
     }, 800);
     return () => clearTimeout(timer);
   }, []);
+
+  useDocumentTitle('Nos salons');
 
   return (
     <div className="nos-salons-container">
@@ -38,11 +39,11 @@ export default function NosSalons() {
                 <h2>{salon.name}</h2>
                 <span className="salon-badge">{salon.subtitle}</span>
                 <p className="salon-desc">{salon.description}</p>
-                
+
                 <div className="salon-infos">
-                  <p className="info-item"><BsPeopleFill className="icon"/> <strong>Public :</strong> {salon.target}</p>
-                  <p className="info-item"><BsGeoAltFill className="icon"/> {salon.address}</p>
-                  <p className="info-item"><BsTelephoneFill className="icon"/> {salon.phone}</p>
+                  <p className="info-item"><BsPeopleFill className="icon" /> <strong>Public :</strong> {salon.target}</p>
+                  <p className="info-item"><BsGeoAltFill className="icon" /> {salon.address}</p>
+                  <p className="info-item"><BsTelephoneFill className="icon" /> {salon.phone}</p>
                 </div>
 
                 {/* Le bouton pointe dynamiquement vers /salon/nom-du-salon */}

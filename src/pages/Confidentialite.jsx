@@ -1,6 +1,10 @@
 import './Confidentialite.css';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+
+
 
 export default function Confidentialite() {
+  useDocumentTitle('Confidentialité');
   return (
     <div className="policy-container">
       <h1 className="policy-title">Politique de Confidentialité</h1>

@@ -2,11 +2,15 @@ import { useParams, Link } from 'react-router-dom';
 import { salonsData } from '../api/salons';
 import './SalonDetail.css';
 import { prestationsData } from '../api/prestations';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+
 
 export default function SalonDetail() {
   const { id } = useParams();
   const salon = salonsData.find((s) => s.id === id);
   const salonPrestations = prestationsData.filter(presta => presta.salons.includes(id));
+  
+  useDocumentTitle(salon ? salon.name : 'Détail du salon');
 
   if (!salon) {
     return (
@@ -16,6 +20,7 @@ export default function SalonDetail() {
       </div>
     );
   }
+
 
   return (
     <div className="salon-detail-container">

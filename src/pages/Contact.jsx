@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { salonsData } from '../api/salons';
 import { BsGeoAltFill, BsTelephoneFill, BsCheckCircleFill } from 'react-icons/bs';
 import './Contact.css';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -30,6 +31,8 @@ export default function Contact() {
       setFormData({ prenom: '', nom: '', email: '', telephone: '', salon: '', message: '' });
     }, 4000);
   };
+
+  useDocumentTitle('Contact');
 
   return (
     <div className="contact-container">

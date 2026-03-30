@@ -1,6 +1,9 @@
 import './MentionsLegales.css';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+
 
 export default function MentionsLegales() {
+  useDocumentTitle('Mentions Légales');
   return (
     <div className="legal-container">
       <h1 className="legal-title">Mentions Légales</h1>
