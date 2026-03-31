@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ==========================================
+// table
+// ==========================================
+
+model Utilisateur {
+  id           Int          @id @default(autoincrement())
+  nom          String
+  prenom       String
+  email        String       @unique
+  mot_de_passe String
+  telephone    String?      
+  role         String       @default("CLIENT") // "CLIENT" ou "ADMIN"
+  
+  // Relation : Un utilisateur peut avoir plusieurs RDV
+  rendezVous   RendezVous[] 
+}
+
+model Salon {
+  id          Int          @id @default(autoincrement())
+  slug        String
+  nom         String
+  adresse     String
+  telephone   String
+  
+  // Relations
+  employes    Employe[]
+  prestations Prestation[]
+}
+
+model Prestation {
+  id          Int          @id @default(autoincrement())
+  nom         String
+  duree       Int          // minutes
+  prix        Float
+  
+  // Relations
+  salons      Salon[]      
+  rendezVous  RendezVous[]
+}
+
+model Employe {
+  id          Int          @id @default(autoincrement())
+  nom         String
+  role        String       
+  
+  // Relation : Un employé travaille dans 1 salon
+  salonId     Int
+  salon       Salon        @relation(fields: [salonId], references: [id])
+  
+  // Relation : Un employé gère plusieurs RDV
+  rendezVous  RendezVous[]
+}
+
+model RendezVous {
+  id            Int         @id @default(autoincrement())
+  date_rdv      DateTime
+  heure_rdv     String
+  statut        String      @default("A_VENIR") // "A_VENIR", "TERMINE", "ANNULE"
+  
+  utilisateurId Int
+  utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id])
+  
+  prestationId  Int
+  prestation    Prestation  @relation(fields: [prestationId], references: [id])
+  
+  employeId     Int
+  employe       Employe     @relation(fields: [employeId], references: [id])
+}

@@ -25,7 +25,7 @@ export default function App() {
           <Route path="/nos-salons" element={<NosSalons />} />
           
           {/* <-- dynamic  --> */}
-          <Route path="/salon/:id" element={<SalonDetail />} />
+          <Route path="/salon/:slug" element={<SalonDetail />} />
           <Route path="/prestations" element={<Prestations />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/compte" element={<Compte />} />

@@ -190,6 +190,29 @@
     font-family: 'Playfair Display', serif;
 }
 
+
+/* Style pour la page d'erreur (Salon introuvable) */
+.salon-not-found {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.retour-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: linear-gradient(90deg,
+      rgba(26, 26, 26, 0.85) 0%,
+      rgba(26, 26, 26, 1) 50%,
+      rgba(26, 26, 26, 0.85) 100%);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
 /* button reserver */
 .service-reserver-btn {
     background-color: #1a1a1a;
