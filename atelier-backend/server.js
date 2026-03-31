@@ -38,10 +38,15 @@ app.get('/api/salons', async (req, res) => {
 // Route pour récupérer UN SEUL salon par son SLUG
 app.get('/api/salons/:slug', async (req, res) => {
   try {
-    const leSlug = req.params.slug; // Plus besoin de "parseInt", c'est déjà du texte !
+    const leSlug = req.params.slug; 
     
     const salon = await prisma.salon.findUnique({
-      where: { slug: leSlug } // On cherche dans la colonne slug
+      where: { slug: leSlug },
+      // LA NOUVEAUTÉ EST ICI 👇
+      include: {
+        employes: true,
+        prestations: true
+      }
     });
 
     if (!salon) {

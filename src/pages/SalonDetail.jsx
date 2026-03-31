@@ -77,11 +77,12 @@ export default function SalonDetail() {
           </div>
         </div>
 
-        {/* bottom left */}
+       {/* bottom left */}
         <div className="grid-box box-team">
           <h3>Nos coiffeurs :</h3>
           <div className="team-list">
-            {salon.equipe && salon.equipe.length > 0 ? salon.equipe.map(membre => (
+            {/* On remplace "equipe" par "employes" ici 👇 */}
+            {salon.employes && salon.employes.length > 0 ? salon.employes.map(membre => (
               <div key={membre.id} className="team-member">
                 {membre.nom}
               </div>
