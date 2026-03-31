@@ -51,7 +51,6 @@
 .presentation-content {
     position: relative;
     z-index: 2;
-    /* text */
 }
 
 .presentation-content h1 {
@@ -71,31 +70,86 @@
     font-size: 1.1rem;
 }
 
-/* bottom left */
+/* bottom left  */
 .box-team {
-    padding: 2rem;
+    padding: 3rem 2rem;
+    background-color: #f8f9fa; 
+    border-radius: 30px;
 }
 
 .box-team h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    margin-bottom: 2.5rem;
     text-align: center;
+    color: #1a1a1a;
 }
 
 .team-list {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 1rem;
-    height: 60%;
-    align-items: center;
+    gap: 2rem;
 }
 
-.team-member {
+/* card */
+.team-member-card {
+    background-color: white;
+    padding: 25px 20px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.team-member-name {
+    font-family: 'Playfair Display', serif;
     font-weight: bold;
+    margin: 0 0 15px 0;
+    font-size: 1.3rem;
+    color: #2c3e50;
     text-align: center;
-    white-space: pre-line;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 12px;
+}
+
+/* planing */
+.team-schedule-list {
+    margin: 0;
+    padding: 0;
+    list-style: none; 
+    flex-grow: 1;
+}
+
+.team-schedule-item {
+    display: flex;
+    justify-content: space-between; /* day left, hours right ! */
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.team-schedule-item:last-child {
+    border-bottom: none; 
+}
+
+.team-schedule-day {
+    font-weight: bold;
+    color: #1a1a1a;
+}
+
+.team-schedule-hours {
+    font-weight: bold;
+}
+
+.team-schedule-empty {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+    margin-top: 10px;
 }
 
 /* bottom right */
@@ -174,6 +228,12 @@
 .service-info-duration {
     font-size: 0.9rem;
     color: #666;
+    margin-top: 5px;
+}
+
+.service-icon-clock {
+    margin-right: 6px;
+    color: #888;
 }
 
 .service-action {
@@ -188,10 +248,10 @@
     font-weight: bold;
     color: #4CAF50;
     font-family: 'Playfair Display', serif;
+    margin: 0;
 }
 
-
-/* Style pour la page d'erreur (Salon introuvable) */
+/* erreur */
 .salon-not-found {
   text-align: center;
   padding: 100px 20px;
@@ -211,7 +271,6 @@
   border-radius: 6px;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
-
 
 /* button reserver */
 .service-reserver-btn {

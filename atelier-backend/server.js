@@ -42,9 +42,13 @@ app.get('/api/salons/:slug', async (req, res) => {
     
     const salon = await prisma.salon.findUnique({
       where: { slug: leSlug },
-      // LA NOUVEAUTÉ EST ICI 👇
       include: {
-        employes: true,
+        // NOUVEAU : On inclut les employés ET leurs horaires !
+        employes: {
+          include: {
+            horaires: true
+          }
+        },
         prestations: true
       }
     });

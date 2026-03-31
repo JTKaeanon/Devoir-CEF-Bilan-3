@@ -7,7 +7,7 @@ datasource db {
 }
 
 // ==========================================
-// table
+// tables
 // ==========================================
 
 model Utilisateur {
@@ -16,7 +16,7 @@ model Utilisateur {
   prenom       String
   email        String       @unique
   mot_de_passe String
-  telephone    String?      
+  telephone    String?
   role         String       @default("CLIENT") // "CLIENT" ou "ADMIN"
   
   // Relation : Un utilisateur peut avoir plusieurs RDV
@@ -25,7 +25,7 @@ model Utilisateur {
 
 model Salon {
   id          Int          @id @default(autoincrement())
-  slug        String
+  slug        String       @unique  
   nom         String
   adresse     String
   telephone   String
@@ -41,8 +41,11 @@ model Prestation {
   duree       Int          // minutes
   prix        Float
   
+  // NOUVEAU : Relation (Une prestation appartient à 1 salon)
+  salonId     Int
+  salon       Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  
   // Relations
-  salons      Salon[]      
   rendezVous  RendezVous[]
 }
 
@@ -53,10 +56,24 @@ model Employe {
   
   // Relation : Un employé travaille dans 1 salon
   salonId     Int
-  salon       Salon        @relation(fields: [salonId], references: [id])
+  salon       Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  
+  // Relation : Un employé a plusieurs horaires
+  horaires    Horaire[]
   
   // Relation : Un employé gère plusieurs RDV
   rendezVous  RendezVous[]
+}
+
+// NOUVEAU : La table pour les plannings
+model Horaire {
+  id          Int      @id @default(autoincrement())
+  jour        String
+  heure_debut String
+  heure_fin   String
+  
+  employeId   Int
+  employe     Employe  @relation(fields: [employeId], references: [id], onDelete: Cascade)
 }
 
 model RendezVous {

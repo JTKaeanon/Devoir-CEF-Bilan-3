@@ -4,17 +4,15 @@ import './SalonDetail.css';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function SalonDetail() {
-  const { slug } = useParams(); // Récupère l'ID dans l'URL (ex: /salon/1)
+  const { slug } = useParams();
   const [salon, setSalon] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   
-  // Met à jour le titre de l'onglet du navigateur
   useDocumentTitle(salon ? salon.nom : 'Détail du salon');
 
   useEffect(() => {
     const fetchSalonDetail = async () => {
       try {
-        // On interroge notre nouvelle route backend avec l'ID
         const reponse = await fetch(`http://localhost:3000/api/salons/${slug}`);
         
         if (!reponse.ok) {
@@ -34,7 +32,6 @@ export default function SalonDetail() {
     fetchSalonDetail();
   }, [slug]);
 
-  // 1. Affichage pendant le chargement
   if (isLoading) {
     return (
       <div style={{ textAlign: 'center', padding: '100px' }}>
@@ -43,7 +40,6 @@ export default function SalonDetail() {
     );
   }
 
-  // 2. Affichage si le salon n'existe pas
   if (!salon) {
     return (
       <div className="salon-not-found">
@@ -53,7 +49,6 @@ export default function SalonDetail() {
     );
   }
 
-  // 3. Affichage normal du salon
   return (
     <div className="salon-detail-container">
       <div className="salon-detail-grid">
@@ -61,32 +56,46 @@ export default function SalonDetail() {
         {/* top left */}
         <div
           className="grid-box box-image"
-          style={{ backgroundColor: '#e9ecef', backgroundImage: salon.image ? `url(${salon.image})` : 'none' }}
+          style={{ backgroundImage: salon.image ? `url(${salon.image})` : 'none' }}
         ></div>
 
         {/* top right */}
         <div
           className="grid-box box-presentation"
-          style={{ backgroundColor: '#2c3e50', backgroundImage: salon.presentationImage ? `url(${salon.presentationImage})` : 'none' }}
+          style={{ backgroundImage: salon.presentationImage ? `url(${salon.presentationImage})` : 'none' }}
         >
           <div className="presentation-content">
-            {/* Attention à bien utiliser salon.nom (et non salon.name) */}
             <h1>{salon.nom}</h1>
             <h2>{salon.subtitle || "Bienvenue dans notre salon"}</h2>
             <p>Présentation</p>
           </div>
         </div>
 
-       {/* bottom left */}
+        {/* bottom left */}
         <div className="grid-box box-team">
-          <h3>Nos coiffeurs :</h3>
+          <h3>Nos coiffeurs</h3>
           <div className="team-list">
-            {/* On remplace "equipe" par "employes" ici 👇 */}
             {salon.employes && salon.employes.length > 0 ? salon.employes.map(membre => (
-              <div key={membre.id} className="team-member">
-                {membre.nom}
+              
+              <div key={membre.id} className="team-member-card">
+                <p className="team-member-name">{membre.nom} - {membre.role}</p>
+                
+                {membre.horaires && membre.horaires.length > 0 ? (
+                  <ul className="team-schedule-list">
+                    {membre.horaires.map(horaire => (
+                      <li key={horaire.id} className="team-schedule-item">
+                        {/* Séparation du jour et de l'heure pour l'alignement */}
+                        <span className="team-schedule-day">{horaire.jour}</span>
+                        <span className="team-schedule-hours">{horaire.heure_debut} - {horaire.heure_fin}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="team-schedule-empty">Horaires non définis</p>
+                )}
               </div>
-            )) : <p>Équipe en cours de recrutement</p>}
+
+            )) : <p style={{textAlign: 'center', width: '100%'}}>Équipe en cours de recrutement</p>}
           </div>
         </div>
 
@@ -96,12 +105,21 @@ export default function SalonDetail() {
           <div className="services-list">
             {salon.prestations && salon.prestations.length > 0 ? salon.prestations.map(presta => (
               <div key={presta.id} className="service-card">
+                
                 <div className="service-info">
-                  <p className="service-info-name">{presta.nom}</p>
-                  <p className="service-info-duration">{presta.duree}</p>
+                  <p className="service-info-name">
+                    {presta.nom}
+                  </p>
+                  <p className="service-info-duration">
+                    <i className="bi bi-clock service-icon-clock"></i>
+                    {presta.duree} minutes
+                  </p>
                 </div>
+
                 <div className="service-action">
-                  <p className="service-price">{presta.prix}</p>
+                  <p className="service-price">
+                    {presta.prix} €
+                  </p>
                   <Link
                     to="/reservation"
                     state={{ salonId: salon.id, prestationNom: presta.nom }}
@@ -110,6 +128,7 @@ export default function SalonDetail() {
                     Réserver
                   </Link>
                 </div>
+                
               </div>
             )) : <p>Aucun service disponible pour le moment.</p>}
           </div>
