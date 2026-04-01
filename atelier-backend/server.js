@@ -47,7 +47,12 @@ app.get('/api/salons/:slug', async (req, res) => {
             horaires: true
           }
         },
-        prestations: true
+        // 🌟 NOUVEAU : On trie les prestations imbriquées !
+        prestations: {
+          orderBy: {
+            duree: 'asc'
+          }
+        }
       }
     });
 
@@ -67,7 +72,11 @@ app.get('/api/prestations', async (req, res) => {
   try {
     const prestations = await prisma.prestation.findMany({
       include: {
-        salons: true // 
+        salons: true 
+      },
+      // 🌟 NOUVEAU : On demande à Prisma de trier par durée croissante
+      orderBy: {
+        duree: 'asc' // 'asc' veut dire "ascendant" (du plus petit au plus grand)
       }
     });
     res.json(prestations);
@@ -76,6 +85,7 @@ app.get('/api/prestations', async (req, res) => {
     res.status(500).json({ erreur: "Impossible de récupérer les prestations" });
   }
 });
+
 
 // ==========================================
 // init serveur
