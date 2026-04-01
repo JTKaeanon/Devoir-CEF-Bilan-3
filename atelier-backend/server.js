@@ -11,7 +11,6 @@ const prisma = new PrismaClient({ adapter });
 
 const app = express();
 
-
 app.use(cors()); 
 app.use(express.json());
 
@@ -43,7 +42,6 @@ app.get('/api/salons/:slug', async (req, res) => {
     const salon = await prisma.salon.findUnique({
       where: { slug: leSlug },
       include: {
-        // NOUVEAU : On inclut les employés ET leurs horaires !
         employes: {
           include: {
             horaires: true
@@ -64,10 +62,25 @@ app.get('/api/salons/:slug', async (req, res) => {
   }
 });
 
+// prestations  salons
+app.get('/api/prestations', async (req, res) => {
+  try {
+    const prestations = await prisma.prestation.findMany({
+      include: {
+        salons: true // 
+      }
+    });
+    res.json(prestations);
+  } catch (error) {
+    console.error("Erreur Prisma :", error);
+    res.status(500).json({ erreur: "Impossible de récupérer les prestations" });
+  }
+});
+
 // ==========================================
-// init serever
+// init serveur
 // ==========================================
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Serveur démarré avec succès sur http://localhost:${PORT}`);
+  console.log(` Serveur démarré avec succès sur http://localhost:${PORT}`);
 });

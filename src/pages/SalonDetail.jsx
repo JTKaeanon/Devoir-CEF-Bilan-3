@@ -112,7 +112,7 @@ export default function SalonDetail() {
                   </p>
                   <p className="service-info-duration">
                     <i className="bi bi-clock service-icon-clock"></i>
-                    {presta.duree} minutes
+                    {formatDuree(presta.duree)}
                   </p>
                 </div>
 

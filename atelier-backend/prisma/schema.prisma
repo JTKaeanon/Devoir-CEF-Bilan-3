@@ -30,12 +30,12 @@ model Salon {
   adresse           String
   telephone         String
   
-  // NOUVELLES COLONNES POUR LE DESIGN 🎨
+  // DESIGN
   image             String?      // URL de l'image de la carte (page Nos Salons)
   presentationImage String?      // URL de la grande image (page Détail)
-  subtitle          String?      // Ex: "Le spécialiste de la barbe"
+  subtitle          String?      // 
   description       String?      // Paragraphe de présentation
-  target            String?      // Ex: "Hommes", "Femmes", "Mixte"
+  target            String?      // "Hommes", "Femmes", "Mixte"
   
   // Relations
   employes          Employe[]
@@ -48,9 +48,8 @@ model Prestation {
   duree       Int          // minutes
   prix        Float
   
-  // Relation (Une prestation appartient à 1 salon)
-  salonId     Int
-  salon       Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  // CORRECTION : Une prestation peut appartenir à PLUSIEURS salons
+  salons      Salon[]
   
   // Relations
   rendezVous  RendezVous[]
@@ -72,7 +71,7 @@ model Employe {
   rendezVous  RendezVous[]
 }
 
-// La table pour les plannings
+// table plannings
 model Horaire {
   id          Int      @id @default(autoincrement())
   jour        String
