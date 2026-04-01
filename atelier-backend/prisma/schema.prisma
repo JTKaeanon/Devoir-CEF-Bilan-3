@@ -24,15 +24,22 @@ model Utilisateur {
 }
 
 model Salon {
-  id          Int          @id @default(autoincrement())
-  slug        String       @unique  
-  nom         String
-  adresse     String
-  telephone   String
+  id                Int          @id @default(autoincrement())
+  slug              String       @unique  
+  nom               String
+  adresse           String
+  telephone         String
+  
+  // NOUVELLES COLONNES POUR LE DESIGN 🎨
+  image             String?      // URL de l'image de la carte (page Nos Salons)
+  presentationImage String?      // URL de la grande image (page Détail)
+  subtitle          String?      // Ex: "Le spécialiste de la barbe"
+  description       String?      // Paragraphe de présentation
+  target            String?      // Ex: "Hommes", "Femmes", "Mixte"
   
   // Relations
-  employes    Employe[]
-  prestations Prestation[]
+  employes          Employe[]
+  prestations       Prestation[]
 }
 
 model Prestation {
@@ -41,7 +48,7 @@ model Prestation {
   duree       Int          // minutes
   prix        Float
   
-  // NOUVEAU : Relation (Une prestation appartient à 1 salon)
+  // Relation (Une prestation appartient à 1 salon)
   salonId     Int
   salon       Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
   
@@ -65,7 +72,7 @@ model Employe {
   rendezVous  RendezVous[]
 }
 
-// NOUVEAU : La table pour les plannings
+// La table pour les plannings
 model Horaire {
   id          Int      @id @default(autoincrement())
   jour        String
