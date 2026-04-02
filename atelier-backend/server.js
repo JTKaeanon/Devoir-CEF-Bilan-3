@@ -230,6 +230,77 @@ app.post('/api/reservations', async (req, res) => {
   }
 });
 
+
+// rdv dashboard client
+
+
+app.get('/api/utilisateurs/:id/reservations', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id);
+    
+    // rdv user 
+    const mesRdv = await prisma.rendezVous.findMany({
+      where: { 
+        utilisateurId: userId 
+      },
+      include: {
+        prestation: true, // infos presta
+        employe: {
+          include: { 
+            salon: true // salon employé
+          }
+        }
+      },
+      orderBy: { 
+        date_rdv: 'asc' // plus recent 
+      }
+    });
+
+    res.json(mesRdv);
+
+  } catch (error) {
+    console.error("Erreur récupération RDV :", error);
+    res.status(500).json({ erreur: "Impossible de récupérer vos rendez-vous." });
+  }
+});
+
+// modif client
+
+app.put('/api/utilisateurs/:id', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const { nom, prenom, email, telephone } = req.body;
+
+    const utilisateurMisAJour = await prisma.utilisateur.update({
+      where: { id: userId },
+      data: {
+        nom: nom,
+        prenom: prenom,
+        email: email,
+        telephone: telephone
+      }
+    });
+
+    // modif accept
+    res.json({
+      message: "Profil mis à jour avec succès !",
+      utilisateur: {
+        id: utilisateurMisAJour.id,
+        nom: utilisateurMisAJour.nom,
+        prenom: utilisateurMisAJour.prenom,
+        email: utilisateurMisAJour.email,
+        telephone: utilisateurMisAJour.telephone,
+        role: utilisateurMisAJour.role
+      }
+    });
+
+  } catch (error) {
+    console.error("Erreur de mise à jour :", error);
+    // error mail deja utilisé
+    res.status(500).json({ erreur: "Impossible de mettre à jour. Cet email est peut-être déjà utilisé." });
+  }
+});
+
 // ==========================================
 // init serveur
 // ==========================================

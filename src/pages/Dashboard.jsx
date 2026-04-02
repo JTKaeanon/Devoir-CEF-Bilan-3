@@ -1,119 +1,211 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import './Dashboard.css';
 
-// Fausses données pour simuler la base de données (CCP2)
-const mockRDV = [
-  { id: 1, heure: '09:00', client: 'Jean Dupont', prestation: 'Coupe Homme + Barbe', coiffeur: 'Thomas', statut: 'À venir' },
-  { id: 2, heure: '10:30', client: 'Marie Curie', prestation: 'Coloration', coiffeur: 'Camille', statut: 'En cours' },
-  { id: 3, heure: '14:00', client: 'Paul Martin', prestation: 'Coupe Enfant', coiffeur: 'Thomas', statut: 'À venir' },
-  { id: 4, heure: '15:30', client: 'Sophie Leroux', prestation: 'Brushing', coiffeur: 'Sarah', statut: 'Terminé' }
-];
-
 export default function Dashboard() {
-  // State pour simuler la connexion avec un rôle spécifique
-  const [role, setRole] = useState('admin'); // 'admin' ou 'coiffeur'
+  useDocumentTitle('Mon Espace | Groupe l\'Atelier');
+  const navigate = useNavigate();
 
-  // Filtrer les RDV si on est en vue coiffeur (ex: on simule qu'on est connecté en tant que "Thomas")
-  const rdvAffiches = role === 'coiffeur' 
-    ? mockRDV.filter(rdv => rdv.coiffeur === 'Thomas') 
-    : mockRDV;
+  const [utilisateur, setUtilisateur] = useState(() => {
+    const data = localStorage.getItem('utilisateur');
+    return data ? JSON.parse(data) : null;
+  });
+
+  const [mesRdv, setMesRdv] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // modif profil
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    nom: utilisateur?.nom || '',
+    prenom: utilisateur?.prenom || '',
+    email: utilisateur?.email || '',
+    telephone: utilisateur?.telephone || ''
+  });
+
+  useEffect(() => {
+    if (!utilisateur) {
+      navigate('/compte');
+      return;
+    }
+
+    const fetchMesRdv = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/utilisateurs/${utilisateur.id}/reservations`);
+        if (response.ok) {
+          const data = await response.json();
+          setMesRdv(data);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement des rendez-vous", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMesRdv();
+  }, [navigate, utilisateur]);
+
+  const handleEditChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:3000/api/utilisateurs/${utilisateur.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem('utilisateur', JSON.stringify(data.utilisateur));
+        setUtilisateur(data.utilisateur);
+        setIsEditing(false); 
+        alert("Profil mis à jour avec succès !");
+      } else {
+        alert(data.erreur);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de la mise à jour.");
+    }
+  };
+
+  // rdv tri
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // rdv a venir
+  const rdvAVenir = mesRdv.filter(rdv => new Date(rdv.date_rdv) >= today);
+  // rdv passé
+  const rdvPasses = mesRdv.filter(rdv => new Date(rdv.date_rdv) < today);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  };
+
+  if (!utilisateur || isLoading) {
+    return <div className="dashboard-loading">Chargement de votre espace...</div>;
+  }
 
   return (
     <div className="dashboard-container">
-      
-      {/* HEADER DU DASHBOARD ET SIMULATEUR DE RÔLE */}
       <div className="dashboard-header">
-        <div>
-          <h1>Tableau de bord</h1>
-          <p>Bienvenue dans votre espace de gestion.</p>
-        </div>
-        
-        {/* Ce bloc est temporaire pour ta démo RNCP */}
-        <div className="role-simulator">
-          <span>Vue actuelle :</span>
-          <button 
-            className={`role-btn ${role === 'admin' ? 'active' : ''}`}
-            onClick={() => setRole('admin')}
-          >
-            Admin (Manager)
-          </button>
-          <button 
-            className={`role-btn ${role === 'coiffeur' ? 'active' : ''}`}
-            onClick={() => setRole('coiffeur')}
-          >
-            Coiffeur (Thomas)
-          </button>
-        </div>
+        <h1>Bonjour, {utilisateur.prenom} !</h1>
+        <p>Gérez vos informations et vos rendez-vous depuis cet espace.</p>
       </div>
 
-      {/* CONTENU SPÉCIFIQUE À L'ADMIN */}
-      {role === 'admin' && (
-        <div className="dashboard-content">
-          <div className="kpi-grid">
-            <div className="kpi-card">
-              <h3>Chiffre du jour</h3>
-              <p className="kpi-value">485 €</p>
-            </div>
-            <div className="kpi-card">
-              <h3>Nouveaux clients</h3>
-              <p className="kpi-value">+ 3</p>
-            </div>
-            <div className="kpi-card">
-              <h3>Rendez-vous (Aujourd'hui)</h3>
-              <p className="kpi-value">{mockRDV.length}</p>
-            </div>
-          </div>
-
-          <div className="admin-actions">
-            <h2>Actions rapides</h2>
-            <div className="actions-grid">
-              <button className="action-btn">➕ Ajouter une prestation</button>
-              <button className="action-btn">✂️ Gérer l'équipe</button>
-              <button className="action-btn">📅 Voir le planning complet</button>
-              <button className="action-btn">⚙️ Paramètres des salons</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* CONTENU COMMUN / VUE COIFFEUR (Planning du jour) */}
-      <div className="dashboard-section">
-        <h2>{role === 'admin' ? 'Tous les rendez-vous du jour' : 'Mon planning du jour'}</h2>
+      <div className="dashboard-layout">
         
-        <div className="table-responsive">
-          <table className="dashboard-table">
-            <thead>
-              <tr>
-                <th>Heure</th>
-                <th>Client</th>
-                <th>Prestation</th>
-                {role === 'admin' && <th>Coiffeur</th>}
-                <th>Statut</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rdvAffiches.map(rdv => (
-                <tr key={rdv.id}>
-                  <td className="fw-bold">{rdv.heure}</td>
-                  <td>{rdv.client}</td>
-                  <td>{rdv.prestation}</td>
-                  {role === 'admin' && <td>{rdv.coiffeur}</td>}
-                  <td>
-                    <span className={`badge-statut ${rdv.statut.replace(/\s+/g, '-').toLowerCase()}`}>
-                      {rdv.statut}
-                    </span>
-                  </td>
-                  <td>
-                    <button className="btn-edit-rdv">Modifier</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+        {/* profil */}
+        <aside className="dashboard-sidebar">
+          <div className="profile-card">
+            <div className="profile-header">
+              <h2>Mon Profil</h2>
+              {!isEditing && (
+                <button className="btn-edit" onClick={() => setIsEditing(true)}>
+                  <i className="bi bi-pencil-square"></i> Modifier
+                </button>
+              )}
+            </div>
 
+            {isEditing ? (
+              <form onSubmit={handleUpdateProfile} className="profile-form">
+                <div className="form-group">
+                  <label>Prénom</label>
+                  <input type="text" name="prenom" value={formData.prenom} onChange={handleEditChange} required />
+                </div>
+                <div className="form-group">
+                  <label>Nom</label>
+                  <input type="text" name="nom" value={formData.nom} onChange={handleEditChange} required />
+                </div>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input type="email" name="email" value={formData.email} onChange={handleEditChange} required />
+                </div>
+                <div className="form-group">
+                  <label>Téléphone</label>
+                  <input type="tel" name="telephone" value={formData.telephone} onChange={handleEditChange} />
+                </div>
+                <div className="form-actions">
+                  <button type="button" className="btn-cancel" onClick={() => setIsEditing(false)}>Annuler</button>
+                  <button type="submit" className="btn-save">Enregistrer</button>
+                </div>
+              </form>
+            ) : (
+              <div className="profile-info">
+                <p><strong>Nom :</strong> {utilisateur.prenom} {utilisateur.nom}</p>
+                <p><strong>Email :</strong> {utilisateur.email}</p>
+                <p><strong>Téléphone :</strong> {utilisateur.telephone || 'Non renseigné'}</p>
+              </div>
+            )}
+          </div>
+        </aside>
+
+        {/* rendez vous */}
+        <main className="dashboard-main">
+          
+          {/* a venir */}
+          <section className="rdv-section">
+            <h2 className="section-title"><i className="bi bi-calendar-event"></i> Rendez-vous à venir</h2>
+            {rdvAVenir.length === 0 ? (
+              <div className="no-rdv">
+                <p>Vous n'avez aucun rendez-vous prévu.</p>
+                <button onClick={() => navigate('/prestations')} className="btn-reserver-dash">
+                  Prendre rendez-vous
+                </button>
+              </div>
+            ) : (
+              <div className="rdv-grid">
+                {rdvAVenir.map((rdv) => (
+                  <div key={rdv.id} className="rdv-card upcoming">
+                    <div className="rdv-date-box">
+                      <span className="rdv-date">{formatDate(rdv.date_rdv)}</span>
+                      <span className="rdv-time">{rdv.heure_rdv}</span>
+                    </div>
+                    <div className="rdv-info">
+                      <h3>{rdv.prestation.nom}</h3>
+                      <p><i className="bi bi-shop"></i> {rdv.employe.salon.nom}</p>
+                      <p><i className="bi bi-person"></i> Avec {rdv.employe.nom}</p>
+                    </div>
+                    <div className="rdv-status">
+                      <span className={`status-badge ${rdv.statut.toLowerCase()}`}>
+                        {rdv.statut.replace('_', ' ')}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          {/* historique */}
+          {true && (
+            <section className="rdv-section past-rdv">
+              <h2 className="section-title"><i className="bi bi-clock-history"></i> Historique</h2>
+              <div className="rdv-grid">
+                {rdvPasses.map((rdv) => (
+                  <div key={rdv.id} className="rdv-card past">
+                    <div className="rdv-date-box">
+                      <span className="rdv-date">{formatDate(rdv.date_rdv)}</span>
+                    </div>
+                    <div className="rdv-info">
+                      <h3>{rdv.prestation.nom}</h3>
+                      <p>{rdv.employe.salon.nom} - Avec {rdv.employe.nom}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+        </main>
+      </div>
     </div>
   );
 }

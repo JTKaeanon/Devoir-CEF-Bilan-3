@@ -5,7 +5,7 @@ import './Navbar.css';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  //  check user stock dans navigateur
+  // check user stock dans navigateur
   const utilisateurData = localStorage.getItem('utilisateur');
   const utilisateur = utilisateurData ? JSON.parse(utilisateurData) : null;
 
@@ -53,9 +53,11 @@ export default function Navbar() {
         {/* etat connexion */}
         {utilisateur ? (
           <>
-            <span style={{ color: '#ffffff', fontFamily: "'Playfair Display', serif", fontSize: '1.1rem' }}>
-              Bonjour, {utilisateur.prenom}
-            </span>
+            {/* boutton espace */}
+            <Link to="/dashboard" className="btn-mon-espace" onClick={closeMenu}>
+              <i className="bi bi-person-circle"></i> Mon Espace
+            </Link>
+
             <button onClick={handleDeconnexion} className="logout-btn">
               Déconnexion
             </button>
