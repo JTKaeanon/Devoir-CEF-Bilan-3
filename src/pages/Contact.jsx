@@ -4,11 +4,25 @@ import "./Contact.css";
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Contact() {
+  // pre remplis si connecté
+  const utilisateurData = localStorage.getItem('utilisateur');
+  const utilisateurConnecte = utilisateurData ? JSON.parse(utilisateurData) : null;
+
+  const [salonsData, setSalonsData] = useState([]);
+
+  // salons
+  useEffect(() => {
+    fetch('http://localhost:3000/api/salons')
+      .then(res => res.json())
+      .then(data => setSalonsData(data))
+      .catch(err => console.error("Erreur de chargement des salons :", err));
+  }, []);
+
   const [formData, setFormData] = useState({
-    prenom: '',
-    nom: '',
-    email: '',
-    telephone: '',
+    prenom: utilisateurConnecte ? utilisateurConnecte.prenom : '',
+    nom: utilisateurConnecte ? utilisateurConnecte.nom : '',
+    email: utilisateurConnecte ? utilisateurConnecte.email : '',
+    telephone: utilisateurConnecte && utilisateurConnecte.telephone ? utilisateurConnecte.telephone : '',
     salon: '',
     message: ''
   });
@@ -27,7 +41,14 @@ export default function Contact() {
     //reset
     setTimeout(() => {
       setIsSent(false);
-      setFormData({ prenom: '', nom: '', email: '', telephone: '', salon: '', message: '' });
+      setFormData({ 
+        prenom: utilisateurConnecte ? utilisateurConnecte.prenom : '', 
+        nom: utilisateurConnecte ? utilisateurConnecte.nom : '', 
+        email: utilisateurConnecte ? utilisateurConnecte.email : '', 
+        telephone: utilisateurConnecte && utilisateurConnecte.telephone ? utilisateurConnecte.telephone : '', 
+        salon: '', 
+        message: '' 
+      });
     }, 4000);
   };
 
@@ -38,7 +59,7 @@ export default function Contact() {
       <h1 className="contact-title">Contactez-nous</h1>
       <div className="contact-wrapper">
         
-        {/* SECTION GAUCHE : FORMULAIRE */}
+        {/* formulaire */}
         <section className="contact-form-section">
           <h2>Envoyer un message</h2>
           {isSent ? (
@@ -76,7 +97,7 @@ export default function Contact() {
                 <select name="salon" id="salon" required value={formData.salon} onChange={handleChange}>
                   <option value="">Choisir un salon...</option>
                   {salonsData.map(salon => (
-                    <option key={salon.id} value={salon.id}>{salon.name}</option>
+                    <option key={salon.id} value={salon.id}>{salon.nom}</option>
                   ))}
                 </select>
               </div>
@@ -91,25 +112,26 @@ export default function Contact() {
           )}
         </section>
 
-        {/* SECTION DROITE : INFOS SALONS */}
+        {/* infos salons */}
         <section className="contact-info-section">
           <h2>Nos Salons</h2>
           {salonsData.map(salon => (
             <div key={salon.id} className="salon-info-card">
-              <h3>{salon.name}</h3>
+              {/* On utilise les champs en français de la BDD */}
+              <h3>{salon.nom}</h3>
               <p className="info-line">
                 <BsGeoAltFill className="contact-icon" /> 
                 <a 
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(salon.address)}`} 
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(salon.adresse)}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
-                  {salon.address}
+                  {salon.adresse}
                 </a>
               </p>
               <p className="info-line">
                 <BsTelephoneFill className="contact-icon" /> 
-                <a href={`tel:${salon.phone}`}>{salon.phone}</a>
+                <a href={`tel:${salon.telephone}`}>{salon.telephone}</a>
               </p>
             </div>
           ))}

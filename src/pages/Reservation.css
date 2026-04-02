@@ -1,18 +1,20 @@
+/* =========================================
+ global 
+   ========================================= */
 .reservation-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 60px 2rem;
+    padding: 30px 1rem;
     min-height: 75vh;
 }
 
 .reservation-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .reservation-header h1 {
-    
-    font-size: 3rem;
+    font-size: 2.2rem;
     color: #1a1a1a;
     margin-bottom: 0.5rem;
 }
@@ -48,13 +50,13 @@
 .wizard-card {
     background: white;
     border-radius: 20px;
-    padding: 3rem;
+    padding: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .step-content h2 {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
+    font-size: 1.3rem; 
+    margin-bottom: 1.5rem;
     color: #1a1a1a;
     border-bottom: 2px solid #f0f0f0;
     padding-bottom: 1rem;
@@ -69,13 +71,13 @@
 }
 
 .options-grid.list-view {
-    grid-template-columns: 1fr; /* 1 presta par ligne */
+    grid-template-columns: 1fr;
 }
 
 .option-card {
     border: 2px solid #eee;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 1rem; 
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -106,16 +108,18 @@
     margin: 0;
 }
 
+
 .options-grid.list-view .option-card {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; 
+    align-items: flex-start;
+    gap: 10px;
 }
 
 .presta-price {
     font-weight: bold;
     color: #4CAF50;
     font-size: 1.2rem;
+    font-family: 'Playfair Display', serif; 
 }
 
 /* form */
@@ -128,7 +132,7 @@
 
 .form-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
 }
 
@@ -152,6 +156,7 @@
     font-family: inherit;
     outline: none;
     transition: border-color 0.2s;
+    width: 100%;
 }
 
 .form-group input:focus, .form-group select:focus {
@@ -163,19 +168,21 @@
     display: flex;
     justify-content: space-between;
     margin-top: 2rem;
+    gap: 10px; 
 }
 
 .btn-next, .btn-submit {
     background-color: #1a1a1a;
     color: white;
     border: none;
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 1.2rem; 
     border-radius: 30px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-left: auto; 
+    font-family: 'Playfair Display', serif;
 }
 
 .btn-next:hover, .btn-submit:hover {
@@ -191,19 +198,19 @@
     background-color: transparent;
     color: #666;
     border: 1px solid #ccc;
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 1.2rem;
     border-radius: 30px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
+    font-family: 'Playfair Display', serif;
 }
 
 .btn-prev:hover {
     background-color: #f5f5f5;
     color: #1a1a1a;
 }
-
 
 .reservation-loading {
   text-align: center;
@@ -212,7 +219,6 @@
   color: #666666;
 }
 
-/* info pré rempli */
 .notice-success {
   background-color: #e8f5e9;
   padding: 12px;
@@ -223,7 +229,6 @@
   font-weight: 500;
 }
 
-/* case proche */
 .checkbox-wrapper {
   margin-bottom: 25px;
   text-align: center;
@@ -235,7 +240,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 1rem;
+  font-size: 0.9rem; 
   color: #1a1a1a;
   font-weight: 500;
 }
@@ -246,7 +251,6 @@
   accent-color: #1a1a1a; 
 }
 
-/* success */
 .success-step .success-icon {
   color: #4CAF50;
   font-size: 4rem;
@@ -259,15 +263,42 @@
   text-decoration: none;
 }
 
-
-
-/* Responsive */
-
-@media screen and (max-width: 600px) {
+/* =========================================
+   TABLETTES ET DESKTOP
+   ========================================= */
+@media screen and (min-width: 600px) {
     .form-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
+    
     .wizard-card {
+        padding: 3rem;
+    }
+
+    .options-grid.list-view .option-card {
+        flex-direction: row; 
+        align-items: center;
+    }
+
+    .btn-next, .btn-submit, .btn-prev {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .reservation-container {
+        padding: 60px 2rem;
+    }
+    .reservation-header h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+    }
+    .step-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .option-card {
         padding: 1.5rem;
     }
 }
