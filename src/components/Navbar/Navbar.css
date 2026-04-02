@@ -75,6 +75,24 @@
   transition: opacity 0.3s ease;
 }
 
+
+.logout-btn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
 /* =========================================
  DESKTOP > 1024px
    ========================================= */

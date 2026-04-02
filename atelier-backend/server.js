@@ -11,6 +11,8 @@ const prisma = new PrismaClient({ adapter });
 
 const app = express();
 
+const bcrypt = require('bcrypt');
+
 app.use(cors()); 
 app.use(express.json());
 
@@ -74,9 +76,8 @@ app.get('/api/prestations', async (req, res) => {
       include: {
         salons: true 
       },
-      // 🌟 NOUVEAU : On demande à Prisma de trier par durée croissante
       orderBy: {
-        duree: 'asc' // 'asc' veut dire "ascendant" (du plus petit au plus grand)
+        duree: 'asc' // durée plus petit au plsus grand
       }
     });
     res.json(prestations);
@@ -86,6 +87,90 @@ app.get('/api/prestations', async (req, res) => {
   }
 });
 
+
+// inscription
+app.post('/api/inscription', async (req, res) => {
+  try {
+    // donnée front 
+    const { nom, prenom, email, mot_de_passe, telephone } = req.body;
+
+    // email deja présent
+    const utilisateurExistant = await prisma.utilisateur.findUnique({
+      where: { email: email }
+    });
+
+    if (utilisateurExistant) {
+      return res.status(400).json({ erreur: "Cet email est déjà utilisé." });
+    }
+
+    // 3. hash mdp
+    const saltRounds = 10;
+    const motDePasseHache = await bcrypt.hash(mot_de_passe, saltRounds);
+
+    // 4. enregistrement
+    const nouvelUtilisateur = await prisma.utilisateur.create({
+      data: {
+        nom: nom,
+        prenom: prenom,
+        email: email,
+        mot_de_passe: motDePasseHache,
+        telephone: telephone || null,
+        role: "CLIENT"
+      }
+    });
+
+    // succes message
+    res.status(201).json({ 
+      message: "Inscription réussie !", 
+      utilisateur: { id: nouvelUtilisateur.id, nom: nouvelUtilisateur.nom, email: nouvelUtilisateur.email } 
+    });
+
+  } catch (error) {
+    console.error("Erreur Inscription :", error);
+    res.status(500).json({ erreur: "Erreur lors de l'inscription." });
+  }
+});
+
+
+// Route de connexion
+app.post('/api/connexion', async (req, res) => {
+  try {
+    const { email, mot_de_passe } = req.body;
+
+    // 1. On cherche l'utilisateur dans la base de données avec son email
+    const utilisateur = await prisma.utilisateur.findUnique({
+      where: { email: email }
+    });
+
+    // S'il n'existe pas, on renvoie une erreur générique (sécurité : on ne dit pas si c'est l'email ou le mdp qui est faux)
+    if (!utilisateur) {
+      return res.status(401).json({ erreur: "Email ou mot de passe incorrect." });
+    }
+
+    // 2. On compare le mot de passe tapé avec le mot de passe crypté dans la base
+    const motDePasseValide = await bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
+
+    if (!motDePasseValide) {
+      return res.status(401).json({ erreur: "Email ou mot de passe incorrect." });
+    }
+
+    // 3. Succès ! On renvoie les infos du client (mais SURTOUT PAS son mot de passe !)
+    res.json({
+      message: "Connexion réussie !",
+      utilisateur: {
+        id: utilisateur.id,
+        nom: utilisateur.nom,
+        prenom: utilisateur.prenom,
+        email: utilisateur.email,
+        role: utilisateur.role
+      }
+    });
+
+  } catch (error) {
+    console.error("Erreur Connexion :", error);
+    res.status(500).json({ erreur: "Erreur lors de la connexion." });
+  }
+});
 
 // ==========================================
 // init serveur

@@ -32,6 +32,21 @@ export default function SalonDetail() {
     fetchSalonDetail();
   }, [slug]);
 
+  // 🌟 NOUVEAU : La fonction qui transforme les minutes en texte élégant !
+  const formatDuree = (minutes) => {
+    if (minutes < 60) return `${minutes} min`;
+    if (minutes === 60) return `1 Heure`;
+    
+    const heures = Math.floor(minutes / 60);
+    const resteMinutes = minutes % 60;
+    
+    if (resteMinutes === 0) {
+      return `${heures} Heures`;
+    } else {
+      return `${heures}h${resteMinutes}`; // Ex: 1h30
+    }
+  };
+
   if (isLoading) {
     return (
       <div style={{ textAlign: 'center', padding: '100px' }}>
