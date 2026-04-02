@@ -95,7 +95,7 @@
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
   margin-top: 10px;
-  font-family: 'Playfair Display', serif;
+  
   letter-spacing: 1px;
 }
 
