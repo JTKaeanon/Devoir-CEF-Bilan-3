@@ -173,6 +173,66 @@ app.post('/api/connexion', async (req, res) => {
 });
 
 // ==========================================
+// RESERVATIONS
+// ==========================================
+
+app.post('/api/reservations', async (req, res) => {
+  try {
+    const { date, heure, prestationId, employeId, utilisateurId, nom, prenom, email, telephone } = req.body;
+
+    let finalUtilisateurId = utilisateurId;
+
+    // 1. GESTION DE L'UTILISATEUR (S'il n'est pas connecté)
+    if (!finalUtilisateurId) {
+      // On cherche si cet email existe déjà dans la base
+      let userExistant = await prisma.utilisateur.findUnique({
+        where: { email: email }
+      });
+
+      if (userExistant) {
+        finalUtilisateurId = userExistant.id;
+      } else {
+        // Création d'un compte "Invité" automatique car l'ID est requis dans la BDD
+        const fauxMotDePasse = await bcrypt.hash("invite1234", 10); // Mot de passe bidon sécurisé
+        
+        const newUser = await prisma.utilisateur.create({
+          data: {
+            nom: nom,
+            prenom: prenom,
+            email: email,
+            telephone: telephone || null,
+            mot_de_passe: fauxMotDePasse,
+            role: "CLIENT"
+          }
+        });
+        finalUtilisateurId = newUser.id;
+      }
+    }
+
+    // 2. CONVERSION DE LA DATE (Pour Prisma qui demande un objet DateTime)
+    const dateRdvObj = new Date(date);
+
+    // 3. ENREGISTREMENT DU RENDEZ-VOUS
+    const nouveauRdv = await prisma.rendezVous.create({
+      data: {
+        date_rdv: dateRdvObj,
+        heure_rdv: heure,
+        statut: "A_VENIR",
+        utilisateurId: finalUtilisateurId,
+        prestationId: parseInt(prestationId),
+        employeId: parseInt(employeId)
+      }
+    });
+
+    res.status(201).json({ message: "Réservation confirmée avec succès !", rdv: nouveauRdv });
+
+  } catch (error) {
+    console.error("Erreur lors de la réservation :", error);
+    res.status(500).json({ erreur: "Impossible de valider la réservation." });
+  }
+});
+
+// ==========================================
 // init serveur
 // ==========================================
 const PORT = 3000;

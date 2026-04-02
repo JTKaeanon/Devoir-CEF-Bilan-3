@@ -206,28 +206,63 @@
     color: #1a1a1a;
 }
 
-/* --- SUCCÈS --- */
-.success-step {
-    text-align: center;
-    padding: 2rem 0;
+/* =========================================
+   STYLES EXTRAITS DU JSX (Refactoring)
+   ========================================= */
+
+/* L'état de chargement */
+.reservation-loading {
+  text-align: center;
+  padding: 100px;
+  font-size: 1.2rem;
+  color: #666666;
 }
 
-.success-icon {
-    font-size: 5rem;
-    color: #4CAF50;
-    margin-bottom: 1.5rem;
+/* Le bandeau vert "informations pré-remplies" */
+.notice-success {
+  background-color: #e8f5e9;
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  color: #2e7d32;
+  text-align: center;
+  font-weight: 500;
 }
 
-.success-step p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    color: #444;
+/* La case à cocher "Pour un proche" */
+.checkbox-wrapper {
+  margin-bottom: 25px;
+  text-align: center;
 }
 
-.success-step .btn-next {
-    margin-top: 2rem;
-    margin-left: 0;
+.checkbox-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.checkbox-input {
+  width: 18px;
+  height: 18px;
+  accent-color: #1a1a1a; /* Met la case en noir quand elle est cochée */
+}
+
+/* Étape 6 : Écran de succès */
+.success-step .success-icon {
+  color: #4CAF50;
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.btn-home-return {
+  display: inline-block;
+  margin-top: 25px;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 600px) {

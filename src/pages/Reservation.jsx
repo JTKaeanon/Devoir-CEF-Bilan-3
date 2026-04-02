@@ -20,7 +20,7 @@ export default function Reservation() {
 
   const [formData, setFormData] = useState({
     salonId: passedState.salonId || '',
-    prestationId: '', // 🌟 On laisse vide au début, l'ID sera trouvé dans le useEffect !
+    prestationId: passedState.prestationId || '',
     employeId: '',
     date: '',
     heure: '',
@@ -49,7 +49,6 @@ export default function Reservation() {
         setSalons(salonsData);
         setPrestations(prestasData);
         
-        // 🌟 LE CORRECTIF DU BUG EST ICI : On convertit le NOM de la presta en ID pour la BDD !
         if (passedState.prestationNom) {
           const laPresta = prestasData.find(p => p.nom === passedState.prestationNom);
           if (laPresta) {
@@ -139,7 +138,8 @@ export default function Reservation() {
     presta.salons && presta.salons.some(s => s.id === formData.salonId)
   );
 
-  if (isLoading) return <div style={{textAlign: 'center', padding: '100px'}}>Chargement de la réservation...</div>;
+  // 🌟 NOUVEAU : Plus de style en ligne ici
+  if (isLoading) return <div className="reservation-loading">Chargement de la réservation...</div>;
 
   return (
     <div className="reservation-container">
@@ -269,20 +269,21 @@ export default function Reservation() {
           <div className="step-content">
             <h2>5. Vos coordonnées</h2>
             
+            {/* 🌟 NOUVEAU : Classes CSS au lieu de styles en ligne */}
             {utilisateurConnecte && !pourUnProche && (
-              <div style={{ backgroundColor: '#e8f5e9', padding: '10px', borderRadius: '5px', marginBottom: '20px', color: '#2e7d32', textAlign: 'center' }}>
+              <div className="notice-success">
                 <i className="bi bi-person-check-fill"></i> Bonjour {utilisateurConnecte.prenom}, vos informations ont été pré-remplies !
               </div>
             )}
 
             {utilisateurConnecte && (
-              <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-                <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '1rem', color: '#1a1a1a' }}>
+              <div className="checkbox-wrapper">
+                <label className="checkbox-label">
                   <input 
                     type="checkbox" 
+                    className="checkbox-input"
                     checked={pourUnProche} 
                     onChange={handleCheckboxChange} 
-                    style={{ width: '18px', height: '18px' }}
                   />
                   Je prends rendez-vous pour une autre personne (enfant, conjoint...)
                 </label>
@@ -320,11 +321,13 @@ export default function Reservation() {
         {/* ÉTAPE 6 : CONFIRMATION */}
         {step === 6 && (
           <div className="step-content success-step">
-            <BsCheckCircleFill className="success-icon" style={{color: '#4CAF50', fontSize: '4rem', marginBottom: '20px'}} />
+            <BsCheckCircleFill className="success-icon" />
             <h2>Rendez-vous Confirmé !</h2>
             <p>Le rendez-vous pour {formData.prenom} est bien enregistré le <strong>{formData.date.split('-').reverse().join('/')} à {formData.heure}</strong>.</p>
             <p>Un email de confirmation vient de vous être envoyé à <em>{formData.email}</em>.</p>
-            <Link to="/" className="btn-next" style={{display: 'inline-block', marginTop: '20px', textDecoration: 'none'}}>Retour à l'accueil</Link>
+            
+            {/* 🌟 NOUVEAU : Une simple classe ajoutée */}
+            <Link to="/" className="btn-next btn-home-return">Retour à l'accueil</Link>
           </div>
         )}
 
