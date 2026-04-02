@@ -1,30 +1,29 @@
-/* main container */
-.compte-container {
-  max-width: 500px; 
+/* main */
+.inscription-container {
+  max-width: 600px;
   margin: 0 auto;
   padding: 60px 20px;
-  min-height: calc(100vh - 200px);
 }
 
-/* head */
-.compte-header {
+/* hed */
+.inscription-header {
   text-align: center;
   margin-bottom: 40px;
 }
 
-.compte-title {
-  color: #1a1a1a;
+.inscription-title {
+  color: #1a1a1a; 
   font-size: 2.5rem;
   margin-bottom: 10px;
 }
 
-.compte-subtitle {
+.inscription-subtitle {
   color: #666666;
   font-size: 1.1rem;
 }
 
 /* card form */
-.compte-form-box {
+.inscription-form-box {
   background-color: #ffffff;
   padding: 40px;
   border-radius: 8px;
@@ -52,21 +51,27 @@
   border: 1px solid #a5d6a7;
 }
 
-/* form */
-.compte-form {
+/* form structure */
+.inscription-form {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
   gap: 20px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .form-group label {
   margin-bottom: 8px;
-  color: #1a1a1a;
+  color: #1a1a1a; 
   font-weight: 600;
   font-size: 0.95rem;
 }
@@ -83,9 +88,9 @@
   border-color: #1a1a1a; 
 }
 
-/* boutton validé */
-.compte-submit-btn {
-  background-color: #1a1a1a;
+/* bouton submit */
+.inscription-submit-btn {
+  background-color: #1a1a1a; 
   color: #ffffff;
   padding: 15px;
   border: none;
@@ -99,13 +104,12 @@
   letter-spacing: 1px;
 }
 
-.compte-submit-btn:hover {
-  background-color: #333333;
-  transform: translateY(-2px);
+.inscription-submit-btn:hover {
+  background-color: rgba(51, 51, 51, 0.658)
 }
 
-/* footer */
-.compte-footer {
+/* ffooter */
+.inscription-footer {
   text-align: center;
   margin-top: 30px;
   padding-top: 20px;
@@ -113,20 +117,24 @@
   color: #666666;
 }
 
-.compte-footer a {
+.inscription-footer a {
   color: #1a1a1a;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s;
 }
 
-.compte-footer a:hover {
+.inscription-footer a:hover {
   text-decoration: underline;
 }
 
 /* responsive */
 @media (max-width: 600px) {
-  .compte-form-box {
+  .form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .inscription-form-box {
     padding: 25px 20px;
   }
 }

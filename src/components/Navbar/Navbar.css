@@ -55,6 +55,10 @@
   flex-direction: column;
   background-color: rgba(26, 26, 26, 0.95);
   width: 250px;
+  height: calc(100vh - 90px);
+  overflow-y: auto;
+  z-index: 99;
+
   padding: 2rem;
   gap: 1.5rem;
   align-items: flex-start;
@@ -66,6 +70,10 @@
   transform: translateX(0);
 }
 
+.mobile-only {
+  display: block;
+}
+
 .nav-links-right a {
   color: #ffffff;
   text-decoration: none;
@@ -73,6 +81,27 @@
   font-weight: 500;
   font-family: 'Playfair Display', serif;
   transition: opacity 0.3s ease;
+  width: 100%;
+}
+
+
+.logout-btn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.logout-btn:hover {
+  background-color: #ffffff;
+  color: #1a1a1a;
 }
 
 /* =========================================
@@ -101,6 +130,9 @@
     position: static;
     background-color: transparent;
     width: auto;
+    height: auto;
+    overflow-y: visible;
+
     padding: 0;
     transform: none;
     gap: 1.5rem; 
@@ -119,12 +151,18 @@
     padding: 0.6rem 1.2rem;
     white-space: nowrap;
     transition: all 0.3s ease;
+    width: auto;
   }
 
   .nav-links-left a:hover, .nav-links-right a:hover {
     background-color: rgba(255, 255, 255, 0.2);
     border-color: #ffffff;
     transform: translateY(-2px);
+  }
+
+  .logout-btn {
+    width: auto;
+    text-align: center;
   }
 }
 

@@ -1,11 +1,28 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { salonsData } from '../api/salons'; // Import des données
 import './Accueil.css';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
-
 export default function Accueil() {
+  const [salons, setSalons] = useState([]);
+  
   useDocumentTitle('Accueil');
+
+  useEffect(() => {
+    const fetchSalons = async () => {
+      try {
+        const reponse = await fetch('http://localhost:3000/api/salons');
+        if (reponse.ok) {
+          const data = await reponse.json();
+          setSalons(data);
+        }
+      } catch (erreur) {
+        console.error("Erreur de chargement des salons", erreur);
+      }
+    };
+    fetchSalons();
+  }, []);
+
   return (
     <div className="accueil-container">
       <section className="hero-grid">
@@ -17,17 +34,20 @@ export default function Accueil() {
           </div>
         </div>
 
-        {/* Génération dynamique des cartes salons */}
-        {salonsData.map((salon) => (
+        {/* dynamique card db */}
+        {salons.map((salon) => (
           <Link 
             key={salon.id} 
-            to={`/salon/${salon.id}`} 
+            to={`/salon/${salon.slug}`} 
             className="grid-item salon-card" 
-            style={{ backgroundImage: `url(${salon.image})` }}
+            style={{ 
+              backgroundColor: '#2c3e50', // couleurs si pas image
+              backgroundImage: salon.image ? `url(${salon.image})` : 'none' 
+            }}
           >
             <div className="salon-overlay">
-              <h3>{salon.name}</h3>
-              <p>{salon.subtitle}</p>
+              <h3>{salon.nom}</h3>
+              <p>{salon.subtitle || "Découvrir ce salon"}</p>
             </div>
           </Link>
         ))}

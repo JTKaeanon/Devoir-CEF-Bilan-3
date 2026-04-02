@@ -7,7 +7,7 @@
       rgba(26, 26, 26, 1) 50%,
       rgba(26, 26, 26, 0.85) 100%);
   color: #ffffff;
-  padding: 3rem 2rem;
+  padding: 2rem 1rem; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,7 +86,6 @@
     align-items: center;
     text-align: left;
   }
-
 
   .footer-section:first-child {
     align-items: flex-start;

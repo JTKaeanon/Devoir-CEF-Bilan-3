@@ -13,6 +13,7 @@ import Contact from './pages/Contact';
 import MentionsLegales from './pages/MentionsLegales';
 import Confidentialite from './pages/Confidentialite';
 import Dashboard from './pages/Dashboard';
+import Inscription from './pages/Inscription';
 
 export default function App() {
   return (
@@ -25,7 +26,7 @@ export default function App() {
           <Route path="/nos-salons" element={<NosSalons />} />
           
           {/* <-- dynamic  --> */}
-          <Route path="/salon/:id" element={<SalonDetail />} />
+          <Route path="/salon/:slug" element={<SalonDetail />} />
           <Route path="/prestations" element={<Prestations />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/compte" element={<Compte />} />
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/inscription" element={<Inscription />} />
         </Routes>
       </main>
 

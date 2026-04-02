@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ==========================================
+// tables
+// ==========================================
+
+model Utilisateur {
+  id           Int          @id @default(autoincrement())
+  nom          String
+  prenom       String
+  email        String       @unique
+  mot_de_passe String
+  telephone    String?
+  role         String       @default("CLIENT") // "CLIENT" ou "ADMIN"
+  
+  // Relation : Un utilisateur peut avoir plusieurs RDV
+  rendezVous   RendezVous[] 
+}
+
+model Salon {
+  id                Int          @id @default(autoincrement())
+  slug              String       @unique  
+  nom               String
+  adresse           String
+  telephone         String
+  
+  // DESIGN
+  image             String?      // URL image carte (page Nos Salons)
+  presentationImage String?      // URL grande image (page Détail)
+  subtitle          String?      // 
+  description       String?      // Presentation
+  target            String?      // "Hommes", "Femmes", "Mixte"
+  
+  // Relations
+  employes          Employe[]
+  prestations       Prestation[]
+}
+
+model Prestation {
+  id          Int          @id @default(autoincrement())
+  nom         String
+  duree       Int          // minutes
+  prix        Float
+  
+  // une prestation peut plusieurs salons
+  salons      Salon[]
+  
+  // Relations
+  rendezVous  RendezVous[]
+}
+
+model Employe {
+  id          Int          @id @default(autoincrement())
+  nom         String
+  role        String       
+  
+  // 1 emplyé = 1 salon
+  salonId     Int
+  salon       Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  
+  // horaires employés
+  horaires    Horaire[]
+  
+  // rdv employé
+  rendezVous  RendezVous[]
+}
+
+// table plannings
+model Horaire {
+  id          Int      @id @default(autoincrement())
+  jour        String
+  heure_debut String
+  heure_fin   String
+  
+  employeId   Int
+  employe     Employe  @relation(fields: [employeId], references: [id], onDelete: Cascade)
+}
+
+model RendezVous {
+  id            Int         @id @default(autoincrement())
+  date_rdv      DateTime
+  heure_rdv     String
+  statut        String      @default("A_VENIR") // "A_VENIR", "TERMINE", "ANNULE"
+  
+  utilisateurId Int
+  utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id])
+  
+  prestationId  Int
+  prestation    Prestation  @relation(fields: [prestationId], references: [id])
+  
+  employeId     Int
+  employe       Employe     @relation(fields: [employeId], references: [id])
+}

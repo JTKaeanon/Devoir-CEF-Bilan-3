@@ -1,69 +1,144 @@
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { salonsData } from '../api/salons';
-import { prestationsData } from '../api/prestations';
+import { useState, useEffect } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import './Reservation.css';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
-
-// Fausse équipe pour l'exemple (à mettre dans une API plus tard)
-const mockEquipe = [
-  { id: 'e1', nom: 'Sarah', role: 'Manager & Visagiste' },
-  { id: 'e2', nom: 'Thomas', role: 'Barbier & Coupe Homme' },
-  { id: 'e3', nom: 'Camille', role: 'Coloriste' },
-  { id: 'e4', nom: 'Pas de préférence', role: 'Premier disponible' }
-];
-
 export default function Reservation() {
-  // Récupération des données passées via le Link (depuis SalonDetail ou Prestations)
   const location = useLocation();
   const passedState = location.state || {};
 
-  // 1. Stocker toutes les données de la réservation en pré-remplissant si possible
+  const utilisateurData = localStorage.getItem('utilisateur');
+  const utilisateurConnecte = utilisateurData ? JSON.parse(utilisateurData) : null;
+
+  const [salons, setSalons] = useState([]);
+  const [prestations, setPrestations] = useState([]);
+  const [employesDuSalon, setEmployesDuSalon] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [pourUnProche, setPourUnProche] = useState(false);
+
   const [formData, setFormData] = useState({
-    salon: passedState.salonId || '',
-    prestation: passedState.prestationNom || '',
-    coiffeur: '',
+    salonId: passedState.salonId || '',
+    prestationId: passedState.prestationId || '',
+    employeId: '',
     date: '',
     heure: '',
-    nom: '',
-    prenom: '',
-    email: '',
-    telephone: ''
+    nom: utilisateurConnecte ? utilisateurConnecte.nom : '',
+    prenom: utilisateurConnecte ? utilisateurConnecte.prenom : '',
+    email: utilisateurConnecte ? utilisateurConnecte.email : '',
+    telephone: utilisateurConnecte && utilisateurConnecte.telephone ? utilisateurConnecte.telephone : ''
   });
 
-  // 2. Gérer l'étape actuelle intelligemment (de 1 à 6)
   const [step, setStep] = useState(() => {
-    // Si on connait DÉJÀ le salon ET la prestation -> On saute direct à l'étape 3 (Le Coiffeur)
     if (passedState.salonId && passedState.prestationNom) return 3;
-    // Si on ne connait QUE le salon -> On saute à l'étape 2 (La Prestation)
     if (passedState.salonId) return 2;
-    // Sinon, on démarre normalement à l'étape 1
     return 1;
   });
 
-  // Fonction pour mettre à jour les données
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const [resSalons, resPrestas] = await Promise.all([
+          fetch('http://localhost:3000/api/salons'),
+          fetch('http://localhost:3000/api/prestations')
+        ]);
+        const salonsData = await resSalons.json();
+        const prestasData = await resPrestas.json();
+        
+        setSalons(salonsData);
+        setPrestations(prestasData);
+        
+        if (passedState.prestationNom) {
+          const laPresta = prestasData.find(p => p.nom === passedState.prestationNom);
+          if (laPresta) {
+            setFormData(prev => ({ ...prev, prestationId: laPresta.id }));
+          }
+        }
+        
+        if (passedState.salonId) {
+          const leSalon = salonsData.find(s => s.id === passedState.salonId);
+          if (leSalon) {
+            const resDetail = await fetch(`http://localhost:3000/api/salons/${leSalon.slug}`);
+            const salonDetail = await resDetail.json();
+            setEmployesDuSalon(salonDetail.employes || []);
+          }
+        }
+      } catch (error) {
+        console.error("Erreur de chargement :", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchInitialData();
+  }, [passedState.salonId, passedState.prestationNom]);
+
+  const handleSalonSelect = async (salonId) => {
+    setFormData({ ...formData, salonId: salonId, employeId: '' }); 
+    
+    const leSalon = salons.find(s => s.id === salonId);
+    if (leSalon) {
+      try {
+        const res = await fetch(`http://localhost:3000/api/salons/${leSalon.slug}`);
+        const data = await res.json();
+        setEmployesDuSalon(data.employes || []);
+      } catch (error) {
+        console.error("Erreur récupération employés:", error);
+      }
+    }
+  };
+
   const handleSelect = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
 
-  // Fonctions pour naviguer entre les étapes
+  const handleCheckboxChange = (e) => {
+    const isChecked = e.target.checked;
+    setPourUnProche(isChecked);
+
+    if (isChecked) {
+      setFormData({ ...formData, nom: '', prenom: '' });
+    } else {
+      setFormData({ 
+        ...formData, 
+        nom: utilisateurConnecte ? utilisateurConnecte.nom : '', 
+        prenom: utilisateurConnecte ? utilisateurConnecte.prenom : '' 
+      });
+    }
+  };
+
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
-  // Soumission finale
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Ici, plus tard, on enverra les données à la vraie base de données (CCP2)
-    console.log("Réservation envoyée :", formData);
-    nextStep(); // Passe à l'étape 6 (Confirmation)
+    
+    try {
+      const reponse = await fetch('http://localhost:3000/api/reservations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          utilisateurId: utilisateurConnecte ? utilisateurConnecte.id : null 
+        })
+      });
+
+      if (!reponse.ok) throw new Error("Erreur lors de la réservation");
+
+      nextStep();
+    } catch (error) {
+      alert("Une erreur est survenue. Le serveur n'est pas encore prêt !");
+      console.error(error);
+    }
   };
 
-  // Filtrer les prestations en fonction du salon choisi (soit à l'étape 1, soit via le state)
-  const availablePrestations = prestationsData.filter(presta => presta.salons.includes(formData.salon));
-
   useDocumentTitle('Prendre RDV');
+
+  const availablePrestations = prestations.filter(presta => 
+    presta.salons && presta.salons.some(s => s.id === formData.salonId)
+  );
+
+  if (isLoading) return <div className="reservation-loading">Chargement de la réservation...</div>;
 
   return (
     <div className="reservation-container">
@@ -72,7 +147,6 @@ export default function Reservation() {
         <p>Réservez votre moment de détente en quelques clics.</p>
       </div>
 
-      {/* Barre de progression (masquée à l'étape finale) */}
       {step < 6 && (
         <div className="progress-container">
           <div className="progress-bar">
@@ -84,27 +158,27 @@ export default function Reservation() {
 
       <div className="wizard-card">
         
-        {/* --- ÉTAPE 1 : LE SALON --- */}
+        {/* salon */}
         {step === 1 && (
           <div className="step-content">
             <h2>1. Choisissez votre salon</h2>
             <div className="options-grid">
-              {salonsData.map(salon => (
+              {salons.map(salon => (
                 <div 
                   key={salon.id} 
-                  className={`option-card ${formData.salon === salon.id ? 'selected' : ''}`}
-                  onClick={() => handleSelect('salon', salon.id)}
+                  className={`option-card ${formData.salonId === salon.id ? 'selected' : ''}`}
+                  onClick={() => handleSalonSelect(salon.id)}
                 >
-                  <h3>{salon.name}</h3>
-                  <p>{salon.address}</p>
+                  <h3>{salon.nom}</h3>
+                  <p>{salon.adresse}</p>
                 </div>
               ))}
             </div>
-            <button className="btn-next" disabled={!formData.salon} onClick={nextStep}>Suivant</button>
+            <button className="btn-next" disabled={!formData.salonId} onClick={nextStep}>Suivant</button>
           </div>
         )}
 
-        {/* --- ÉTAPE 2 : LA PRESTATION --- */}
+        {/* prestation */}
         {step === 2 && (
           <div className="step-content">
             <h2>2. Choisissez votre prestation</h2>
@@ -112,48 +186,50 @@ export default function Reservation() {
               {availablePrestations.map(presta => (
                 <div 
                   key={presta.id} 
-                  className={`option-card ${formData.prestation === presta.nom ? 'selected' : ''}`}
-                  onClick={() => handleSelect('prestation', presta.nom)}
+                  className={`option-card ${formData.prestationId === presta.id ? 'selected' : ''}`}
+                  onClick={() => handleSelect('prestationId', presta.id)}
                 >
                   <div className="presta-info">
                     <h3>{presta.nom}</h3>
-                    <p>{presta.duree}</p>
+                    <p>{presta.duree} min</p>
                   </div>
-                  <span className="presta-price">{presta.prix}</span>
+                  <span className="presta-price">{presta.prix} €</span>
                 </div>
               ))}
+              {availablePrestations.length === 0 && <p>Aucune prestation disponible pour ce salon.</p>}
             </div>
             <div className="wizard-actions">
               <button className="btn-prev" onClick={prevStep}>Retour</button>
-              <button className="btn-next" disabled={!formData.prestation} onClick={nextStep}>Suivant</button>
+              <button className="btn-next" disabled={!formData.prestationId} onClick={nextStep}>Suivant</button>
             </div>
           </div>
         )}
 
-        {/* --- ÉTAPE 3 : LE COIFFEUR --- */}
+        {/* coiffeur */}
         {step === 3 && (
           <div className="step-content">
             <h2>3. Choisissez votre coiffeur</h2>
             <div className="options-grid">
-              {mockEquipe.map(membre => (
+              {employesDuSalon.map(membre => (
                 <div 
                   key={membre.id} 
-                  className={`option-card ${formData.coiffeur === membre.nom ? 'selected' : ''}`}
-                  onClick={() => handleSelect('coiffeur', membre.nom)}
+                  className={`option-card ${formData.employeId === membre.id ? 'selected' : ''}`}
+                  onClick={() => handleSelect('employeId', membre.id)}
                 >
                   <h3>{membre.nom}</h3>
                   <p>{membre.role}</p>
                 </div>
               ))}
+              {employesDuSalon.length === 0 && <p>L'équipe est en cours de recrutement.</p>}
             </div>
             <div className="wizard-actions">
               <button className="btn-prev" onClick={prevStep}>Retour</button>
-              <button className="btn-next" disabled={!formData.coiffeur} onClick={nextStep}>Suivant</button>
+              <button className="btn-next" disabled={!formData.employeId} onClick={nextStep}>Suivant</button>
             </div>
           </div>
         )}
 
-        {/* --- ÉTAPE 4 : DATE ET HEURE --- */}
+        {/* date heure */}
         {step === 4 && (
           <div className="step-content">
             <h2>4. Date et Heure</h2>
@@ -187,23 +263,45 @@ export default function Reservation() {
           </div>
         )}
 
-        {/* --- ÉTAPE 5 : COORDONNÉES --- */}
+        {/* coordonnées */}
         {step === 5 && (
           <div className="step-content">
             <h2>5. Vos coordonnées</h2>
+            
+            {/* 🌟 NOUVEAU : Classes CSS au lieu de styles en ligne */}
+            {utilisateurConnecte && !pourUnProche && (
+              <div className="notice-success">
+                <i className="bi bi-person-check-fill"></i> Bonjour {utilisateurConnecte.prenom}, vos informations ont été pré-remplies !
+              </div>
+            )}
+
+            {utilisateurConnecte && (
+              <div className="checkbox-wrapper">
+                <label className="checkbox-label">
+                  <input 
+                    type="checkbox" 
+                    className="checkbox-input"
+                    checked={pourUnProche} 
+                    onChange={handleCheckboxChange} 
+                  />
+                  Je prends rendez-vous pour une autre personne (enfant, conjoint...)
+                </label>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="details-form">
               <div className="form-row">
                 <div className="form-group">
-                  <label>Prénom</label>
-                  <input required type="text" value={formData.prenom} onChange={(e) => handleSelect('prenom', e.target.value)} />
+                  <label>Prénom {pourUnProche && "de la personne"}</label>
+                  <input required type="text" value={formData.prenom} onChange={(e) => handleSelect('prenom', e.target.value)} placeholder={pourUnProche ? "Ex: Léo" : ""} />
                 </div>
                 <div className="form-group">
-                  <label>Nom</label>
+                  <label>Nom {pourUnProche && "de la personne"}</label>
                   <input required type="text" value={formData.nom} onChange={(e) => handleSelect('nom', e.target.value)} />
                 </div>
               </div>
               <div className="form-group">
-                <label>Email</label>
+                <label>Email de confirmation</label>
                 <input required type="email" value={formData.email} onChange={(e) => handleSelect('email', e.target.value)} />
               </div>
               <div className="form-group">
@@ -219,14 +317,16 @@ export default function Reservation() {
           </div>
         )}
 
-        {/* --- ÉTAPE 6 : CONFIRMATION --- */}
+        {/* confirmation */}
         {step === 6 && (
           <div className="step-content success-step">
             <BsCheckCircleFill className="success-icon" />
             <h2>Rendez-vous Confirmé !</h2>
-            <p>Merci {formData.prenom}, votre rendez-vous est bien enregistré pour le <strong>{formData.date.split('-').reverse().join('/')} à {formData.heure}</strong>.</p>
+            <p>Le rendez-vous pour {formData.prenom} est bien enregistré le <strong>{formData.date.split('-').reverse().join('/')} à {formData.heure}</strong>.</p>
             <p>Un email de confirmation vient de vous être envoyé à <em>{formData.email}</em>.</p>
-            <button className="btn-next" onClick={() => window.location.href = '/'}>Retour à l'accueil</button>
+            
+            {/* boutton accueil */}
+            <Link to="/" className="btn-next btn-home-return">Retour à l'accueil</Link>
           </div>
         )}
 

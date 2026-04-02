@@ -1,109 +1,86 @@
 import { useState } from 'react';
-import './Compte.css';
+import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import './Compte.css';
 
 export default function Compte() {
-  // Ce state permet de basculer entre le formulaire de connexion et d'inscription
-  const [isLogin, setIsLogin] = useState(true);
+  useDocumentTitle('Connexion | Groupe l\'Atelier');
 
-  // States pour les champs du formulaire
   const [formData, setFormData] = useState({
-    prenom: '',
-    nom: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    mot_de_passe: ''
   });
+
+  const [message, setMessage] = useState({ type: '', texte: '' });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isLogin) {
-      console.log("Tentative de connexion avec :", formData.email);
-      // Plus tard (CCP2) : Appel API pour vérifier le mot de passe
-    } else {
-      console.log("Tentative de création de compte pour :", formData.email);
-      // Plus tard (CCP2) : Appel API pour créer l'utilisateur
+    setMessage({ type: '', texte: '' });
+
+    try {
+      const reponse = await fetch('http://localhost:3000/api/connexion', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await reponse.json();
+
+      if (!reponse.ok) {
+        throw new Error(data.erreur || "Erreur lors de la connexion.");
+      }
+
+      // save user dans nav
+      localStorage.setItem('utilisateur', JSON.stringify(data.utilisateur));
+
+      // reload navbar
+      window.location.href = '/'; 
+
+    } catch (erreur) {
+      setMessage({ type: 'error', texte: erreur.message });
     }
   };
 
-  useDocumentTitle('Mon compte');
-
   return (
     <div className="compte-container">
-      <div className="compte-box">
+      
+      <div className="compte-header">
+        <h1 className="compte-title">Connexion</h1>
+        <p className="compte-subtitle">Accédez à votre espace client l'Atelier.</p>
+      </div>
 
-        {/* Les boutons pour basculer entre Connexion et Inscription */}
-        <div className="compte-tabs">
-          <button
-            className={`tab-btn ${isLogin ? 'active' : ''}`}
-            onClick={() => setIsLogin(true)}
-          >
-            Se connecter
-          </button>
-          <button
-            className={`tab-btn ${!isLogin ? 'active' : ''}`}
-            onClick={() => setIsLogin(false)}
-          >
-            S'inscrire
-          </button>
-        </div>
-
-        <div className="compte-header">
-          <h1>{isLogin ? 'Ravi de vous revoir !' : 'Rejoignez-nous'}</h1>
-          <p>{isLogin ? 'Connectez-vous pour gérer vos rendez-vous.' : 'Créez un compte pour faciliter vos prochaines réservations.'}</p>
-        </div>
+      <div className="compte-form-box">
+        {message.texte && (
+          <div className={`message-box ${message.type === 'error' ? 'message-error' : 'message-success'}`}>
+            {message.texte}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="compte-form">
-
-          {/* Champs visibles UNIQUEMENT pour l'inscription */}
-          {!isLogin && (
-            <div className="form-row">
-              <div className="form-group">
-                <label>Prénom</label>
-                <input type="text" name="prenom" required={!isLogin} value={formData.prenom} onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label>Nom</label>
-                <input type="text" name="nom" required={!isLogin} value={formData.nom} onChange={handleChange} />
-              </div>
-            </div>
-          )}
-
-          {/* Champs communs (Connexion et Inscription) */}
           <div className="form-group">
-            <label>Email</label>
-            <input type="email" name="email" required value={formData.email} onChange={handleChange} />
+            <label htmlFor="email">Adresse Email</label>
+            <input type="email" id="email" name="email" required onChange={handleChange} />
           </div>
 
           <div className="form-group">
-            <label>Mot de passe</label>
-            <input type="password" name="password" required value={formData.password} onChange={handleChange} />
+            <label htmlFor="mot_de_passe">Mot de passe</label>
+            <input type="password" id="mot_de_passe" name="mot_de_passe" required onChange={handleChange} />
           </div>
 
-          {/* Champ visible UNIQUEMENT pour l'inscription */}
-          {!isLogin && (
-            <div className="form-group">
-              <label>Confirmer le mot de passe</label>
-              <input type="password" name="confirmPassword" required={!isLogin} value={formData.confirmPassword} onChange={handleChange} />
-            </div>
-          )}
-
-          {isLogin && (
-            <div className="forgot-password">
-              <a href="#!">Mot de passe oublié ?</a>
-            </div>
-          )}
-
-          <button type="submit" className="btn-submit-compte">
-            {isLogin ? 'Me connecter' : 'Créer mon compte'}
-          </button>
+          <button type="submit" className="compte-submit-btn">Se connecter</button>
         </form>
 
+        <div className="compte-footer">
+          <p>Nouveau client ? <Link to="/inscription">Créer un compte</Link></p>
+        </div>
       </div>
+
     </div>
   );
 }

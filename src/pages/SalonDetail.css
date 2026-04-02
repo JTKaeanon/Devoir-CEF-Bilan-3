@@ -1,7 +1,7 @@
 .salon-detail-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 40px 2rem;
+    padding: 20px 1rem;
     color: #1a1a1a;
 }
 
@@ -16,7 +16,7 @@
 .grid-box {
     border-radius: 30px;
     overflow: hidden;
-    min-height: 400px;
+    min-height: 300px;
     position: relative;
     background-color: #b3b3b3;
 }
@@ -36,7 +36,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 2rem;
+    padding: 1.5rem;
 }
 
 /* transparence */
@@ -51,18 +51,17 @@
 .presentation-content {
     position: relative;
     z-index: 2;
-    /* text */
 }
 
 .presentation-content h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
+    
+    font-size: 2.2rem;
     margin-bottom: 1rem;
 }
 
 .presentation-content h2 {
-    font-size: 1.5rem;
-    margin-bottom: 3rem;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
     font-weight: bold;
 }
 
@@ -71,36 +70,91 @@
     font-size: 1.1rem;
 }
 
-/* bottom left */
+/* bottom left  */
 .box-team {
-    padding: 2rem;
+    padding: 2rem 1rem;
+    background-color: #f8f9fa; 
+    border-radius: 30px;
 }
 
 .box-team h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
+    
+    font-size: 1.8rem;
     margin-bottom: 2rem;
     text-align: center;
+    color: #1a1a1a;
 }
 
 .team-list {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 1rem;
-    height: 60%;
-    align-items: center;
+    gap: 1.5rem; 
 }
 
-.team-member {
+/* card */
+.team-member-card {
+    background-color: white;
+    padding: 20px 15px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.team-member-name {
+    
     font-weight: bold;
+    margin: 0 0 15px 0;
+    font-size: 1.3rem;
+    color: #2c3e50;
     text-align: center;
-    white-space: pre-line;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 12px;
+}
+
+/* planing */
+.team-schedule-list {
+    margin: 0;
+    padding: 0;
+    list-style: none; 
+    flex-grow: 1;
+}
+
+.team-schedule-item {
+    display: flex;
+    justify-content: space-between; /* day left, hours right  */
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.team-schedule-item:last-child {
+    border-bottom: none; 
+}
+
+.team-schedule-day {
+    font-weight: bold;
+    color: #1a1a1a;
+}
+
+.team-schedule-hours {
+    font-weight: bold;
+}
+
+.team-schedule-empty {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+    margin-top: 10px;
 }
 
 /* bottom right */
 .box-services {
-    padding: 3rem 2rem;
+    padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -111,9 +165,9 @@
 }
 
 .box-services h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    margin-bottom: 2.5rem;
+    
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
     text-align: center;
     position: relative;
 }
@@ -133,6 +187,8 @@
 .box-services>p {
     color: #f1f1f1;
     font-style: italic;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .services-list {
@@ -146,34 +202,39 @@
 /* prestation card */
 .service-card {
     background-color: white;
-    padding: 1.2rem 1.5rem;
+    padding: 1rem;
     border-radius: 15px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.service-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
 
 .service-info {
     text-align: left;
+    flex: 1;
 }
 
 .service-info-name {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem; 
     color: #1a1a1a;
     margin-bottom: 0.3rem;
 }
 
 .service-info-duration {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #666;
+    margin-top: 5px;
+}
+
+.service-icon-clock {
+    margin-right: 6px;
+    color: #888;
 }
 
 .service-action {
@@ -184,10 +245,32 @@
 }
 
 .service-price {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: #4CAF50;
-    font-family: 'Playfair Display', serif;
+    
+    margin: 0;
+}
+
+/* erreur */
+.salon-not-found {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.retour-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: linear-gradient(90deg,
+      rgba(26, 26, 26, 0.85) 0%,
+      rgba(26, 26, 26, 1) 50%,
+      rgba(26, 26, 26, 0.85) 100%);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 /* button reserver */
@@ -210,5 +293,51 @@
 @media screen and (min-width: 1024px) {
     .salon-detail-grid {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .salon-detail-container {
+        padding: 40px 2rem;
+    }
+
+    .grid-box {
+        min-height: 400px;
+    }
+
+    .box-presentation {
+        padding: 2rem;
+    }
+
+    .presentation-content h1 {
+        font-size: 3.5rem;
+    }
+
+    .presentation-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .box-team, .box-services {
+        padding: 3rem 2rem;
+    }
+
+    .box-team h3, .box-services h3 {
+        font-size: 2.2rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .team-list {
+        gap: 2rem;
+    }
+
+    .team-member-card {
+        padding: 25px 20px;
+    }
+
+    .service-card {
+        padding: 1.2rem 1.5rem;
+    }
+
+    .service-info-name {
+        font-size: 1.1rem;
     }
 }

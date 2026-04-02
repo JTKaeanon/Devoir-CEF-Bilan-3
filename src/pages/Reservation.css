@@ -1,24 +1,25 @@
-/* src/pages/Reservation.css */
+/* =========================================
+ global 
+   ========================================= */
 .reservation-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 60px 2rem;
+    padding: 30px 1rem;
     min-height: 75vh;
 }
 
 .reservation-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .reservation-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
+    font-size: 2.2rem;
     color: #1a1a1a;
     margin-bottom: 0.5rem;
 }
 
-/* --- BARRE DE PROGRESSION --- */
+/* progress bar */
 .progress-container {
     margin-bottom: 2rem;
 }
@@ -45,23 +46,23 @@
     font-weight: 600;
 }
 
-/* --- LA CARTE DU FORMULAIRE --- */
+/* form card */
 .wizard-card {
     background: white;
     border-radius: 20px;
-    padding: 3rem;
+    padding: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .step-content h2 {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
+    font-size: 1.3rem; 
+    margin-bottom: 1.5rem;
     color: #1a1a1a;
     border-bottom: 2px solid #f0f0f0;
     padding-bottom: 1rem;
 }
 
-/* --- GRILLE D'OPTIONS (Cartes cliquables) --- */
+/* options grid */
 .options-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -70,13 +71,13 @@
 }
 
 .options-grid.list-view {
-    grid-template-columns: 1fr; /* Pour les prestations, une par ligne */
+    grid-template-columns: 1fr;
 }
 
 .option-card {
     border: 2px solid #eee;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 1rem; 
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -107,20 +108,21 @@
     margin: 0;
 }
 
-/* Modif spéciale pour les prestations */
+
 .options-grid.list-view .option-card {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; 
+    align-items: flex-start;
+    gap: 10px;
 }
 
 .presta-price {
     font-weight: bold;
     color: #4CAF50;
     font-size: 1.2rem;
+    font-family: 'Playfair Display', serif; 
 }
 
-/* --- FORMULAIRE ET CHAMPS --- */
+/* form */
 .datetime-container, .details-form {
     display: flex;
     flex-direction: column;
@@ -130,7 +132,7 @@
 
 .form-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
 }
 
@@ -154,30 +156,33 @@
     font-family: inherit;
     outline: none;
     transition: border-color 0.2s;
+    width: 100%;
 }
 
 .form-group input:focus, .form-group select:focus {
     border-color: #4CAF50;
 }
 
-/* --- BOUTONS --- */
+/* boutons */
 .wizard-actions {
     display: flex;
     justify-content: space-between;
     margin-top: 2rem;
+    gap: 10px; 
 }
 
 .btn-next, .btn-submit {
     background-color: #1a1a1a;
     color: white;
     border: none;
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 1.2rem; 
     border-radius: 30px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: auto; /* Pousse à droite si pas de bouton précédent */
+    margin-left: auto; 
+    font-family: 'Playfair Display', serif;
 }
 
 .btn-next:hover, .btn-submit:hover {
@@ -193,12 +198,13 @@
     background-color: transparent;
     color: #666;
     border: 1px solid #ccc;
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 1.2rem;
     border-radius: 30px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
+    font-family: 'Playfair Display', serif;
 }
 
 .btn-prev:hover {
@@ -206,35 +212,93 @@
     color: #1a1a1a;
 }
 
-/* --- SUCCÈS --- */
-.success-step {
-    text-align: center;
-    padding: 2rem 0;
+.reservation-loading {
+  text-align: center;
+  padding: 100px;
+  font-size: 1.2rem;
+  color: #666666;
 }
 
-.success-icon {
-    font-size: 5rem;
-    color: #4CAF50;
-    margin-bottom: 1.5rem;
+.notice-success {
+  background-color: #e8f5e9;
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  color: #2e7d32;
+  text-align: center;
+  font-weight: 500;
 }
 
-.success-step p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    color: #444;
+.checkbox-wrapper {
+  margin-bottom: 25px;
+  text-align: center;
 }
 
-.success-step .btn-next {
-    margin-top: 2rem;
-    margin-left: 0;
+.checkbox-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.9rem; 
+  color: #1a1a1a;
+  font-weight: 500;
 }
 
-@media screen and (max-width: 600px) {
+.checkbox-input {
+  width: 18px;
+  height: 18px;
+  accent-color: #1a1a1a; 
+}
+
+.success-step .success-icon {
+  color: #4CAF50;
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.btn-home-return {
+  display: inline-block;
+  margin-top: 25px;
+  text-decoration: none;
+}
+
+/* =========================================
+   TABLETTES ET DESKTOP
+   ========================================= */
+@media screen and (min-width: 600px) {
     .form-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
+    
     .wizard-card {
+        padding: 3rem;
+    }
+
+    .options-grid.list-view .option-card {
+        flex-direction: row; 
+        align-items: center;
+    }
+
+    .btn-next, .btn-submit, .btn-prev {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .reservation-container {
+        padding: 60px 2rem;
+    }
+    .reservation-header h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+    }
+    .step-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .option-card {
         padding: 1.5rem;
     }
 }
