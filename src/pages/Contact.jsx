@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { salonsData } from '../api/salons';
-import { BsGeoAltFill, BsTelephoneFill, BsCheckCircleFill } from 'react-icons/bs';
-import './Contact.css';
+import { useState, useEffect } from "react";
+import { BsGeoAltFill, BsTelephoneFill, BsCheckCircleFill } from "react-icons/bs";
+import "./Contact.css";
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Contact() {
