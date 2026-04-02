@@ -9,7 +9,6 @@ export default function NosSalons() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Fonction pour aller chercher les vraies données du serveur
     const fetchSalons = async () => {
       try {
         const reponse = await fetch('http://localhost:3000/api/salons');
@@ -19,12 +18,10 @@ export default function NosSalons() {
         }
         
         const data = await reponse.json();
-        // 2. On sauvegarde les données de la BDD dans notre état React
         setSalons(data); 
       } catch (erreur) {
         console.error("Impossible de récupérer les salons :", erreur);
       } finally {
-        // 3. On arrête le chargement quoi qu'il arrive
         setIsLoading(false); 
       }
     };
@@ -48,17 +45,16 @@ export default function NosSalons() {
           {salons.map((salon) => (
             <div key={salon.id} className="salon-list-card">
               
-              {/* Si une image existe on l'affiche, sinon on met un fond de couleur par défaut */}
+              {/* image ou couleur */}
               <div 
                 className="salon-list-image" 
                 style={{ backgroundColor: '#e9ecef', backgroundImage: salon.image ? `url(${salon.image})` : 'none' }}
               ></div>
               
               <div className="salon-list-content">
-                {/* On utilise les noms des colonnes de ta base de données Prisma ! */}
+                {/* colonne ! */}
                 <h2>{salon.nom}</h2>
                 
-                {/* Affichage conditionnel : si ces infos n'existent pas en BDD, on ne les affiche pas */}
                 {salon.subtitle && <span className="salon-badge">{salon.subtitle}</span>}
                 {salon.description && <p className="salon-desc">{salon.description}</p>}
 
@@ -70,7 +66,6 @@ export default function NosSalons() {
                   <p className="info-item"><BsTelephoneFill className="icon" /> {salon.telephone}</p>
                 </div>
 
-                {/* Le bouton pointe dynamiquement vers /salon/l-id-du-salon */}
                 <Link to={`/salon/${salon.slug}`} className="salon-btn">Découvrir ce salon</Link>
               </div>
             </div>

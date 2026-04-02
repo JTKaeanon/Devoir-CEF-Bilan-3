@@ -32,7 +32,7 @@ export default function SalonDetail() {
     fetchSalonDetail();
   }, [slug]);
 
-  // 🌟 NOUVEAU : La fonction qui transforme les minutes en texte élégant !
+  // minutes et heures
   const formatDuree = (minutes) => {
     if (minutes < 60) return `${minutes} min`;
     if (minutes === 60) return `1 Heure`;
@@ -43,7 +43,7 @@ export default function SalonDetail() {
     if (resteMinutes === 0) {
       return `${heures} Heures`;
     } else {
-      return `${heures}h${resteMinutes}`; // Ex: 1h30
+      return `${heures}h${resteMinutes}`; // ex : 30 => 30min ou 60 => 1heure
     }
   };
 

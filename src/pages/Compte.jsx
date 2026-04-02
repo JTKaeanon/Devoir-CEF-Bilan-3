@@ -36,16 +36,16 @@ export default function Compte() {
         throw new Error(data.erreur || "Erreur lors de la connexion.");
       }
 
-      // 🌟 On sauvegarde l'utilisateur dans le navigateur
+      // save user dans nav
       localStorage.setItem('utilisateur', JSON.stringify(data.utilisateur));
 
-      // 🚀 REDIRECTION IMMÉDIATE (qui force la navbar à se mettre à jour)
+      // reload navbar
       window.location.href = '/'; 
 
     } catch (erreur) {
       setMessage({ type: 'error', texte: erreur.message });
     }
-  }; // <--- C'est cette accolade et ce point-virgule qui avaient disparu !
+  };
 
   return (
     <div className="compte-container">

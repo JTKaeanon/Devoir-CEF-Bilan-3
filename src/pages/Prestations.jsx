@@ -26,7 +26,7 @@ export default function Prestations() {
     fetchPrestations();
   }, []);
 
-  // 🌟 NOUVEAU : La fonction qui transforme les minutes en texte élégant
+  // minutes ou heures
   const formatDuree = (minutes) => {
     if (minutes < 60) return `${minutes} min`;
     if (minutes === 60) return `1 Heure`;

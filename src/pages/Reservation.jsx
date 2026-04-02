@@ -138,7 +138,6 @@ export default function Reservation() {
     presta.salons && presta.salons.some(s => s.id === formData.salonId)
   );
 
-  // 🌟 NOUVEAU : Plus de style en ligne ici
   if (isLoading) return <div className="reservation-loading">Chargement de la réservation...</div>;
 
   return (
@@ -159,7 +158,7 @@ export default function Reservation() {
 
       <div className="wizard-card">
         
-        {/* ÉTAPE 1 : LE SALON */}
+        {/* salon */}
         {step === 1 && (
           <div className="step-content">
             <h2>1. Choisissez votre salon</h2>
@@ -179,7 +178,7 @@ export default function Reservation() {
           </div>
         )}
 
-        {/* ÉTAPE 2 : LA PRESTATION */}
+        {/* prestation */}
         {step === 2 && (
           <div className="step-content">
             <h2>2. Choisissez votre prestation</h2>
@@ -206,7 +205,7 @@ export default function Reservation() {
           </div>
         )}
 
-        {/* ÉTAPE 3 : LE COIFFEUR */}
+        {/* coiffeur */}
         {step === 3 && (
           <div className="step-content">
             <h2>3. Choisissez votre coiffeur</h2>
@@ -230,7 +229,7 @@ export default function Reservation() {
           </div>
         )}
 
-        {/* ÉTAPE 4 : DATE ET HEURE */}
+        {/* date heure */}
         {step === 4 && (
           <div className="step-content">
             <h2>4. Date et Heure</h2>
@@ -264,7 +263,7 @@ export default function Reservation() {
           </div>
         )}
 
-        {/* ÉTAPE 5 : COORDONNÉES */}
+        {/* coordonnées */}
         {step === 5 && (
           <div className="step-content">
             <h2>5. Vos coordonnées</h2>
@@ -318,7 +317,7 @@ export default function Reservation() {
           </div>
         )}
 
-        {/* ÉTAPE 6 : CONFIRMATION */}
+        {/* confirmation */}
         {step === 6 && (
           <div className="step-content success-step">
             <BsCheckCircleFill className="success-icon" />
@@ -326,7 +325,7 @@ export default function Reservation() {
             <p>Le rendez-vous pour {formData.prenom} est bien enregistré le <strong>{formData.date.split('-').reverse().join('/')} à {formData.heure}</strong>.</p>
             <p>Un email de confirmation vient de vous être envoyé à <em>{formData.email}</em>.</p>
             
-            {/* 🌟 NOUVEAU : Une simple classe ajoutée */}
+            {/* boutton accueil */}
             <Link to="/" className="btn-next btn-home-return">Retour à l'accueil</Link>
           </div>
         )}

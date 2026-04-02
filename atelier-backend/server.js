@@ -20,7 +20,7 @@ app.use(express.json());
 // routing
 // ==========================================
 
-// Route de test
+// test
 app.get('/', (req, res) => {
   res.json({ message: "Bienvenue sur l'API du Groupe l'Atelier !" });
 });
@@ -36,7 +36,7 @@ app.get('/api/salons', async (req, res) => {
   }
 });
 
-// Route pour récupérer UN SEUL salon par son SLUG
+// 1 salons par slug
 app.get('/api/salons/:slug', async (req, res) => {
   try {
     const leSlug = req.params.slug; 
@@ -49,7 +49,7 @@ app.get('/api/salons/:slug', async (req, res) => {
             horaires: true
           }
         },
-        // 🌟 NOUVEAU : On trie les prestations imbriquées !
+        // trie prestations
         prestations: {
           orderBy: {
             duree: 'asc'
@@ -132,29 +132,29 @@ app.post('/api/inscription', async (req, res) => {
 });
 
 
-// Route de connexion
+// connect
 app.post('/api/connexion', async (req, res) => {
   try {
     const { email, mot_de_passe } = req.body;
 
-    // 1. On cherche l'utilisateur dans la base de données avec son email
+    // check email in db
     const utilisateur = await prisma.utilisateur.findUnique({
       where: { email: email }
     });
 
-    // S'il n'existe pas, on renvoie une erreur générique (sécurité : on ne dit pas si c'est l'email ou le mdp qui est faux)
+    // si pas présent => incorrect
     if (!utilisateur) {
       return res.status(401).json({ erreur: "Email ou mot de passe incorrect." });
     }
 
-    // 2. On compare le mot de passe tapé avec le mot de passe crypté dans la base
+    // compare mdp avec hash dans db
     const motDePasseValide = await bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
 
     if (!motDePasseValide) {
       return res.status(401).json({ erreur: "Email ou mot de passe incorrect." });
     }
 
-    // 3. Succès ! On renvoie les infos du client (mais SURTOUT PAS son mot de passe !)
+    // 3. renvoi infos client sans mdp
     res.json({
       message: "Connexion réussie !",
       utilisateur: {
@@ -172,9 +172,7 @@ app.post('/api/connexion', async (req, res) => {
   }
 });
 
-// ==========================================
-// RESERVATIONS
-// ==========================================
+// reservations
 
 app.post('/api/reservations', async (req, res) => {
   try {
@@ -182,9 +180,9 @@ app.post('/api/reservations', async (req, res) => {
 
     let finalUtilisateurId = utilisateurId;
 
-    // 1. GESTION DE L'UTILISATEUR (S'il n'est pas connecté)
+    // gestion user si pas co
     if (!finalUtilisateurId) {
-      // On cherche si cet email existe déjà dans la base
+      // email dans db
       let userExistant = await prisma.utilisateur.findUnique({
         where: { email: email }
       });
@@ -192,8 +190,8 @@ app.post('/api/reservations', async (req, res) => {
       if (userExistant) {
         finalUtilisateurId = userExistant.id;
       } else {
-        // Création d'un compte "Invité" automatique car l'ID est requis dans la BDD
-        const fauxMotDePasse = await bcrypt.hash("invite1234", 10); // Mot de passe bidon sécurisé
+        // compte invité automatique ID requis bdd
+        const fauxMotDePasse = await bcrypt.hash("invite1234", 10); // faux mdp 
         
         const newUser = await prisma.utilisateur.create({
           data: {
@@ -209,10 +207,10 @@ app.post('/api/reservations', async (req, res) => {
       }
     }
 
-    // 2. CONVERSION DE LA DATE (Pour Prisma qui demande un objet DateTime)
+    // conversion date
     const dateRdvObj = new Date(date);
 
-    // 3. ENREGISTREMENT DU RENDEZ-VOUS
+    // prise RDV
     const nouveauRdv = await prisma.rendezVous.create({
       data: {
         date_rdv: dateRdvObj,

@@ -1,19 +1,18 @@
-/* Conteneur principal centré */
+/* main */
 .inscription-container {
   max-width: 600px;
   margin: 0 auto;
   padding: 60px 20px;
 }
 
-/* En-tête de la page */
+/* hed */
 .inscription-header {
   text-align: center;
   margin-bottom: 40px;
 }
 
 .inscription-title {
-  /* Hérite du 'Playfair Display' de ton index.css */
-  color: #1a1a1a; /* Le gris très foncé de ta Navbar */
+  color: #1a1a1a; 
   font-size: 2.5rem;
   margin-bottom: 10px;
 }
@@ -23,15 +22,15 @@
   font-size: 1.1rem;
 }
 
-/* La carte blanche du formulaire */
+/* card form */
 .inscription-form-box {
   background-color: #ffffff;
   padding: 40px;
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Ombre douce */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* Messages de validation/erreur */
+/* validation erreur */
 .message-box {
   padding: 15px;
   margin-bottom: 25px;
@@ -52,7 +51,7 @@
   border: 1px solid #a5d6a7;
 }
 
-/* Structure du formulaire */
+/* form structure */
 .inscription-form {
   display: flex;
   flex-direction: column;
@@ -72,7 +71,7 @@
 
 .form-group label {
   margin-bottom: 8px;
-  color: #1a1a1a; /* La couleur de ta charte */
+  color: #1a1a1a; 
   font-weight: 600;
   font-size: 0.95rem;
 }
@@ -82,7 +81,6 @@
   border: 1px solid #cccccc;
   border-radius: 4px;
   font-size: 1rem;
-  /* Hérite du Helvetica Neue de ton index.css */
   transition: border-color 0.3s;
 }
 
@@ -90,9 +88,9 @@
   border-color: #1a1a1a; 
 }
 
-/* Bouton principal */
+/* bouton submit */
 .inscription-submit-btn {
-  background-color: #1a1a1a; /* Le fond de ta Navbar */
+  background-color: #1a1a1a; 
   color: #ffffff;
   padding: 15px;
   border: none;
@@ -102,15 +100,15 @@
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
   margin-top: 10px;
-  font-family: 'Playfair Display', serif; /* La même police que tes liens Navbar */
+  font-family: 'Playfair Display', serif;
   letter-spacing: 1px;
 }
 
 .inscription-submit-btn:hover {
-  background-color: rgba(51, 51, 51, 0.658)/* Noir un peu plus clair au survol */
+  background-color: rgba(51, 51, 51, 0.658)
 }
 
-/* Pied du formulaire */
+/* ffooter */
 .inscription-footer {
   text-align: center;
   margin-top: 30px;
@@ -130,7 +128,7 @@
   text-decoration: underline;
 }
 
-/* Responsive pour mobile */
+/* responsive */
 @media (max-width: 600px) {
   .form-row {
     flex-direction: column;

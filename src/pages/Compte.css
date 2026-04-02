@@ -1,12 +1,12 @@
-/* Conteneur principal centré */
+/* main container */
 .compte-container {
-  max-width: 500px; /* Un peu plus petit que l'inscription */
+  max-width: 500px; 
   margin: 0 auto;
   padding: 60px 20px;
   min-height: calc(100vh - 200px);
 }
 
-/* En-tête de la page */
+/* head */
 .compte-header {
   text-align: center;
   margin-bottom: 40px;
@@ -23,7 +23,7 @@
   font-size: 1.1rem;
 }
 
-/* La carte blanche du formulaire */
+/* card form */
 .compte-form-box {
   background-color: #ffffff;
   padding: 40px;
@@ -31,7 +31,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* Messages de validation/erreur */
+/* validation erreur */
 .message-box {
   padding: 15px;
   margin-bottom: 25px;
@@ -52,7 +52,7 @@
   border: 1px solid #a5d6a7;
 }
 
-/* Structure du formulaire */
+/* form */
 .compte-form {
   display: flex;
   flex-direction: column;
@@ -83,7 +83,7 @@
   border-color: #1a1a1a; 
 }
 
-/* Bouton principal */
+/* boutton validé */
 .compte-submit-btn {
   background-color: #1a1a1a;
   color: #ffffff;
@@ -104,7 +104,7 @@
   transform: translateY(-2px);
 }
 
-/* Pied du formulaire */
+/* footer */
 .compte-footer {
   text-align: center;
   margin-top: 30px;
@@ -124,7 +124,7 @@
   text-decoration: underline;
 }
 
-/* Responsive pour mobile */
+/* responsive */
 @media (max-width: 600px) {
   .compte-form-box {
     padding: 25px 20px;

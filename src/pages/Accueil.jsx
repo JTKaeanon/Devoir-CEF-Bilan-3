@@ -8,7 +8,6 @@ export default function Accueil() {
   
   useDocumentTitle('Accueil');
 
-  // On va chercher les vrais salons dans la base de données
   useEffect(() => {
     const fetchSalons = async () => {
       try {
@@ -35,19 +34,18 @@ export default function Accueil() {
           </div>
         </div>
 
-        {/* Génération dynamique des cartes salons depuis la vraie BDD */}
+        {/* dynamique card db */}
         {salons.map((salon) => (
           <Link 
             key={salon.id} 
             to={`/salon/${salon.slug}`} 
             className="grid-item salon-card" 
             style={{ 
-              backgroundColor: '#2c3e50', // Couleur de secours si pas d'image
+              backgroundColor: '#2c3e50', // couleurs si pas image
               backgroundImage: salon.image ? `url(${salon.image})` : 'none' 
             }}
           >
             <div className="salon-overlay">
-              {/* Attention, c'est salon.nom et non salon.name ! */}
               <h3>{salon.nom}</h3>
               <p>{salon.subtitle || "Découvrir ce salon"}</p>
             </div>

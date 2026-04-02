@@ -24,7 +24,7 @@ export default function Contact() {
     console.log("Message envoyé :", formData);
     setIsSent(true);
     
-    // Réinitialisation après 4 secondes
+    //reset
     setTimeout(() => {
       setIsSent(false);
       setFormData({ prenom: '', nom: '', email: '', telephone: '', salon: '', message: '' });

@@ -31,10 +31,10 @@ model Salon {
   telephone         String
   
   // DESIGN
-  image             String?      // URL de l'image de la carte (page Nos Salons)
-  presentationImage String?      // URL de la grande image (page Détail)
+  image             String?      // URL image carte (page Nos Salons)
+  presentationImage String?      // URL grande image (page Détail)
   subtitle          String?      // 
-  description       String?      // Paragraphe de présentation
+  description       String?      // Presentation
   target            String?      // "Hommes", "Femmes", "Mixte"
   
   // Relations
@@ -48,7 +48,7 @@ model Prestation {
   duree       Int          // minutes
   prix        Float
   
-  // CORRECTION : Une prestation peut appartenir à PLUSIEURS salons
+  // une prestation peut plusieurs salons
   salons      Salon[]
   
   // Relations
@@ -60,14 +60,14 @@ model Employe {
   nom         String
   role        String       
   
-  // Relation : Un employé travaille dans 1 salon
+  // 1 emplyé = 1 salon
   salonId     Int
   salon       Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
   
-  // Relation : Un employé a plusieurs horaires
+  // horaires employés
   horaires    Horaire[]
   
-  // Relation : Un employé gère plusieurs RDV
+  // rdv employé
   rendezVous  RendezVous[]
 }
 

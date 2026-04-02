@@ -1,4 +1,3 @@
-/* src/pages/Reservation.css */
 .reservation-container {
     max-width: 800px;
     margin: 0 auto;
@@ -18,7 +17,7 @@
     margin-bottom: 0.5rem;
 }
 
-/* --- BARRE DE PROGRESSION --- */
+/* progress bar */
 .progress-container {
     margin-bottom: 2rem;
 }
@@ -45,7 +44,7 @@
     font-weight: 600;
 }
 
-/* --- LA CARTE DU FORMULAIRE --- */
+/* form card */
 .wizard-card {
     background: white;
     border-radius: 20px;
@@ -61,7 +60,7 @@
     padding-bottom: 1rem;
 }
 
-/* --- GRILLE D'OPTIONS (Cartes cliquables) --- */
+/* options grid */
 .options-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -70,7 +69,7 @@
 }
 
 .options-grid.list-view {
-    grid-template-columns: 1fr; /* Pour les prestations, une par ligne */
+    grid-template-columns: 1fr; /* 1 presta par ligne */
 }
 
 .option-card {
@@ -107,7 +106,6 @@
     margin: 0;
 }
 
-/* Modif spéciale pour les prestations */
 .options-grid.list-view .option-card {
     flex-direction: row;
     justify-content: space-between;
@@ -120,7 +118,7 @@
     font-size: 1.2rem;
 }
 
-/* --- FORMULAIRE ET CHAMPS --- */
+/* form */
 .datetime-container, .details-form {
     display: flex;
     flex-direction: column;
@@ -160,7 +158,7 @@
     border-color: #4CAF50;
 }
 
-/* --- BOUTONS --- */
+/* boutons */
 .wizard-actions {
     display: flex;
     justify-content: space-between;
@@ -177,7 +175,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: auto; /* Pousse à droite si pas de bouton précédent */
+    margin-left: auto; 
 }
 
 .btn-next:hover, .btn-submit:hover {
@@ -206,11 +204,7 @@
     color: #1a1a1a;
 }
 
-/* =========================================
-   STYLES EXTRAITS DU JSX (Refactoring)
-   ========================================= */
 
-/* L'état de chargement */
 .reservation-loading {
   text-align: center;
   padding: 100px;
@@ -218,7 +212,7 @@
   color: #666666;
 }
 
-/* Le bandeau vert "informations pré-remplies" */
+/* info pré rempli */
 .notice-success {
   background-color: #e8f5e9;
   padding: 12px;
@@ -229,7 +223,7 @@
   font-weight: 500;
 }
 
-/* La case à cocher "Pour un proche" */
+/* case proche */
 .checkbox-wrapper {
   margin-bottom: 25px;
   text-align: center;
@@ -249,10 +243,10 @@
 .checkbox-input {
   width: 18px;
   height: 18px;
-  accent-color: #1a1a1a; /* Met la case en noir quand elle est cochée */
+  accent-color: #1a1a1a; 
 }
 
-/* Étape 6 : Écran de succès */
+/* success */
 .success-step .success-icon {
   color: #4CAF50;
   font-size: 4rem;
@@ -264,6 +258,10 @@
   margin-top: 25px;
   text-decoration: none;
 }
+
+
+
+/* Responsive */
 
 @media screen and (max-width: 600px) {
     .form-row {

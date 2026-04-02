@@ -40,7 +40,7 @@ export default function Inscription() {
         throw new Error(data.erreur || "Une erreur est survenue.");
       }
 
-      // 🚀 REDIRECTION IMMÉDIATE VERS LA PAGE DE CONNEXION
+      // vers connexion
       navigate('/compte'); 
 
     } catch (erreur) {

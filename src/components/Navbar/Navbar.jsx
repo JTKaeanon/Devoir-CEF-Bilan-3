@@ -5,7 +5,7 @@ import './Navbar.css';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // 🌟 NOUVEAU : On regarde si un utilisateur est stocké dans la mémoire du navigateur
+  //  check user stock dans navigateur
   const utilisateurData = localStorage.getItem('utilisateur');
   const utilisateur = utilisateurData ? JSON.parse(utilisateurData) : null;
 
@@ -18,10 +18,10 @@ export default function Navbar() {
     setIsMenuOpen(false);
   };
 
-  // 🌟 NOUVEAU : Fonction pour se déconnecter
+  // deconnexion
   const handleDeconnexion = () => {
-    localStorage.removeItem('utilisateur'); // On efface la mémoire
-    window.location.href = '/'; // On recharge la page d'accueil pour rafraîchir la Navbar
+    localStorage.removeItem('utilisateur'); // on efface mémoire
+    window.location.href = '/'; // reload pour refresh
   };
 
   return (
@@ -50,7 +50,7 @@ export default function Navbar() {
         <Link to="/prestations" className="mobile-only" onClick={closeMenu}>Prestations</Link>
         <Link to="/reservation" onClick={closeMenu}>Prendre RDV</Link>
 
-        {/* 🌟 MAGIE LOGIQUE : Affichage conditionnel selon l'état de connexion */}
+        {/* etat connexion */}
         {utilisateur ? (
           <>
             <span style={{ color: '#ffffff', fontFamily: "'Playfair Display', serif", fontSize: '1.1rem' }}>
