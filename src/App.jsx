@@ -14,6 +14,8 @@ import MentionsLegales from './pages/MentionsLegales';
 import Confidentialite from './pages/Confidentialite';
 import Dashboard from './pages/Dashboard';
 import Inscription from './pages/Inscription';
+import Admin from './pages/Admin';
+
 
 export default function App() {
   return (
@@ -24,6 +26,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Accueil />} />
           <Route path="/nos-salons" element={<NosSalons />} />
+          <Route path="/admin" element={<Admin />} />
+          
           
           {/* <-- dynamic  --> */}
           <Route path="/salon/:slug" element={<SalonDetail />} />

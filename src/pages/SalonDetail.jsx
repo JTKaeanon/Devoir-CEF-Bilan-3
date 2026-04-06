@@ -14,10 +14,7 @@ export default function SalonDetail() {
     const fetchSalonDetail = async () => {
       try {
         const reponse = await fetch(`http://localhost:3000/api/salons/${slug}`);
-        
-        if (!reponse.ok) {
-          throw new Error('Salon introuvable');
-        }
+        if (!reponse.ok) throw new Error('Salon introuvable');
         
         const data = await reponse.json();
         setSalon(data);
@@ -32,7 +29,6 @@ export default function SalonDetail() {
     fetchSalonDetail();
   }, [slug]);
 
-  // minutes et heures
   const formatDuree = (minutes) => {
     if (minutes < 60) return `${minutes} min`;
     if (minutes === 60) return `1 Heure`;
@@ -40,11 +36,8 @@ export default function SalonDetail() {
     const heures = Math.floor(minutes / 60);
     const resteMinutes = minutes % 60;
     
-    if (resteMinutes === 0) {
-      return `${heures} Heures`;
-    } else {
-      return `${heures}h${resteMinutes}`; // ex : 30 => 30min ou 60 => 1heure
-    }
+    if (resteMinutes === 0) return `${heures} Heures`;
+    return `${heures}h${resteMinutes}`; 
   };
 
   if (isLoading) {
@@ -68,21 +61,39 @@ export default function SalonDetail() {
     <div className="salon-detail-container">
       <div className="salon-detail-grid">
 
-        {/* top left */}
+        {/* top left : Image principale */}
         <div
           className="grid-box box-image"
-          style={{ backgroundImage: salon.image ? `url(${salon.image})` : 'none' }}
+          style={{ 
+            backgroundImage: salon.image ? `url("${salon.image}")` : 'none',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundColor: '#e0e0e0'
+          }}
         ></div>
 
-        {/* top right */}
+        {/* top right : Image de présentation et Texte */}
         <div
           className="grid-box box-presentation"
-          style={{ backgroundImage: salon.presentationImage ? `url(${salon.presentationImage})` : 'none' }}
+          style={{ 
+            backgroundImage: salon.presentationImage ? `url("${salon.presentationImage}")` : 'none',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundColor: '#1a1a1a'
+          }}
         >
-          <div className="presentation-content">
+          {/* OVERLAY SOMBRE GÉRÉ EN CSS */}
+          <div className="presentation-overlay">
             <h1>{salon.nom}</h1>
-            <h2>{salon.subtitle || "Bienvenue dans notre salon"}</h2>
-            <p>Présentation</p>
+            <p className="salon-description">
+              {salon.description || "Bienvenue dans notre salon. Découvrez notre univers dédié à la coiffure et au bien-être."}
+            </p>
+
+            <div className="salon-global-hours">
+              <h3><i className="bi bi-clock-fill"></i> Horaires d'ouverture</h3>
+              <p>{salon.horaires || "Horaires non communiqués"}</p>
+            </div>
+
           </div>
         </div>
 
@@ -99,7 +110,6 @@ export default function SalonDetail() {
                   <ul className="team-schedule-list">
                     {membre.horaires.map(horaire => (
                       <li key={horaire.id} className="team-schedule-item">
-                        {/* Séparation du jour et de l'heure pour l'alignement */}
                         <span className="team-schedule-day">{horaire.jour}</span>
                         <span className="team-schedule-hours">{horaire.heure_debut} - {horaire.heure_fin}</span>
                       </li>
@@ -122,9 +132,7 @@ export default function SalonDetail() {
               <div key={presta.id} className="service-card">
                 
                 <div className="service-info">
-                  <p className="service-info-name">
-                    {presta.nom}
-                  </p>
+                  <p className="service-info-name">{presta.nom}</p>
                   <p className="service-info-duration">
                     <i className="bi bi-clock service-icon-clock"></i>
                     {formatDuree(presta.duree)}
@@ -132,9 +140,7 @@ export default function SalonDetail() {
                 </div>
 
                 <div className="service-action">
-                  <p className="service-price">
-                    {presta.prix} €
-                  </p>
+                  <p className="service-price">{presta.prix} €</p>
                   <Link
                     to="/reservation"
                     state={{ salonId: salon.id, prestationNom: presta.nom }}

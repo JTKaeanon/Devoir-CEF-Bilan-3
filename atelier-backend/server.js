@@ -302,6 +302,164 @@ app.put('/api/utilisateurs/:id', async (req, res) => {
 });
 
 // ==========================================
+// C.R.U.D PRESTATIONS (ADMINISTRATEUR)
+// ==========================================
+
+// 1. CREATE : Ajouter une nouvelle prestation
+app.post('/api/prestations', async (req, res) => {
+  try {
+    const { nom, description, prix, duree } = req.body;
+    const nouvellePrestation = await prisma.prestation.create({
+      data: {
+        nom,
+        description,
+        prix: parseFloat(prix),
+        duree: parseInt(duree) // Durée en minutes
+      }
+    });
+    res.status(201).json(nouvellePrestation);
+  } catch (error) {
+    console.error("Erreur CREATE prestation :", error);
+    res.status(500).json({ erreur: "Impossible d'ajouter la prestation." });
+  }
+});
+
+// 2. UPDATE : Modifier une prestation existante
+app.put('/api/prestations/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { nom, description, prix, duree } = req.body;
+    
+    const prestationMaj = await prisma.prestation.update({
+      where: { id: id },
+      data: {
+        nom,
+        description,
+        prix: parseFloat(prix),
+        duree: parseInt(duree)
+      }
+    });
+    res.json(prestationMaj);
+  } catch (error) {
+    console.error("Erreur UPDATE prestation :", error);
+    res.status(500).json({ erreur: "Impossible de modifier la prestation." });
+  }
+});
+
+// 3. DELETE : Supprimer une prestation
+app.delete('/api/prestations/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    await prisma.prestation.delete({
+      where: { id: id }
+    });
+    res.json({ message: "Prestation supprimée avec succès." });
+  } catch (error) {
+    console.error("Erreur DELETE prestation :", error);
+    res.status(500).json({ erreur: "Impossible de supprimer. Cette prestation est peut-être liée à des réservations." });
+  }
+});
+
+// ==========================================
+// C.R.U.D SALONS
+// ==========================================
+
+app.post('/api/salons', async (req, res) => {
+  try {
+    const nouveau = await prisma.salon.create({
+      data: req.body // Prisma prend tout ce qu'on lui donne (nom, adresse, horaires...)
+    });
+    res.status(201).json(nouveau);
+  } catch (error) {
+    console.error("Erreur POST Salon :", error);
+    res.status(500).json({ erreur: "Erreur lors de la création du salon." });
+  }
+});
+
+app.put('/api/salons/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { id: _, ...donneesAUpdate } = req.body; 
+
+    const maj = await prisma.salon.update({
+      where: { id },
+      data: donneesAUpdate
+    });
+    res.json(maj);
+  } catch (error) {
+    console.error("Erreur PUT Salon :", error);
+    res.status(500).json({ erreur: "Erreur lors de la mise à jour." });
+  }
+});
+
+app.delete('/api/salons/:id', async (req, res) => {
+  try {
+    await prisma.salon.delete({ where: { id: parseInt(req.params.id) } });
+    res.json({ message: "Salon supprimé" });
+  } catch (error) {
+    res.status(500).json({ erreur: "Erreur suppression (lié à des employés ?)" });
+  }
+});
+
+app.delete('/api/salons/:id', async (req, res) => {
+  try {
+    await prisma.salon.delete({ where: { id: parseInt(req.params.id) } });
+    res.json({ message: "Salon supprimé" });
+  } catch (error) {
+    res.status(500).json({ erreur: "Erreur suppression (lié à des employés ?)" });
+  }
+});
+
+// ==========================================
+// C.R.U.D COIFFEURS & PLANNING
+// ==========================================
+
+app.get('/api/employes', async (req, res) => {
+  try {
+    const employes = await prisma.employe.findMany({ 
+      include: { 
+        salon: true, 
+        horaires: true 
+      } 
+    });
+    res.json(employes);
+  } catch (error) {
+    console.error("Erreur API Employés :", error);
+    res.status(500).json({ erreur: "Erreur lors de la récupération des employés." });
+  }
+});
+
+app.post('/api/employes', async (req, res) => {
+  try {
+    const { nom, role, salonId } = req.body;
+    const nouveau = await prisma.employe.create({
+      data: { nom, role, salonId: parseInt(salonId) }
+    });
+    res.status(201).json(nouveau);
+  } catch (error) {
+    res.status(500).json({ erreur: "Erreur création employé." });
+  }
+});
+
+// Ajouter un créneau au planning
+app.post('/api/horaires', async (req, res) => {
+  try {
+    const { jour, heure_debut, heure_fin, employeId } = req.body;
+    const nouvelHoraire = await prisma.horaire.create({
+      data: { jour, heure_debut, heure_fin, employeId: parseInt(employeId) }
+    });
+    res.status(201).json(nouvelHoraire);
+  } catch (error) {
+    res.status(500).json({ erreur: "Erreur ajout horaire." });
+  }
+});
+
+app.delete('/api/horaires/:id', async (req, res) => {
+  await prisma.horaire.delete({ where: { id: parseInt(req.params.id) } });
+  res.json({ message: "Créneau supprimé" });
+});
+
+// ==========================================
 // init serveur
 // ==========================================
 const PORT = 3000;
