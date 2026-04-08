@@ -460,6 +460,21 @@ app.delete('/api/horaires/:id', async (req, res) => {
 });
 
 // ==========================================
+// C.R.U.D RENDEZ-VOUS
+// ==========================================
+app.post('/api/rendezvous', async (req, res) => {
+  try {
+    const rdv = await prisma.rendezVous.create({
+      data: req.body 
+    });
+    res.status(201).json(rdv);
+  } catch (error) {
+    console.error("Erreur POST Rendez-vous :", error);
+    res.status(500).json({ erreur: "Erreur lors de la création du rendez-vous." });
+  }
+});
+
+// ==========================================
 // init serveur
 // ==========================================
 const PORT = 3000;

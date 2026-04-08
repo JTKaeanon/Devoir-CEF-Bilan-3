@@ -1,73 +1,81 @@
-/* =========================================
- global 
-   ========================================= */
+/* Container global */
+.reservation-loading {
+    text-align: center;
+    padding: 100px;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+}
+
 .reservation-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 30px 1rem;
-    min-height: 75vh;
+    padding: 40px 20px;
+    min-height: 70vh;
 }
 
 .reservation-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 30px;
 }
 
 .reservation-header h1 {
-    font-size: 2.2rem;
-    color: #1a1a1a;
-    margin-bottom: 0.5rem;
+    color: #cda434;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
 }
 
-/* progress bar */
+.reservation-header p {
+    color: #555;
+    font-size: 1.1rem;
+}
+
+/* Barre de progression */
 .progress-container {
-    margin-bottom: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .progress-bar {
     width: 100%;
-    height: 8px;
-    background-color: #eee;
-    border-radius: 4px;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
     overflow: hidden;
+    margin-bottom: 10px;
 }
 
 .progress-fill {
     height: 100%;
-    background-color: #4CAF50;
-    transition: width 0.4s ease;
+    background-color: #cda434;
+    transition: width 0.4s ease-in-out;
 }
 
 .step-indicator {
-    text-align: right;
-    font-size: 0.85rem;
+    font-weight: bold;
     color: #666;
-    margin-top: 0.5rem;
-    font-weight: 600;
 }
 
-/* form card */
+/* Carte principale (Wizard) */
 .wizard-card {
-    background: white;
+    background-color: #ffffff;
     border-radius: 20px;
-    padding: 1.5rem;
+    padding: 40px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .step-content h2 {
-    font-size: 1.3rem; 
-    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
     color: #1a1a1a;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 1rem;
+    margin-bottom: 25px;
+    text-align: center;
 }
 
-/* options grid */
+/* Grilles d'options (Salons, Prestations, Employés) */
 .options-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
 .options-grid.list-view {
@@ -75,118 +83,192 @@
 }
 
 .option-card {
-    border: 2px solid #eee;
+    border: 2px solid #e0e0e0;
     border-radius: 12px;
-    padding: 1rem; 
+    padding: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.option-card:hover {
-    border-color: #ccc;
+    align-items: center;
+    text-align: center;
     background-color: #fafafa;
 }
 
+.options-grid.list-view .option-card {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.option-card:hover {
+    border-color: #cda434;
+    background-color: #fff9e6;
+}
+
 .option-card.selected {
-    border-color: #4CAF50;
-    background-color: #f1f8f1;
-    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.15);
+    border-color: #cda434;
+    background-color: #fff9e6;
+    box-shadow: 0 4px 10px rgba(205, 164, 52, 0.2);
 }
 
 .option-card h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
     color: #1a1a1a;
 }
 
 .option-card p {
-    font-size: 0.9rem;
-    color: #666;
     margin: 0;
-}
-
-
-.options-grid.list-view .option-card {
-    flex-direction: column; 
-    align-items: flex-start;
-    gap: 10px;
+    color: #666;
+    font-size: 0.95rem;
 }
 
 .presta-price {
     font-weight: bold;
-    color: #4CAF50;
     font-size: 1.2rem;
-    font-family: 'Playfair Display', serif; 
+    color: #4CAF50;
 }
 
-/* form */
-.datetime-container, .details-form {
+/* Formulaires et Dates */
+.datetime-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 600px) {
+    .datetime-container {
+        flex-direction: column;
+    }
+}
+
+.details-form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 20px;
 }
 
 .form-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    display: flex;
+    gap: 20px;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    flex: 1;
 }
 
 .form-group label {
-    font-weight: 600;
-    font-size: 0.95rem;
+    font-weight: bold;
+    margin-bottom: 8px;
     color: #333;
 }
 
-.form-group input, .form-group select {
-    padding: 0.8rem 1rem;
-    border: 1px solid #ddd;
+.form-group input, 
+.form-group select {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
-    font-family: inherit;
-    outline: none;
     transition: border-color 0.2s;
-    width: 100%;
 }
 
-.form-group input:focus, .form-group select:focus {
-    border-color: #4CAF50;
+.form-group input:focus, 
+.form-group select:focus {
+    outline: none;
+    border-color: #cda434;
 }
 
-/* boutons */
+/* Informations utilisateur & Succès */
+.notice-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-wrapper {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 1px solid #e9ecef;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+}
+
+.checkbox-input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Boutons d'action du Wizard */
 .wizard-actions {
     display: flex;
     justify-content: space-between;
-    margin-top: 2rem;
-    gap: 10px; 
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.btn-prev {
+    padding: 12px 25px;
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-prev:hover {
+    background-color: #e0e0e0;
 }
 
 .btn-next, .btn-submit {
+    padding: 12px 30px;
     background-color: #1a1a1a;
     color: white;
     border: none;
-    padding: 0.8rem 1.2rem; 
-    border-radius: 30px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
-    margin-left: auto; 
-    font-family: 'Playfair Display', serif;
+    transition: background-color 0.2s;
+}
+
+.btn-next.single-action {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
 }
 
 .btn-next:hover, .btn-submit:hover {
-    background-color: #4CAF50;
+    background-color: #cda434;
 }
 
 .btn-next:disabled {
@@ -194,111 +276,53 @@
     cursor: not-allowed;
 }
 
-.btn-prev {
-    background-color: transparent;
-    color: #666;
-    border: 1px solid #ccc;
-    padding: 0.8rem 1.2rem;
-    border-radius: 30px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-family: 'Playfair Display', serif;
+.btn-submit {
+    background-color: #4CAF50;
 }
 
-.btn-prev:hover {
-    background-color: #f5f5f5;
-    color: #1a1a1a;
+.btn-submit:hover {
+    background-color: #45a049;
 }
 
-.reservation-loading {
-  text-align: center;
-  padding: 100px;
-  font-size: 1.2rem;
-  color: #666666;
+/* Étape Finale (Succès) */
+.success-step {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0;
 }
 
-.notice-success {
-  background-color: #e8f5e9;
-  padding: 12px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  color: #2e7d32;
-  text-align: center;
-  font-weight: 500;
+.success-icon {
+    font-size: 4rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
 }
 
-.checkbox-wrapper {
-  margin-bottom: 25px;
-  text-align: center;
+.success-step h2 {
+    color: #4CAF50;
+    margin-bottom: 15px;
 }
 
-.checkbox-label {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-size: 0.9rem; 
-  color: #1a1a1a;
-  font-weight: 500;
-}
-
-.checkbox-input {
-  width: 18px;
-  height: 18px;
-  accent-color: #1a1a1a; 
-}
-
-.success-step .success-icon {
-  color: #4CAF50;
-  font-size: 4rem;
-  margin-bottom: 20px;
+.success-step p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 10px;
+    line-height: 1.5;
 }
 
 .btn-home-return {
-  display: inline-block;
-  margin-top: 25px;
-  text-decoration: none;
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 30px;
+    background-color: #1a1a1a;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.2s;
 }
 
-/* =========================================
-   TABLETTES ET DESKTOP
-   ========================================= */
-@media screen and (min-width: 600px) {
-    .form-row {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-    .wizard-card {
-        padding: 3rem;
-    }
-
-    .options-grid.list-view .option-card {
-        flex-direction: row; 
-        align-items: center;
-    }
-
-    .btn-next, .btn-submit, .btn-prev {
-        padding: 0.8rem 2rem;
-        font-size: 1rem;
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .reservation-container {
-        padding: 60px 2rem;
-    }
-    .reservation-header h1 {
-        font-size: 3rem;
-        margin-bottom: 0.5rem;
-    }
-    .step-content h2 {
-        font-size: 1.5rem;
-        margin-bottom: 2rem;
-    }
-    .option-card {
-        padding: 1.5rem;
-    }
+.btn-home-return:hover {
+    background-color: #cda434;
 }

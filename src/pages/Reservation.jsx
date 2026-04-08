@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { BsCheckCircleFill } from 'react-icons/bs';
 import './Reservation.css';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -174,7 +173,7 @@ export default function Reservation() {
                 </div>
               ))}
             </div>
-            <button className="btn-next" disabled={!formData.salonId} onClick={nextStep}>Suivant</button>
+            <button className="btn-next single-action" disabled={!formData.salonId} onClick={nextStep}>Suivant</button>
           </div>
         )}
 
@@ -268,7 +267,6 @@ export default function Reservation() {
           <div className="step-content">
             <h2>5. Vos coordonnées</h2>
             
-            {/* 🌟 NOUVEAU : Classes CSS au lieu de styles en ligne */}
             {utilisateurConnecte && !pourUnProche && (
               <div className="notice-success">
                 <i className="bi bi-person-check-fill"></i> Bonjour {utilisateurConnecte.prenom}, vos informations ont été pré-remplies !
@@ -320,13 +318,12 @@ export default function Reservation() {
         {/* confirmation */}
         {step === 6 && (
           <div className="step-content success-step">
-            <BsCheckCircleFill className="success-icon" />
+            <i className="bi bi-check-circle-fill success-icon"></i>
             <h2>Rendez-vous Confirmé !</h2>
             <p>Le rendez-vous pour {formData.prenom} est bien enregistré le <strong>{formData.date.split('-').reverse().join('/')} à {formData.heure}</strong>.</p>
             <p>Un email de confirmation vient de vous être envoyé à <em>{formData.email}</em>.</p>
             
-            {/* boutton accueil */}
-            <Link to="/" className="btn-next btn-home-return">Retour à l'accueil</Link>
+            <Link to="/" className="btn-home-return">Retour à l'accueil</Link>
           </div>
         )}
 
