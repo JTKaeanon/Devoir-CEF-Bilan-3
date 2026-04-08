@@ -21,6 +21,21 @@
     background-color: #b3b3b3;
 }
 
+/* Gestion de l'affichage des images de fond */
+.box-image, .box-presentation {
+    background-size: cover;
+    background-position: center;
+}
+
+.box-image {
+    background-color: #e0e0e0;
+}
+
+.box-presentation {
+    background-color: #1a1a1a;
+}
+
+/* L'OVERLAY SOMBRE POUR LE TEXTE (Haut Droite) */
 .presentation-overlay {
     position: absolute;
     inset: 0; 
@@ -47,11 +62,14 @@
     font-weight: 500;
 }
 
+/* =========================================
+   NOUVEAU : SECTION HORAIRES DU SALON
+   ========================================= */
 .salon-global-hours {
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2); 
-    width: 80%; 
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    width: 80%;
 }
 
 .salon-global-hours h3 {
@@ -61,7 +79,7 @@
 }
 
 .salon-global-hours p {
-    white-space: pre-line; 
+    white-space: pre-line;
     font-size: 1rem;
     line-height: 1.5;
     opacity: 0.9;
@@ -121,7 +139,7 @@
 
 .team-schedule-item {
     display: flex;
-    justify-content: space-between; /* day left, hours right  */
+    justify-content: space-between; 
     padding: 8px 0;
     border-bottom: 1px dashed #eee;
     font-size: 0.9rem;

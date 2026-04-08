@@ -308,13 +308,19 @@ app.put('/api/utilisateurs/:id', async (req, res) => {
 // 1. CREATE : Ajouter une nouvelle prestation
 app.post('/api/prestations', async (req, res) => {
   try {
-    const { nom, description, prix, duree } = req.body;
+    // 🌟 On récupère salonIds envoyé par le Front
+    const { nom, description, prix, duree, salonIds } = req.body; 
+    
     const nouvellePrestation = await prisma.prestation.create({
       data: {
         nom,
         description,
         prix: parseFloat(prix),
-        duree: parseInt(duree) // Durée en minutes
+        duree: parseInt(duree), // Durée en minutes
+        // 🌟 NOUVEAU : On connecte la prestation aux salons cochés
+        salons: {
+          connect: salonIds ? salonIds.map(id => ({ id: parseInt(id) })) : []
+        }
       }
     });
     res.status(201).json(nouvellePrestation);
@@ -328,7 +334,8 @@ app.post('/api/prestations', async (req, res) => {
 app.put('/api/prestations/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const { nom, description, prix, duree } = req.body;
+    // 🌟 On récupère salonIds envoyé par le Front
+    const { nom, description, prix, duree, salonIds } = req.body;
     
     const prestationMaj = await prisma.prestation.update({
       where: { id: id },
@@ -336,7 +343,11 @@ app.put('/api/prestations/:id', async (req, res) => {
         nom,
         description,
         prix: parseFloat(prix),
-        duree: parseInt(duree)
+        duree: parseInt(duree),
+        // 🌟 NOUVEAU : 'set' remplace les anciennes liaisons par les nouvelles cases cochées
+        salons: {
+          set: salonIds ? salonIds.map(id => ({ id: parseInt(id) })) : [] 
+        }
       }
     });
     res.json(prestationMaj);

@@ -29,6 +29,7 @@ model Salon {
   nom               String
   adresse           String
   telephone         String
+  horaires          String?
   
   // DESIGN
   image             String?      // URL image carte (page Nos Salons)

@@ -65,10 +65,7 @@ export default function SalonDetail() {
         <div
           className="grid-box box-image"
           style={{ 
-            backgroundImage: salon.image ? `url("${salon.image}")` : 'none',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundColor: '#e0e0e0'
+            backgroundImage: salon.image ? `url("${salon.image.startsWith('/') ? salon.image : '/' + salon.image}")` : 'none' 
           }}
         ></div>
 
@@ -76,12 +73,11 @@ export default function SalonDetail() {
         <div
           className="grid-box box-presentation"
           style={{ 
-            backgroundImage: salon.presentationImage ? `url("${salon.presentationImage}")` : 'none',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundColor: '#1a1a1a'
+            backgroundImage: salon.presentationImage ? `url("${salon.presentationImage.startsWith('/') ? salon.presentationImage : '/' + salon.presentationImage}")` : 'none' 
           }}
         >
+
+          
           {/* OVERLAY SOMBRE GÉRÉ EN CSS */}
           <div className="presentation-overlay">
             <h1>{salon.nom}</h1>

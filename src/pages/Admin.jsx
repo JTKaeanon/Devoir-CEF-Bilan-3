@@ -11,11 +11,9 @@ export default function Admin() {
   const [prestations, setPrestations] = useState([]);
   const [salons, setSalons] = useState([]);
   const [employes, setEmployes] = useState([]);
-
-  const [formPresta, setFormPresta] = useState({ id: null, nom: '', description: '', prix: '', duree: '' });
+  const [formPresta, setFormPresta] = useState({ id: null, nom: '', description: '', prix: '', duree: '', salonIds: [] });
   const [isEditingPresta, setIsEditingPresta] = useState(false);
 
-  // 🌟 AJOUT DE 'horaires' DANS LE STATE DU SALON
   const [formSalon, setFormSalon] = useState({ id: null, nom: '', adresse: '', telephone: '', image: '', presentationImage: '', slug: '', description: '', horaires: '' });
   const [isEditingSalon, setIsEditingSalon] = useState(false);
 
@@ -51,7 +49,8 @@ export default function Admin() {
     const url = isEditingPresta ? `http://localhost:3000/api/prestations/${formPresta.id}` : 'http://localhost:3000/api/prestations';
     const method = isEditingPresta ? 'PUT' : 'POST';
     await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formPresta) });
-    setFormPresta({ id: null, nom: '', description: '', prix: '', duree: '' });
+    // On réinitialise bien les salons sélectionnés à vide après l'ajout
+    setFormPresta({ id: null, nom: '', description: '', prix: '', duree: '', salonIds: [] });
     setIsEditingPresta(false);
     fetchData();
   };
@@ -142,6 +141,29 @@ export default function Admin() {
                   <div className="form-group"><label>Prix</label><input type="number" value={formPresta.prix} onChange={e => setFormPresta({...formPresta, prix: e.target.value})} step="0.01" required /></div>
                   <div className="form-group"><label>Durée</label><input type="number" value={formPresta.duree} onChange={e => setFormPresta({...formPresta, duree: e.target.value})} required /></div>
                 </div>
+
+                <div className="form-group" style={{ marginTop: '10px' }}>
+                  <label>Salons proposant cette prestation</label>
+                  <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', marginTop: '10px' }}>
+                    {salons.map(s => (
+                      <label key={s.id} style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                        <input 
+                          type="checkbox" 
+                          checked={formPresta.salonIds.includes(s.id)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setFormPresta({...formPresta, salonIds: [...formPresta.salonIds, s.id]});
+                            } else {
+                              setFormPresta({...formPresta, salonIds: formPresta.salonIds.filter(id => id !== s.id)});
+                            }
+                          }}
+                        />
+                        {s.nom}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="admin-form-actions">
                   {isEditingPresta && <button type="button" className="btn-cancel" onClick={() => setIsEditingPresta(false)}>Annuler</button>}
                   <button type="submit" className="btn-save">Enregistrer</button>
@@ -156,7 +178,10 @@ export default function Admin() {
                       <tr key={p.id}>
                         <td>{p.nom}</td><td>{p.prix} €</td>
                         <td className="actions-cell">
-                          <button onClick={() => { setFormPresta(p); setIsEditingPresta(true); }} className="btn-icon edit"><i className="bi bi-pencil-fill"></i></button>
+                          <button onClick={() => { 
+                            setFormPresta({ ...p, salonIds: p.salons ? p.salons.map(s => s.id) : [] }); 
+                            setIsEditingPresta(true); 
+                          }} className="btn-icon edit"><i className="bi bi-pencil-fill"></i></button>
                           <button onClick={() => handlePrestaDelete(p.id)} className="btn-icon delete"><i className="bi bi-trash-fill"></i></button>
                         </td>
                       </tr>
@@ -188,7 +213,12 @@ export default function Admin() {
                 
                 <div className="form-group">
                   <label>Horaires d'ouverture du salon</label>
-                  <textarea placeholder="Ex: Lundi : Fermé&#10;Mardi au Samedi : 09h - 19h" value={formSalon.horaires || ''} onChange={e => setFormSalon({...formSalon, horaires: e.target.value})} rows="4"></textarea>
+                  <textarea 
+                    placeholder="Ex: Lundi : Fermé&#10;Mardi au Samedi : 09h - 19h" 
+                    value={formSalon.horaires || ''} 
+                    onChange={e => setFormSalon({...formSalon, horaires: e.target.value})} 
+                    rows="4">
+                  </textarea>
                 </div>
 
                 <div className="admin-form-actions">

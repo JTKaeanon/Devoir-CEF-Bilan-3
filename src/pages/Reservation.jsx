@@ -14,6 +14,7 @@ export default function Reservation() {
   const [prestations, setPrestations] = useState([]);
   const [employesDuSalon, setEmployesDuSalon] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [availableHours, setAvailableHours] = useState([]);
 
   const [pourUnProche, setPourUnProche] = useState(false);
 
@@ -131,6 +132,35 @@ export default function Reservation() {
     }
   };
 
+  // crenaux dynamique
+  useEffect(() => {
+    if (formData.date && formData.employeId) {
+      const jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+      const nomDuJour = jours[new Date(formData.date).getDay()];
+
+      const employe = employesDuSalon.find(e => e.id === parseInt(formData.employeId));
+      
+      if (employe && employe.horaires) {
+        const horairesDuJour = employe.horaires.find(h => h.jour === nomDuJour);
+
+        if (horairesDuJour) {
+          //  creneaux tout les 30mins
+          let creneaux = [];
+          let heureActuelle = new Date(`1970-01-01T${horairesDuJour.heure_debut}:00`);
+          let heureFin = new Date(`1970-01-01T${horairesDuJour.heure_fin}:00`);
+
+          while (heureActuelle < heureFin) {
+            creneaux.push(heureActuelle.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).replace(':', ':'));
+            heureActuelle.setMinutes(heureActuelle.getMinutes() + 30); // Saut de 30 min
+          }
+          setAvailableHours(creneaux);
+        } else {
+          setAvailableHours([]); 
+        }
+      }
+    }
+  }, [formData.date, formData.employeId, employesDuSalon]);
+
   useDocumentTitle('Prendre RDV');
 
   const availablePrestations = prestations.filter(presta => 
@@ -244,14 +274,15 @@ export default function Reservation() {
               </div>
               <div className="form-group">
                 <label>Heure souhaitée</label>
-                <select value={formData.heure} onChange={(e) => handleSelect('heure', e.target.value)}>
+                <select value={formData.heure} onChange={(e) => handleSelect('heure', e.target.value)} required disabled={!formData.date || !formData.employeId}>
                   <option value="">Choisir un horaire...</option>
-                  <option value="09:00">09:00</option>
-                  <option value="10:00">10:00</option>
-                  <option value="11:30">11:30</option>
-                  <option value="14:00">14:00</option>
-                  <option value="15:30">15:30</option>
-                  <option value="17:00">17:00</option>
+                  
+                  {availableHours.length > 0 ? (
+                    availableHours.map(h => <option key={h} value={h}>{h}</option>)
+                  ) : (
+                    formData.date && formData.employeId && <option value="" disabled>Aucun créneau disponible ce jour.</option>
+                  )}
+                  
                 </select>
               </div>
             </div>
