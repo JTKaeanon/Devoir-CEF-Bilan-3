@@ -28,7 +28,7 @@ Suivez ces étapes pour exécuter le projet localement sur votre machine.
 ### 1. Cloner le dépôt
 
 ```bash
-git clone (https://github.com/JTKaeanon/Devoir-CEF-Bilan-3)
+git clone https://github.com/JTKaeanon/Devoir-CEF-Bilan-3
 cd Devoir-CEF-Bilan-3 
 ```
 
