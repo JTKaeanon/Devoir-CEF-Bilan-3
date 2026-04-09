@@ -46,6 +46,7 @@ model Salon {
 model Prestation {
   id          Int          @id @default(autoincrement())
   nom         String
+  description String?
   duree       Int          // minutes
   prix        Float
   

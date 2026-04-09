@@ -31,9 +31,9 @@ export default function Admin() {
 
   const fetchData = async () => {
     try {
-      const resP = await fetch('http://localhost:3000/api/prestations');
-      const resS = await fetch('http://localhost:3000/api/salons');
-      const resE = await fetch('http://localhost:3000/api/employes');
+      const resP = await fetch('http://localhost:3000/api/prestations', { cache: 'no-store' });
+      const resS = await fetch('http://localhost:3000/api/salons', { cache: 'no-store' });
+      const resE = await fetch('http://localhost:3000/api/employes', { cache: 'no-store' });
       
       if (resP.ok) setPrestations(await resP.json());
       if (resS.ok) setSalons(await resS.json());
@@ -49,7 +49,6 @@ export default function Admin() {
     const url = isEditingPresta ? `http://localhost:3000/api/prestations/${formPresta.id}` : 'http://localhost:3000/api/prestations';
     const method = isEditingPresta ? 'PUT' : 'POST';
     await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formPresta) });
-    // On réinitialise bien les salons sélectionnés à vide après l'ajout
     setFormPresta({ id: null, nom: '', description: '', prix: '', duree: '', salonIds: [] });
     setIsEditingPresta(false);
     fetchData();
