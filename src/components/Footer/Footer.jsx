@@ -4,6 +4,10 @@ import { FaXTwitter } from 'react-icons/fa6';
 import './Footer.css';
 
 export default function Footer() {
+  // 🌟 On vérifie si un utilisateur est connecté
+  const utilisateurData = localStorage.getItem('utilisateur');
+  const utilisateurConnecte = utilisateurData ? JSON.parse(utilisateurData) : null;
+
   return (
     <footer className="footer-container">
       
@@ -12,7 +16,11 @@ export default function Footer() {
         <p>Lundi - Samedi</p>
         <p>9h00 - 19h00</p>
         <Link to="/contact">Contact</Link>
-        <Link to="/compte">Espace Client</Link>
+        
+        {/* 🌟 LIEN INTELLIGENT : Dashboard si connecté, sinon page de Connexion */}
+        <Link to={utilisateurConnecte ? "/dashboard" : "/compte"}>
+          {utilisateurConnecte ? "Mon Espace" : "Espace Client"}
+        </Link>
       </div>
 
       <div className="footer-section footer-center">

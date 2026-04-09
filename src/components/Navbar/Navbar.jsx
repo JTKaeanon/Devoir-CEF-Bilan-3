@@ -5,23 +5,24 @@ import './Navbar.css';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  //  check user stock dans navigateur
-  const utilisateurData = localStorage.getItem('utilisateur');
-  const utilisateur = utilisateurData ? JSON.parse(utilisateurData) : null;
+  // 🌟 LECTURE SÉCURISÉE DU NAVIGATEUR (Anti Page Blanche)
+  let utilisateur = null;
+  try {
+    const utilisateurData = localStorage.getItem('utilisateur');
+    if (utilisateurData && utilisateurData !== "undefined") {
+      utilisateur = JSON.parse(utilisateurData);
+    }
+  } catch (error) {
+    console.error("Erreur de lecture de l'utilisateur, on nettoie la mémoire :", error);
+    localStorage.removeItem('utilisateur'); // On vide la mémoire corrompue
+  }
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
-  // close menu on selection
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
-  // deconnexion
   const handleDeconnexion = () => {
-    localStorage.removeItem('utilisateur'); // on efface mémoire
-    window.location.href = '/'; // reload pour refresh
+    localStorage.removeItem('utilisateur');
+    window.location.href = '/';
   };
 
   return (
@@ -53,9 +54,18 @@ export default function Navbar() {
         {/* etat connexion */}
         {utilisateur ? (
           <>
-            <span style={{ color: '#ffffff', fontFamily: "'Playfair Display', serif", fontSize: '1.1rem' }}>
-              Bonjour, {utilisateur.prenom}
-            </span>
+            {/* bouton admin */}
+            {utilisateur.role === 'ADMIN' && (
+              <Link to="/admin" className="btn-admin-nav" onClick={closeMenu}>
+                <i className="bi bi-shield-lock-fill"></i> Admin
+              </Link>
+            )}
+
+            {/* boutton espace */}
+            <Link to="/dashboard" className="btn-mon-espace" onClick={closeMenu}>
+              <i className="bi bi-person-circle"></i> Mon Espace
+            </Link>
+
             <button onClick={handleDeconnexion} className="logout-btn">
               Déconnexion
             </button>

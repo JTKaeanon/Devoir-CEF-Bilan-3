@@ -16,59 +16,76 @@
 .grid-box {
     border-radius: 30px;
     overflow: hidden;
-    min-height: 300px;
+    min-height: 400px; 
     position: relative;
     background-color: #b3b3b3;
 }
 
-/* top left */
-.box-image {
+/* Gestion de l'affichage des images de fond */
+.box-image, .box-presentation {
     background-size: cover;
     background-position: center;
 }
 
-/* top right */
+.box-image {
+    background-color: #e0e0e0;
+}
+
 .box-presentation {
-    background-size: cover;
-    background-position: center;
+    background-color: #1a1a1a;
+}
+
+/* L'OVERLAY SOMBRE POUR LE TEXTE (Haut Droite) */
+.presentation-overlay {
+    position: absolute;
+    inset: 0; 
+    background: rgba(0, 0, 0, 0.65); 
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 1.5rem;
-}
-
-/* transparence */
-.box-presentation::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.65);
-    z-index: 1;
-}
-
-.presentation-content {
-    position: relative;
+    align-items: center; 
+    text-align: center;  
+    padding: 2.5rem;
+    color: white;
     z-index: 2;
 }
 
-.presentation-content h1 {
-    
-    font-size: 2.2rem;
+.presentation-overlay h1 {
+    font-size: 2.5rem;
     margin-bottom: 1rem;
+    color: #cda434;
 }
 
-.presentation-content h2 {
+.salon-description {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+/* =========================================
+   NOUVEAU : SECTION HORAIRES DU SALON
+   ========================================= */
+.salon-global-hours {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    width: 80%;
+}
+
+.salon-global-hours h3 {
+    color: #cda434;
     font-size: 1.2rem;
-    margin-bottom: 2rem;
-    font-weight: bold;
+    margin-bottom: 0.8rem;
 }
 
-.presentation-content p {
-    font-weight: bold;
-    font-size: 1.1rem;
+.salon-global-hours p {
+    white-space: pre-line;
+    font-size: 1rem;
+    line-height: 1.5;
+    opacity: 0.9;
+    margin: 0;
 }
+
 
 /* bottom left  */
 .box-team {
@@ -78,7 +95,6 @@
 }
 
 .box-team h3 {
-    
     font-size: 1.8rem;
     margin-bottom: 2rem;
     text-align: center;
@@ -103,9 +119,7 @@
     flex-direction: column;
 }
 
-
 .team-member-name {
-    
     font-weight: bold;
     margin: 0 0 15px 0;
     font-size: 1.3rem;
@@ -125,7 +139,7 @@
 
 .team-schedule-item {
     display: flex;
-    justify-content: space-between; /* day left, hours right  */
+    justify-content: space-between; 
     padding: 8px 0;
     border-bottom: 1px dashed #eee;
     font-size: 0.9rem;
@@ -165,7 +179,6 @@
 }
 
 .box-services h3 {
-    
     font-size: 1.8rem;
     margin-bottom: 2rem;
     text-align: center;
@@ -213,7 +226,6 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-
 .service-info {
     text-align: left;
     flex: 1;
@@ -248,7 +260,6 @@
     font-size: 1.2rem;
     font-weight: bold;
     color: #4CAF50;
-    
     margin: 0;
 }
 
@@ -300,20 +311,19 @@
     }
 
     .grid-box {
-        min-height: 400px;
+        min-height: 450px; 
     }
 
-    .box-presentation {
-        padding: 2rem;
+    .presentation-overlay {
+        padding: 3.5rem;
     }
 
-    .presentation-content h1 {
+    .presentation-overlay h1 {
         font-size: 3.5rem;
     }
 
-    .presentation-content h2 {
-        font-size: 1.5rem;
-        margin-bottom: 3rem;
+    .salon-description {
+        font-size: 1.3rem;
     }
 
     .box-team, .box-services {

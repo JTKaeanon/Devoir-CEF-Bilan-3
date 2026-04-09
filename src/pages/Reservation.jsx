@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { BsCheckCircleFill } from 'react-icons/bs';
 import './Reservation.css';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -15,6 +14,7 @@ export default function Reservation() {
   const [prestations, setPrestations] = useState([]);
   const [employesDuSalon, setEmployesDuSalon] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [availableHours, setAvailableHours] = useState([]);
 
   const [pourUnProche, setPourUnProche] = useState(false);
 
@@ -132,11 +132,58 @@ export default function Reservation() {
     }
   };
 
+  // crenaux dynamique
+  useEffect(() => {
+    if (formData.date && formData.employeId) {
+      const jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+      const nomDuJour = jours[new Date(formData.date).getDay()];
+
+      const employe = employesDuSalon.find(e => e.id === parseInt(formData.employeId));
+      
+      if (employe && employe.horaires) {
+        const horairesDuJour = employe.horaires.find(h => h.jour === nomDuJour);
+
+        if (horairesDuJour) {
+          //  creneaux tout les 30mins
+          let creneaux = [];
+          let heureActuelle = new Date(`1970-01-01T${horairesDuJour.heure_debut}:00`);
+          let heureFin = new Date(`1970-01-01T${horairesDuJour.heure_fin}:00`);
+
+          while (heureActuelle < heureFin) {
+            creneaux.push(heureActuelle.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).replace(':', ':'));
+            heureActuelle.setMinutes(heureActuelle.getMinutes() + 30); // Saut de 30 min
+          }
+          setAvailableHours(creneaux);
+        } else {
+          setAvailableHours([]); 
+        }
+      }
+    }
+  }, [formData.date, formData.employeId, employesDuSalon]);
+
   useDocumentTitle('Prendre RDV');
 
   const availablePrestations = prestations.filter(presta => 
     presta.salons && presta.salons.some(s => s.id === formData.salonId)
   );
+
+  // presta preselectionné
+  const selectedPresta = prestations.find(p => p.id === formData.prestationId);
+
+  // verif si salon prorpose
+  const isSalonAvailableForPresta = (salonId) => {
+    if (!selectedPresta) return true; // si pas de presta = tout les salons
+    return selectedPresta.salons && selectedPresta.salons.some(s => s.id === salonId);
+  };
+
+  // trie : dispo haut, indispo bas
+  const sortedSalons = [...salons].sort((a, b) => {
+    const aDispo = isSalonAvailableForPresta(a.id);
+    const bDispo = isSalonAvailableForPresta(b.id);
+    if (aDispo === bDispo) return 0;
+    return aDispo ? -1 : 1; // dispo = true = -1
+  });
+
 
   if (isLoading) return <div className="reservation-loading">Chargement de la réservation...</div>;
 
@@ -162,19 +209,53 @@ export default function Reservation() {
         {step === 1 && (
           <div className="step-content">
             <h2>1. Choisissez votre salon</h2>
-            <div className="options-grid">
-              {salons.map(salon => (
-                <div 
-                  key={salon.id} 
-                  className={`option-card ${formData.salonId === salon.id ? 'selected' : ''}`}
-                  onClick={() => handleSalonSelect(salon.id)}
+
+            {/* contexte */}
+            {selectedPresta && passedState.prestationNom && (
+              <div className="context-banner">
+                <p>
+                   Vous réservez pour : <strong>{selectedPresta.nom}</strong>
+                </p>
+                <button 
+                  className="btn-cancel-filter"
+                  onClick={() => {
+                    setFormData({...formData, prestationId: ''});
+                    window.history.replaceState({}, document.title); 
+                  }}
                 >
-                  <h3>{salon.nom}</h3>
-                  <p>{salon.adresse}</p>
-                </div>
-              ))}
+                  Changer de soin
+                </button>
+              </div>
+            )}
+
+            <div className="options-grid">
+              {sortedSalons.map(salon => {
+                const isDispo = isSalonAvailableForPresta(salon.id);
+                
+                return (
+                  <div 
+                    key={salon.id} 
+                    // classe si pas dispo
+                    className={`option-card ${formData.salonId === salon.id ? 'selected' : ''} ${!isDispo ? 'unavailable' : ''}`}
+                    onClick={() => isDispo ? handleSalonSelect(salon.id) : null}
+                  >
+                    <h3>{salon.nom}</h3>
+                    <p>{salon.adresse}</p>
+                    
+                    {/* explication */}
+                    {!isDispo && (
+                      <span className="unavailable-message">
+                        <i className="bi bi-x-circle"></i> Non disponible pour ce soin
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-            <button className="btn-next" disabled={!formData.salonId} onClick={nextStep}>Suivant</button>
+            
+            <button className="btn-next single-action" disabled={!formData.salonId} onClick={nextStep}>
+              Suivant
+            </button>
           </div>
         )}
 
@@ -245,14 +326,15 @@ export default function Reservation() {
               </div>
               <div className="form-group">
                 <label>Heure souhaitée</label>
-                <select value={formData.heure} onChange={(e) => handleSelect('heure', e.target.value)}>
+                <select value={formData.heure} onChange={(e) => handleSelect('heure', e.target.value)} required disabled={!formData.date || !formData.employeId}>
                   <option value="">Choisir un horaire...</option>
-                  <option value="09:00">09:00</option>
-                  <option value="10:00">10:00</option>
-                  <option value="11:30">11:30</option>
-                  <option value="14:00">14:00</option>
-                  <option value="15:30">15:30</option>
-                  <option value="17:00">17:00</option>
+                  
+                  {availableHours.length > 0 ? (
+                    availableHours.map(h => <option key={h} value={h}>{h}</option>)
+                  ) : (
+                    formData.date && formData.employeId && <option value="" disabled>Aucun créneau disponible ce jour.</option>
+                  )}
+                  
                 </select>
               </div>
             </div>
@@ -268,7 +350,6 @@ export default function Reservation() {
           <div className="step-content">
             <h2>5. Vos coordonnées</h2>
             
-            {/* 🌟 NOUVEAU : Classes CSS au lieu de styles en ligne */}
             {utilisateurConnecte && !pourUnProche && (
               <div className="notice-success">
                 <i className="bi bi-person-check-fill"></i> Bonjour {utilisateurConnecte.prenom}, vos informations ont été pré-remplies !
@@ -320,13 +401,12 @@ export default function Reservation() {
         {/* confirmation */}
         {step === 6 && (
           <div className="step-content success-step">
-            <BsCheckCircleFill className="success-icon" />
+            <i className="bi bi-check-circle-fill success-icon"></i>
             <h2>Rendez-vous Confirmé !</h2>
             <p>Le rendez-vous pour {formData.prenom} est bien enregistré le <strong>{formData.date.split('-').reverse().join('/')} à {formData.heure}</strong>.</p>
             <p>Un email de confirmation vient de vous être envoyé à <em>{formData.email}</em>.</p>
             
-            {/* boutton accueil */}
-            <Link to="/" className="btn-next btn-home-return">Retour à l'accueil</Link>
+            <Link to="/" className="btn-home-return">Retour à l'accueil</Link>
           </div>
         )}
 
