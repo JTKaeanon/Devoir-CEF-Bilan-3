@@ -312,6 +312,19 @@ app.get('/api/utilisateurs/:id/reservations', async (req, res) => {
   }
 });
 
+app.delete('/api/reservations/:id', async (req, res) => {
+  try {
+    const rdvId = parseInt(req.params.id);
+    await prisma.rendezVous.delete({
+      where: { id: rdvId }
+    });
+    res.json({ message: "Rendez-vous annulé avec succès." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ erreur: "Impossible d'annuler le rendez-vous." });
+  }
+});
+
 // ==========================================
 // INIT SERVEUR
 // ==========================================

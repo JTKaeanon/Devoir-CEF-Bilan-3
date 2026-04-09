@@ -250,6 +250,30 @@
     justify-content: center;
 }
 
+
+/* --- bouton anulation rdv --- */
+.status-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.btn-cancel-rdv {
+  background: none;
+  border: none;
+  color: #dc3545; 
+  cursor: pointer;
+  font-size: 0.9em;
+  text-decoration: underline;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.btn-cancel-rdv:hover {
+  color: #a71d2a; 
+}
+
 /* =========================================
    responsive
    ========================================= */
