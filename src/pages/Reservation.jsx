@@ -167,6 +167,24 @@ export default function Reservation() {
     presta.salons && presta.salons.some(s => s.id === formData.salonId)
   );
 
+  // presta preselectionné
+  const selectedPresta = prestations.find(p => p.id === formData.prestationId);
+
+  // verif si salon prorpose
+  const isSalonAvailableForPresta = (salonId) => {
+    if (!selectedPresta) return true; // si pas de presta = tout les salons
+    return selectedPresta.salons && selectedPresta.salons.some(s => s.id === salonId);
+  };
+
+  // trie : dispo haut, indispo bas
+  const sortedSalons = [...salons].sort((a, b) => {
+    const aDispo = isSalonAvailableForPresta(a.id);
+    const bDispo = isSalonAvailableForPresta(b.id);
+    if (aDispo === bDispo) return 0;
+    return aDispo ? -1 : 1; // dispo = true = -1
+  });
+
+
   if (isLoading) return <div className="reservation-loading">Chargement de la réservation...</div>;
 
   return (
@@ -191,19 +209,53 @@ export default function Reservation() {
         {step === 1 && (
           <div className="step-content">
             <h2>1. Choisissez votre salon</h2>
-            <div className="options-grid">
-              {salons.map(salon => (
-                <div 
-                  key={salon.id} 
-                  className={`option-card ${formData.salonId === salon.id ? 'selected' : ''}`}
-                  onClick={() => handleSalonSelect(salon.id)}
+
+            {/* contexte */}
+            {selectedPresta && passedState.prestationNom && (
+              <div className="context-banner">
+                <p>
+                   Vous réservez pour : <strong>{selectedPresta.nom}</strong>
+                </p>
+                <button 
+                  className="btn-cancel-filter"
+                  onClick={() => {
+                    setFormData({...formData, prestationId: ''});
+                    window.history.replaceState({}, document.title); 
+                  }}
                 >
-                  <h3>{salon.nom}</h3>
-                  <p>{salon.adresse}</p>
-                </div>
-              ))}
+                  Changer de soin
+                </button>
+              </div>
+            )}
+
+            <div className="options-grid">
+              {sortedSalons.map(salon => {
+                const isDispo = isSalonAvailableForPresta(salon.id);
+                
+                return (
+                  <div 
+                    key={salon.id} 
+                    // classe si pas dispo
+                    className={`option-card ${formData.salonId === salon.id ? 'selected' : ''} ${!isDispo ? 'unavailable' : ''}`}
+                    onClick={() => isDispo ? handleSalonSelect(salon.id) : null}
+                  >
+                    <h3>{salon.nom}</h3>
+                    <p>{salon.adresse}</p>
+                    
+                    {/* explication */}
+                    {!isDispo && (
+                      <span className="unavailable-message">
+                        <i className="bi bi-x-circle"></i> Non disponible pour ce soin
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-            <button className="btn-next single-action" disabled={!formData.salonId} onClick={nextStep}>Suivant</button>
+            
+            <button className="btn-next single-action" disabled={!formData.salonId} onClick={nextStep}>
+              Suivant
+            </button>
           </div>
         )}
 

@@ -326,3 +326,54 @@
 .btn-home-return:hover {
     background-color: #cda434;
 }
+
+/* --- filtre salons --- */
+
+/* choix */
+.context-banner {
+  background-color: #f0f4f8;
+  border-left: 4px solid #333;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.context-banner p {
+  margin: 0;
+  color: #333;
+}
+
+/* anulé le choix */
+.btn-cancel-filter {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel-filter:hover {
+  background: #f1f1f1;
+}
+
+/* grisage si pas dispo */
+.option-card.unavailable {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: #f9f9f9;
+  border-color: #eee;
+}
+
+/* pas dispo */
+.unavailable-message {
+  display: block;
+  margin-top: 10px;
+  color: #999;
+  font-size: 0.85em;
+  font-weight: bold;
+}
