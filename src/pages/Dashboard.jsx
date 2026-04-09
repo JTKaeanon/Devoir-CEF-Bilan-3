@@ -75,6 +75,27 @@ export default function Dashboard() {
     }
   };
 
+  // annulation rdv
+  const handleAnnulerRdv = async (rdvId) => {
+    if (window.confirm("Êtes-vous sûr de vouloir annuler ce rendez-vous ?")) {
+      try {
+        const response = await fetch(`http://localhost:3000/api/reservations/${rdvId}`, {
+          method: 'DELETE'
+        });
+
+        if (response.ok) {
+          setMesRdv(mesRdv.filter(rdv => rdv.id !== rdvId));
+          alert("Votre rendez-vous a bien été annulé.");
+        } else {
+          alert("Erreur lors de l'annulation du rendez-vous.");
+        }
+      } catch (error) {
+        console.error("Erreur :", error);
+        alert("Impossible de joindre le serveur.");
+      }
+    }
+  };
+
   // rdv tri
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -173,10 +194,16 @@ export default function Dashboard() {
                       <p><i className="bi bi-shop"></i> {rdv.employe.salon.nom}</p>
                       <p><i className="bi bi-person"></i> Avec {rdv.employe.nom}</p>
                     </div>
-                    <div className="rdv-status">
+                    <div className="rdv-status status-column">
                       <span className={`status-badge ${rdv.statut.toLowerCase()}`}>
                         {rdv.statut.replace('_', ' ')}
                       </span>
+                      <button 
+                        className="btn-cancel-rdv"
+                        onClick={() => handleAnnulerRdv(rdv.id)}
+                      >
+                        Annuler ce RDV
+                      </button>
                     </div>
                   </div>
                 ))}

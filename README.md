@@ -1,16 +1,42 @@
-# React + Vite
+# Groupe L'Atelier - Plateforme de Réservation de Salons de Coiffure
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ce projet a été réalisé dans le cadre du devoir bilan 3 avec le Centre Européen de Formation. Il s'agit d'une application complète permettant la réservation de prestations de coiffure dans différents salons.
 
-Currently, two official plugins are available:
+##  Fonctionnalités Principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* **Côté Client :**
+    * Parcours de réservation dynamique (choix du salon, prestation, coiffeur, date et heure).
+    * Création de compte et authentification sécurisée.
+    * Tableau de bord client (historique des rendez-vous, annulation, modification du profil).
+* **Côté Administrateur :**
+    * Tableau de bord (Dashboard) sécurisé.
+    * Gestion (C.R.U.D) des salons, des prestations, et du personnel.
+    * Gestion des plannings (créneaux horaires des coiffeurs).
 
-## React Compiler
+## Stack Technique
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Front-end :** React.js (via Vite), React Router Dom, CSS pur.
+* **Back-end :** Node.js, Express.js.
+* **Base de données :** SQLite.
+* **ORM :** Prisma.
+* **Sécurité :** Bcrypt (hachage des mots de passe).
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Suivez ces étapes pour exécuter le projet localement sur votre machine.
+
+### 1. Cloner le dépôt
+```bash
+git clone https://github.com/JTKaeanon/Devoir-CEF-Bilan-3
+cd Devoir-CEF-Bilan-3
+
+#### 2. Lancer le Back-end (API & Base de données)
+Ouvrez un terminal et naviguez dans le dossier du back-end :
+
+```bash
+cd atelier-backend
+npm install
+# Initialiser la base de données SQLite avec Prisma
+npx prisma db push
+# Démarrer le serveur API (tourne sur http://localhost:3000)
+node server.js
