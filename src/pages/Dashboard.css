@@ -24,14 +24,14 @@
     color: #666;
 }
 
-/* --- global --- */
+/*  global  */
 .dashboard-layout {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-/* --- profil gauche --- */
+/*  profil gauche  */
 .profile-card {
     background: #ffffff;
     border-radius: 20px;
@@ -131,7 +131,7 @@
     border-color: #4CAF50;
 }
 
-/* --- RDV --- */
+/*  RDV  */
 .dashboard-main {
     display: flex;
     flex-direction: column;
@@ -251,7 +251,7 @@
 }
 
 
-/* --- bouton anulation rdv --- */
+/*  bouton anulation rdv  */
 .status-column {
   display: flex;
   flex-direction: column;

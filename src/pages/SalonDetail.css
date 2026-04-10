@@ -21,7 +21,7 @@
     background-color: #b3b3b3;
 }
 
-/* Gestion de l'affichage des images de fond */
+/* image fond */
 .box-image, .box-presentation {
     background-size: cover;
     background-position: center;
@@ -68,7 +68,7 @@
     margin-top: 1.5rem;
     padding-top: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
-    width: 80%;
+    width: 100%;
 }
 
 .salon-global-hours h3 {
@@ -301,6 +301,21 @@
 
 /* grid desktop */
 @media screen and (min-width: 1024px) {
+
+    .salon-global-hours {
+        width: 80%;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+    }
+    
+    .salon-global-hours h3 {
+        font-size: 1.2rem;
+    }
+
+    .salon-global-hours p {
+        font-size: 1rem;
+    }
+
     .salon-detail-grid {
         grid-template-columns: 1fr 1fr;
     }
@@ -349,4 +364,7 @@
     .service-info-name {
         font-size: 1.1rem;
     }
+
+    
 }
+
