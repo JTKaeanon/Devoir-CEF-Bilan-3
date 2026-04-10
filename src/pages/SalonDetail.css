@@ -35,7 +35,7 @@
     background-color: #1a1a1a;
 }
 
-/* L'OVERLAY SOMBRE POUR LE TEXTE (Haut Droite) */
+
 .presentation-overlay {
     position: absolute;
     inset: 0; 
@@ -45,26 +45,25 @@
     justify-content: center;
     align-items: center; 
     text-align: center;  
-    padding: 2.5rem;
+    padding: 1.5rem; 
     color: white;
     z-index: 2;
 }
 
 .presentation-overlay h1 {
-    font-size: 2.5rem;
+    font-size: 2rem; 
     margin-bottom: 1rem;
     color: #cda434;
+    word-break: break-word; 
 }
 
 .salon-description {
-    font-size: 1.15rem;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.5;
     font-weight: 500;
 }
 
-/* =========================================
-   NOUVEAU : SECTION HORAIRES DU SALON
-   ========================================= */
+/*   HORAIRES    */
 .salon-global-hours {
     margin-top: 1.5rem;
     padding-top: 1.5rem;
