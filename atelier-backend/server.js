@@ -120,13 +120,12 @@ app.post('/api/prestations', async (req, res) => {
   }
 });
 
-// 🌟 MISE À JOUR : Enregistrement des cases cochées (salonIds)
+// case coché
 app.put('/api/prestations/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const { nom, description, prix, duree, salonIds } = req.body;
-    
-    // 🕵️‍♂️ LE MOUCHARD : Ça va s'afficher dans ton terminal !
+  
     console.log(`---> Je modifie la presta N°${id}`);
     console.log(`---> Salons cochés reçus du Front :`, salonIds);
     
@@ -143,7 +142,7 @@ app.put('/api/prestations/:id', async (req, res) => {
       }
     });
     
-    console.log("---> Base de données mise à jour avec succès !");
+    
     res.json(prestationMaj);
   } catch (error) {
     console.error("Erreur UPDATE prestation :", error);

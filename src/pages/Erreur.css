@@ -1,0 +1,48 @@
+.erreur-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: 2rem;
+    color: #1a1a1a;
+}
+
+.erreur-title {
+    font-size: 8rem;
+    font-weight: 900;
+    margin: 0;
+    line-height: 1;
+    color: #1a1a1a;
+}
+
+.erreur-subtitle {
+    font-size: 2rem;
+    color: #cda434; /* Le doré de L'Atelier */
+    margin: 1rem 0;
+}
+
+.erreur-text {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+}
+
+.erreur-btn {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 0.8rem 1.8rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.erreur-btn:hover {
+    background-color: #4CAF50;
+    color: white;
+}
