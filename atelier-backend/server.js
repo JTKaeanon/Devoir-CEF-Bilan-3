@@ -35,6 +35,7 @@ app.get('/api/salons', async (req, res) => {
     const tousLesSalons = await prisma.salon.findMany();
     res.json(tousLesSalons);
   } catch (error) {
+    console.error(" ERREUR API SALONS :", error);
     res.status(500).json({ erreur: "Impossible de récupérer les salons" });
   }
 });
