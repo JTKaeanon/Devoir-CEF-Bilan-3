@@ -13,7 +13,7 @@ export default function Prestations() {
   useEffect(() => {
     const fetchPrestations = async () => {
       try {
-        const reponse = await fetch('http://localhost:3000/api/prestations');
+        const reponse = await fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/prestations');
         if (!reponse.ok) throw new Error('Erreur de chargement');
         const data = await reponse.json();
         setPrestations(data);

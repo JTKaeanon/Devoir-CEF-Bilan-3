@@ -26,7 +26,7 @@ export default function Inscription() {
     setMessage({ type: '', texte: '' });
 
     try {
-      const reponse = await fetch('http://localhost:3000/api/inscription', {
+      const reponse = await fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/inscription', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

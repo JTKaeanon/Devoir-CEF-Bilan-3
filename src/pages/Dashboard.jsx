@@ -32,7 +32,7 @@ export default function Dashboard() {
 
     const fetchMesRdv = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/utilisateurs/${utilisateur.id}/reservations`);
+        const response = await fetch(`https://groupe-atelier-devoir-bilan.onrender.com/api/utilisateurs/${utilisateur.id}/reservations`);
         if (response.ok) {
           const data = await response.json();
           setMesRdv(data);
@@ -54,7 +54,7 @@ export default function Dashboard() {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/api/utilisateurs/${utilisateur.id}`, {
+      const response = await fetch(`https://groupe-atelier-devoir-bilan.onrender.com/api/utilisateurs/${utilisateur.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -79,7 +79,7 @@ export default function Dashboard() {
   const handleAnnulerRdv = async (rdvId) => {
     if (window.confirm("Êtes-vous sûr de vouloir annuler ce rendez-vous ?")) {
       try {
-        const response = await fetch(`http://localhost:3000/api/reservations/${rdvId}`, {
+        const response = await fetch(`https://groupe-atelier-devoir-bilan.onrender.com/api/reservations/${rdvId}`, {
           method: 'DELETE'
         });
 
