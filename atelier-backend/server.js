@@ -1,14 +1,15 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config(); // NOUVEAU : Permet de lire le fichier .env
 
 // import
 const { PrismaClient } = require('@prisma/client');
-const { PrismaBetterSqlite3 } = require('@prisma/adapter-better-sqlite3');
 const bcrypt = require('bcrypt');
 
-// init prisma
-const adapter = new PrismaBetterSqlite3({ url: "file:./prisma/dev.db" });
-const prisma = new PrismaClient({ adapter });
+// init prisma connexion  neon.tech 
+const prisma = new PrismaClient({
+  datasourceUrl: process.env.DATABASE_URL
+});
 
 const app = express();
 
