@@ -1,13 +1,18 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 
-// import
 const { PrismaClient } = require('@prisma/client');
-const { PrismaBetterSqlite3 } = require('@prisma/adapter-better-sqlite3');
+const { Pool } = require('pg'); 
+const { PrismaPg } = require('@prisma/adapter-pg');
 const bcrypt = require('bcrypt');
 
-// init prisma
-const adapter = new PrismaBetterSqlite3({ url: "file:./prisma/dev.db" });
+
+const pool = new Pool({ 
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
+const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 const app = express();
@@ -30,6 +35,7 @@ app.get('/api/salons', async (req, res) => {
     const tousLesSalons = await prisma.salon.findMany();
     res.json(tousLesSalons);
   } catch (error) {
+    console.error(" ERREUR API SALONS :", error);
     res.status(500).json({ erreur: "Impossible de récupérer les salons" });
   }
 });
@@ -120,13 +126,12 @@ app.post('/api/prestations', async (req, res) => {
   }
 });
 
-// 🌟 MISE À JOUR : Enregistrement des cases cochées (salonIds)
+// case coché
 app.put('/api/prestations/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const { nom, description, prix, duree, salonIds } = req.body;
-    
-    // 🕵️‍♂️ LE MOUCHARD : Ça va s'afficher dans ton terminal !
+  
     console.log(`---> Je modifie la presta N°${id}`);
     console.log(`---> Salons cochés reçus du Front :`, salonIds);
     
@@ -143,7 +148,7 @@ app.put('/api/prestations/:id', async (req, res) => {
       }
     });
     
-    console.log("---> Base de données mise à jour avec succès !");
+    
     res.json(prestationMaj);
   } catch (error) {
     console.error("Erreur UPDATE prestation :", error);

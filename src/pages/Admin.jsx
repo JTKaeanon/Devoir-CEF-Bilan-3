@@ -31,9 +31,9 @@ export default function Admin() {
 
   const fetchData = async () => {
     try {
-      const resP = await fetch('http://localhost:3000/api/prestations', { cache: 'no-store' });
-      const resS = await fetch('http://localhost:3000/api/salons', { cache: 'no-store' });
-      const resE = await fetch('http://localhost:3000/api/employes', { cache: 'no-store' });
+      const resP = await fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/prestations', { cache: 'no-store' });
+      const resS = await fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/salons', { cache: 'no-store' });
+      const resE = await fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/employes', { cache: 'no-store' });
       
       if (resP.ok) setPrestations(await resP.json());
       if (resS.ok) setSalons(await resS.json());
@@ -46,7 +46,7 @@ export default function Admin() {
   // actions prestation
   const handlePrestaSubmit = async (e) => {
     e.preventDefault();
-    const url = isEditingPresta ? `http://localhost:3000/api/prestations/${formPresta.id}` : 'http://localhost:3000/api/prestations';
+    const url = isEditingPresta ? `https://groupe-atelier-devoir-bilan.onrender.com/api/prestations/${formPresta.id}` : 'https://groupe-atelier-devoir-bilan.onrender.com/api/prestations';
     const method = isEditingPresta ? 'PUT' : 'POST';
     await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formPresta) });
     setFormPresta({ id: null, nom: '', description: '', prix: '', duree: '', salonIds: [] });
@@ -56,7 +56,7 @@ export default function Admin() {
 
   const handlePrestaDelete = async (id) => {
     if(window.confirm("Supprimer ?")) {
-      await fetch(`http://localhost:3000/api/prestations/${id}`, { method: 'DELETE' });
+      await fetch(`https://groupe-atelier-devoir-bilan.onrender.com/api/prestations/${id}`, { method: 'DELETE' });
       fetchData();
     }
   };
@@ -64,7 +64,7 @@ export default function Admin() {
   // actions salon
   const handleSalonSubmit = async (e) => {
     e.preventDefault();
-    const url = isEditingSalon ? `http://localhost:3000/api/salons/${formSalon.id}` : 'http://localhost:3000/api/salons';
+    const url = isEditingSalon ? `https://groupe-atelier-devoir-bilan.onrender.com/api/salons/${formSalon.id}` : 'https://groupe-atelier-devoir-bilan.onrender.com/api/salons';
     const method = isEditingSalon ? 'PUT' : 'POST';
     const { id, ...donnees } = formSalon; 
     await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(donnees) });
@@ -77,7 +77,7 @@ export default function Admin() {
 
   const handleSalonDelete = async (id) => {
     if(window.confirm("Supprimer le salon ?")) {
-      await fetch(`http://localhost:3000/api/salons/${id}`, { method: 'DELETE' });
+      await fetch(`https://groupe-atelier-devoir-bilan.onrender.com/api/salons/${id}`, { method: 'DELETE' });
       fetchData();
     }
   };
@@ -85,19 +85,19 @@ export default function Admin() {
   // actions staff planning
   const handleAddStaff = async (e) => {
     e.preventDefault();
-    await fetch('http://localhost:3000/api/employes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formStaff) });
+    await fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/employes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formStaff) });
     setFormStaff({ nom: '', role: 'Coiffeur', salonId: '' });
     fetchData();
   };
 
   const handleAddHoraire = async (e) => {
     e.preventDefault();
-    await fetch('http://localhost:3000/api/horaires', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formHoraire) });
+    await fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/horaires', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formHoraire) });
     fetchData();
   };
 
   const deleteHoraire = async (id) => {
-    await fetch(`http://localhost:3000/api/horaires/${id}`, { method: 'DELETE' });
+    await fetch(`https://groupe-atelier-devoir-bilan.onrender.com/api/horaires/${id}`, { method: 'DELETE' });
     fetchData();
   };
 

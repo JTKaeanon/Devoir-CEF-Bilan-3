@@ -13,7 +13,7 @@ export default function SalonDetail() {
   useEffect(() => {
     const fetchSalonDetail = async () => {
       try {
-        const reponse = await fetch(`http://localhost:3000/api/salons/${slug}`);
+        const reponse = await fetch(`https://groupe-atelier-devoir-bilan.onrender.com/api/salons/${slug}`);
         if (!reponse.ok) throw new Error('Salon introuvable');
         
         const data = await reponse.json();

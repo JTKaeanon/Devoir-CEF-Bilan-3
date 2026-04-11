@@ -22,7 +22,7 @@ export default function Compte() {
     setMessage({ type: '', texte: '' });
 
     try {
-      const reponse = await fetch('http://localhost:3000/api/connexion', {
+      const reponse = await fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/connexion', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

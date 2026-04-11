@@ -12,7 +12,7 @@ export default function Contact() {
 
   // salons
   useEffect(() => {
-    fetch('http://localhost:3000/api/salons')
+    fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/salons')
       .then(res => res.json())
       .then(data => setSalonsData(data))
       .catch(err => console.error("Erreur de chargement des salons :", err));

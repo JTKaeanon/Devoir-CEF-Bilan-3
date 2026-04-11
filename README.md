@@ -37,7 +37,7 @@ cd atelier-backend
 npm install
 # Initialiser la base de données SQLite avec Prisma
 npx prisma db push
-# Démarrer le serveur API (tourne sur http://localhost:3000)
+# Démarrer le serveur API (tourne sur https://groupe-atelier-devoir-bilan.onrender.com)
 node server.js
 
 

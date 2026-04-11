@@ -15,20 +15,20 @@ import Confidentialite from './pages/Confidentialite';
 import Dashboard from './pages/Dashboard';
 import Inscription from './pages/Inscription';
 import Admin from './pages/Admin';
-
+import Erreur from './pages/Erreur';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      
+
       <main style={{ minHeight: '80vh' }}>
         <Routes>
           <Route path="/" element={<Accueil />} />
           <Route path="/nos-salons" element={<NosSalons />} />
           <Route path="/admin" element={<Admin />} />
-          
-          
+
+
           {/* <-- dynamic  --> */}
           <Route path="/salon/:slug" element={<SalonDetail />} />
           <Route path="/prestations" element={<Prestations />} />
@@ -39,6 +39,10 @@ export default function App() {
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/inscription" element={<Inscription />} />
+
+
+          {/* ROUTE 404 */}
+          <Route path="*" element={<Erreur />} />
         </Routes>
       </main>
 

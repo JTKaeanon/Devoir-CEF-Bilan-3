@@ -11,7 +11,7 @@ export default function NosSalons() {
   useEffect(() => {
     const fetchSalons = async () => {
       try {
-        const reponse = await fetch('http://localhost:3000/api/salons');
+        const reponse = await fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/salons');
         
         if (!reponse.ok) {
           throw new Error(`Erreur HTTP: ${reponse.status}`);

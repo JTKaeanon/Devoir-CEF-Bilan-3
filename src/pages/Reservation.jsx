@@ -40,8 +40,8 @@ export default function Reservation() {
     const fetchInitialData = async () => {
       try {
         const [resSalons, resPrestas] = await Promise.all([
-          fetch('http://localhost:3000/api/salons'),
-          fetch('http://localhost:3000/api/prestations')
+          fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/salons'),
+          fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/prestations')
         ]);
         const salonsData = await resSalons.json();
         const prestasData = await resPrestas.json();
@@ -59,7 +59,7 @@ export default function Reservation() {
         if (passedState.salonId) {
           const leSalon = salonsData.find(s => s.id === passedState.salonId);
           if (leSalon) {
-            const resDetail = await fetch(`http://localhost:3000/api/salons/${leSalon.slug}`);
+            const resDetail = await fetch(`https://groupe-atelier-devoir-bilan.onrender.com/api/salons/${leSalon.slug}`);
             const salonDetail = await resDetail.json();
             setEmployesDuSalon(salonDetail.employes || []);
           }
@@ -79,7 +79,7 @@ export default function Reservation() {
     const leSalon = salons.find(s => s.id === salonId);
     if (leSalon) {
       try {
-        const res = await fetch(`http://localhost:3000/api/salons/${leSalon.slug}`);
+        const res = await fetch(`https://groupe-atelier-devoir-bilan.onrender.com/api/salons/${leSalon.slug}`);
         const data = await res.json();
         setEmployesDuSalon(data.employes || []);
       } catch (error) {
@@ -114,7 +114,7 @@ export default function Reservation() {
     e.preventDefault();
     
     try {
-      const reponse = await fetch('http://localhost:3000/api/reservations', {
+      const reponse = await fetch('https://groupe-atelier-devoir-bilan.onrender.com/api/reservations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
