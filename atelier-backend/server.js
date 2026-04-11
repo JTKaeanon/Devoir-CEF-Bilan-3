@@ -1,13 +1,16 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config(); // NOUVEAU : Permet de lire le fichier .env
+require('dotenv').config();
 
-// import
 const { PrismaClient } = require('@prisma/client');
+const { Pool } = require('pg'); 
+const { PrismaPg } = require('@prisma/adapter-pg');
 const bcrypt = require('bcrypt');
 
-// init prisma connexion  neon.tech 
-const prisma = new PrismaClient();
+
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 const app = express();
 
