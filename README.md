@@ -2,6 +2,11 @@
 
 Ce projet a été réalisé dans le cadre du devoir bilan 3 avec le Centre Européen de Formation. Il s'agit d'une application complète permettant la réservation de prestations de coiffure dans différents salons.
 
+## Liens du Projet en Production
+
+* **Application (Front-end) :** https://groupe-atelier.vercel.app/
+* **API (Back-end) :** https://groupe-atelier-devoir-bilan.onrender.com/
+
 ## Fonctionnalités Principales
 
 * **Côté Client :**
@@ -15,9 +20,9 @@ Ce projet a été réalisé dans le cadre du devoir bilan 3 avec le Centre Europ
 
 ## Stack Technique
 
-* **Front-end :** React.js (via Vite), React Router Dom, CSS pur.
-* **Back-end :** Node.js, Express.js.
-* **Base de données :** SQLite.
+* **Front-end :** React.js (via Vite), React Router Dom, CSS pur. Hébergé sur **Vercel**.
+* **Back-end :** Node.js, Express.js. Hébergé sur **Render**.
+* **Base de données :** PostgreSQL (via **Neon.tech**).
 * **ORM :** Prisma.
 * **Sécurité :** Bcrypt (hachage des mots de passe).
 
@@ -33,12 +38,18 @@ cd Devoir-CEF-Bilan-3
 ```
 
 ### 2. Lancer le Back-end (API & Base de données)
+```bash 
 cd atelier-backend
 npm install
+```
 # Initialiser la base de données SQLite avec Prisma
+```bash 
 npx prisma db push
-# Démarrer le serveur API (tourne sur https://groupe-atelier-devoir-bilan.onrender.com)
+```
+# Démarrer le serveur API localement
+```bash 
 node server.js
+```
 
 
 ### 3. Lancer le Front-end (Interface Client & Admin)
@@ -46,7 +57,9 @@ Ouvrez un nouveau terminal et restez à la racine du projet React :
 
 npm install
 # Démarrer l'application React (tourne généralement sur http://localhost:5173)
+```bash
 npm run dev
+```
 
 
 
