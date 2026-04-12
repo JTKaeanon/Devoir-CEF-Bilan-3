@@ -330,6 +330,26 @@ app.delete('/api/reservations/:id', async (req, res) => {
   }
 });
 
+
+// RDV pour les coiffeurs
+app.get('/api/admin/reservations', async (req, res) => {
+  try {
+    const reservations = await prisma.rendezVous.findMany({
+      include: {
+        utilisateur: true, // nom client
+        prestation: true,  // nom presta
+        employe: {         // qui
+          include: { salon: true } 
+        }
+      },
+      orderBy: { date_rdv: 'desc' } // plus récent au ancien
+    });
+    res.json(reservations);
+  } catch (error) {
+    res.status(500).json({ erreur: "Impossible de récupérer les réservations" });
+  }
+});
+
 // ==========================================
 // INIT SERVEUR
 // ==========================================
